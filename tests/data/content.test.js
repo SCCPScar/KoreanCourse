@@ -1,5 +1,5 @@
 /**
- * Testes de integridade dos dados: garantem que ninguém adiciona uma palavra
+ * Testes de integridade dos dados: garantem que ninguém adicione uma palavra
  * sem tradução, com nível errado ou com texto que não é Hangul.
  */
 import { describe, expect, it } from 'vitest';

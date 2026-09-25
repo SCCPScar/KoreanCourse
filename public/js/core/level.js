@@ -1,7 +1,7 @@
 /**
- * Nível do aluno: guardar, ler, avisar quando muda e filtrar conteúdos.
+ * Nível do aluno: salvar, ler, avisar quando muda e filtrar conteúdos.
  *
- * Os outros módulos não precisam de saber onde o nível está guardado:
+ * Os outros módulos não precisam de saber onde o nível está salvo:
  * usam getLevel() e onLevelChange().
  */
 import { LEVELS, findLevel } from '../data/levels.js';
@@ -16,7 +16,7 @@ export function getLevel() {
   return findLevel(id) ? id : null;
 }
 
-/** Guarda o nível e avisa quem estiver a ouvir. */
+/** Salva o nível e avisa quem estiver escutando. */
 export function setLevel(id) {
   if (!findLevel(id)) return;
   writeJSON(STORAGE_KEY, id);

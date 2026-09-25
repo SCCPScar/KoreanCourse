@@ -20,22 +20,22 @@ describe('storage', () => {
     vi.unstubAllGlobals();
   });
 
-  it('guarda e lê valores JSON com o prefixo da app', () => {
+  it('salva e lê valores JSON com o prefixo da app', () => {
     writeJSON('level', 'basico');
     expect(storage.getItem(`${STORAGE_PREFIX}level`)).toBe('"basico"');
     expect(readJSON('level')).toBe('basico');
   });
 
-  it('devolve o fallback quando a chave não existe', () => {
+  it('retorna o fallback quando a chave não existe', () => {
     expect(readJSON('nada', 42)).toBe(42);
   });
 
-  it('devolve o fallback quando o JSON está corrompido', () => {
+  it('retorna o fallback quando o JSON está corrompido', () => {
     storage.setItem(`${STORAGE_PREFIX}level`, '{isto não é json');
     expect(readJSON('level', 'zero')).toBe('zero');
   });
 
-  it('não rebenta quando o localStorage lança erros (ex.: modo privado)', () => {
+  it('não quebra quando o localStorage lança erros (ex.: modo privado)', () => {
     vi.stubGlobal('localStorage', {
       getItem: () => {
         throw new Error('bloqueado');

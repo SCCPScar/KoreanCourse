@@ -1,9 +1,9 @@
 /*
  * Modo escuro: SÓ redefine as variáveis de variables.css.
- * Aplica-se em dois casos:
- *  1. O sistema pede modo escuro e o utilizador não escolheu "claro";
- *  2. O utilizador escolheu "escuro" explicitamente (data-theme="dark").
- * Os dois blocos têm de ser iguais.
+ * Vale em dois casos:
+ *  1. O sistema pede modo escuro e o usuário não escolheu "claro";
+ *  2. O usuário escolheu "escuro" explicitamente (data-theme="dark").
+ * Os dois blocos precisam ser iguais.
  */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {

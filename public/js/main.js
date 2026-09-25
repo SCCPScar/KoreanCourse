@@ -1,5 +1,5 @@
 /**
- * Ponto de arranque ÚNICO da aplicação.
+ * Ponto de entrada ÚNICO da aplicação.
  * Cada funcionalidade exporta uma função init*() que é chamada aqui, por ordem.
  */
 import { initActions } from './core/actions.js';

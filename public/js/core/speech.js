@@ -1,8 +1,8 @@
 /**
- * Síntese de voz em coreano (ko-KR) com a Web Speech API do browser.
+ * Síntese de voz em coreano (ko-KR) com a Web Speech API do navegador.
  *
- * A voz depende do sistema operativo: se não houver uma voz coreana instalada,
- * o browser pode ficar calado ou ler com sotaque errado. Por isso a app
+ * A voz depende do sistema operacional: se não houver uma voz coreana instalada,
+ * o navegador pode ficar mudo ou ler com sotaque errado. Por isso a app
  * verifica isto e mostra um aviso ao aluno.
  */
 
@@ -25,8 +25,8 @@ function getKoreanVoice() {
 }
 
 /**
- * Espera que o browser carregue a lista de vozes (no Chrome é assíncrono),
- * com um limite de tempo para não ficar à espera para sempre.
+ * Espera o navegador carregar a lista de vozes (no Chrome é assíncrono),
+ * com um limite de tempo para não ficar esperando para sempre.
  */
 function waitForVoices() {
   return new Promise((resolve) => {
@@ -40,7 +40,7 @@ function waitForVoices() {
   });
 }
 
-/** true se o browser tiver uma voz coreana instalada. */
+/** true se o navegador tiver uma voz coreana instalada. */
 export async function hasKoreanVoice() {
   if (!isSpeechSupported()) return false;
   await waitForVoices();

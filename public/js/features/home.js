@@ -1,5 +1,5 @@
 /**
- * Início em grelha de cartões ("bento"): responde logo a "o que faço hoje?".
+ * Início em grade de cartões ("bento"): responde logo a "o que faço hoje?".
  *
  * Só mostra dados reais: palavra do dia, progresso do vocabulário, pontos de
  * gramática do nível e uma curiosidade cultural. Sequência de dias e revisões
@@ -91,6 +91,6 @@ export function initHome() {
 
   onLevelChange(render);
   render();
-  // O progresso muda noutras secções: volta a desenhar sempre que se abre o Início.
+  // O progresso muda em outras seções: redesenha sempre que o Início é aberto.
   return render;
 }

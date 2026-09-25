@@ -12,7 +12,7 @@
  */
 const KEY_STEPS = { ArrowRight: 1, ArrowLeft: -1 };
 
-/** Índice da próxima aba ao carregar numa tecla (ou null se a tecla não interessa). */
+/** Índice da próxima aba ao apertar uma tecla (ou null se a tecla não importa). */
 export function nextTabIndex(key, current, count) {
   if (key in KEY_STEPS) return (current + KEY_STEPS[key] + count) % count;
   if (key === 'Home') return 0;

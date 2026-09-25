@@ -1,8 +1,8 @@
 /**
  * Escolhe "o item do dia" (palavra do dia, curiosidade do dia…).
  *
- * É determinístico: no mesmo dia devolve sempre o mesmo item, e no dia
- * seguinte passa ao próximo. Não precisa de guardar nada nem de servidor.
+ * É determinístico: no mesmo dia retorna sempre o mesmo item, e no dia
+ * seguinte passa para o próximo. Não precisa salvar nada nem de servidor.
  */
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;

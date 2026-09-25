@@ -10,7 +10,7 @@ const VOWEL_TYPES = {
   composta: 'Vogais compostas',
 };
 
-/** Cartão clicável: ao clicar, ouve-se a sílaba de exemplo. */
+/** Cartão clicável: ao clicar, toca a sílaba de exemplo. */
 function jamoCard(item) {
   return el(
     'button',
@@ -29,7 +29,7 @@ function jamoCard(item) {
   );
 }
 
-/** Agrupa os itens por tipo e cria um título + grelha para cada grupo. */
+/** Agrupa os itens por tipo e cria um título + grade para cada grupo. */
 function renderGroups(container, items, typeLabels) {
   const groups = Object.entries(typeLabels).map(([type, label]) =>
     el('div', { className: 'jamo-group' }, [

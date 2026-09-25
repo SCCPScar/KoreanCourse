@@ -2,15 +2,15 @@
  * Wrapper seguro do localStorage.
  *
  * O localStorage pode falhar (modo privado, armazenamento cheio ou bloqueado),
- * por isso todas as operações estão dentro de try/catch e a app continua a
- * funcionar — apenas sem guardar o progresso.
+ * por isso todas as operações estão dentro de try/catch e a app continua
+ * funcionando — só não salva o progresso.
  *
  * Todas as chaves têm o prefixo da app, para que "Apagar os meus dados"
  * remova só o que é nosso.
  */
 export const STORAGE_PREFIX = 'haru:';
 
-/** Lê um valor JSON. Devolve `fallback` se não existir ou se der erro. */
+/** Lê um valor JSON. Retorna `fallback` se não existir ou se der erro. */
 export function readJSON(key, fallback = null) {
   try {
     const raw = localStorage.getItem(STORAGE_PREFIX + key);
@@ -20,7 +20,7 @@ export function readJSON(key, fallback = null) {
   }
 }
 
-/** Guarda um valor como JSON. Devolve true se correu bem. */
+/** Salva um valor como JSON. Retorna true se deu certo. */
 export function writeJSON(key, value) {
   try {
     localStorage.setItem(STORAGE_PREFIX + key, JSON.stringify(value));

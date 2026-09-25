@@ -48,7 +48,7 @@ textarea {
 }
 
 /* Texto coreano usa sempre a fonte coreana e só quebra entre palavras
-   (sem isto, o browser parte palavras a meio, entre quaisquer sílabas). */
+   (sem isso, o navegador quebra palavras no meio, entre quaisquer sílabas). */
 [lang='ko'] {
   font-family: var(--font-ko);
   word-break: keep-all;

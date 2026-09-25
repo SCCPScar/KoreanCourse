@@ -3,7 +3,7 @@
 Plataforma web para aprender coreano, do nível zero ao TOPIK 4, com interface em português europeu.
 
 > 🚧 Projeto em desenvolvimento. A documentação completa (arquitetura, decisões técnicas,
-> privacidade e deploy) será adicionada na fase final.
+> privacidade e deploy) vai ser adicionada na fase final.
 
 ## Desenvolvimento local
 

@@ -48,7 +48,7 @@ describe('decomposeSyllable', () => {
     }
   });
 
-  it('devolve null para texto que não é uma sílaba Hangul', () => {
+  it('retorna null para texto que não é uma sílaba Hangul', () => {
     expect(decomposeSyllable('a')).toBeNull();
     expect(decomposeSyllable('ㄱ')).toBeNull();
     expect(decomposeSyllable('가나')).toBeNull();

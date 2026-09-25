@@ -2,7 +2,7 @@
  * Modo claro/escuro.
  *
  * Três modos: 'system' (segue prefers-color-scheme), 'light' e 'dark'.
- * O CSS trata das cores; aqui só se define o atributo data-theme no <html>.
+ * O CSS trata das cores; aqui só definimos o atributo data-theme no <html>.
  */
 import { readJSON, writeJSON } from './storage.js';
 
@@ -15,7 +15,7 @@ const THEME_LABELS = {
   dark: { icon: '🌙', name: 'escuro' },
 };
 
-/** Devolve o modo seguinte no ciclo automático → claro → escuro → automático. */
+/** Retorna o modo seguinte no ciclo automático → claro → escuro → automático. */
 export function nextThemeMode(mode) {
   const index = THEME_MODES.indexOf(mode);
   return THEME_MODES[(index + 1) % THEME_MODES.length];
@@ -42,7 +42,7 @@ function updateButton(button, mode) {
   button.title = `Tema: ${current.name}`;
 }
 
-/** Aplica o tema guardado e liga o botão de alternância. */
+/** Aplica o tema salvo e liga o botão de alternância. */
 export function initTheme(button) {
   let mode = getStoredMode();
   applyTheme(mode);

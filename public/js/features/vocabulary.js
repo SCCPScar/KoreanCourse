@@ -1,6 +1,6 @@
 /**
  * Vocabulário por categorias, com áudio e "marcar como aprendida".
- * As palavras aprendidas ficam guardadas no localStorage (usadas também no Progresso).
+ * As palavras aprendidas ficam salvas no localStorage (usadas também no Progresso).
  */
 import { registerAction } from '../core/actions.js';
 import { byId, el } from '../core/dom.js';
@@ -18,7 +18,7 @@ export function getLearnedIds() {
   return new Set(Array.isArray(ids) ? ids : []);
 }
 
-/** Marca/desmarca uma palavra e devolve o novo estado (true = aprendida). */
+/** Marca/desmarca uma palavra e retorna o novo estado (true = aprendida). */
 function toggleLearned(id) {
   const learned = getLearnedIds();
   const isLearned = !learned.has(id);

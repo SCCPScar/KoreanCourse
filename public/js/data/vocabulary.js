@@ -3,7 +3,7 @@
  *
  * Formato compacto de cada palavra: [hangul, romanização, português, nível].
  * A romanização segue a Romanização Revista, que representa a PRONÚNCIA
- * (ex.: 읽다 escreve-se "ikda" porque se diz [익따]).
+ * (ex.: 읽다 é escrito "ikda" porque se fala [익따]).
  * Níveis: 'zero' | 'basico' | 'intermedio' | 'avancado' (ver data/levels.js).
  */
 

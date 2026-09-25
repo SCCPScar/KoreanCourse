@@ -8,7 +8,7 @@ describe('resolveRoute', () => {
     expect(resolveRoute('#hangul', routes, 'inicio')).toBe('hangul');
   });
 
-  it('usa a rota por omissão com hash vazio ou desconhecido', () => {
+  it('usa a rota padrão com hash vazio ou desconhecido', () => {
     expect(resolveRoute('', routes, 'inicio')).toBe('inicio');
     expect(resolveRoute('#nao-existe', routes, 'inicio')).toBe('inicio');
   });

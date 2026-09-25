@@ -8,7 +8,7 @@ describe('findKoreanVoice', () => {
     expect(findKoreanVoice([pt, ko])).toBe(ko);
   });
 
-  it('devolve null quando não há voz coreana', () => {
+  it('retorna null quando não há voz coreana', () => {
     expect(findKoreanVoice([{ lang: 'en-US' }])).toBeNull();
     expect(findKoreanVoice([])).toBeNull();
   });

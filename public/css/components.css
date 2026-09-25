@@ -1,4 +1,4 @@
-/* Componentes reutilizáveis: cartões, botões, grelhas e janelas de diálogo. */
+/* Componentes reutilizáveis: cartões, botões, grades e janelas de diálogo. */
 
 /* Cartões */
 
@@ -25,7 +25,7 @@
 }
 
 /* Botões "pressionáveis": uma sombra sólida por baixo faz o botão parecer físico;
-   ao carregar, desce 3px em 120ms. Dá sensação de toque sem ruído visual. */
+   ao apertar, desce 3px em 120ms. Dá sensação de toque sem ruído visual. */
 
 .btn {
   --btn-bg: var(--color-surface);
@@ -589,7 +589,7 @@
   filter: brightness(0.96);
 }
 
-/* Aviso que se pode fechar */
+/* Aviso que pode ser fechado */
 
 .notice {
   display: flex;
@@ -673,7 +673,7 @@
   box-shadow: var(--shadow-card);
 }
 
-/* Início: grelha de cartões ("bento") */
+/* Início: grade de cartões ("bento") */
 
 .bento {
   display: grid;
@@ -741,7 +741,7 @@
   color: var(--color-on-primary);
 }
 
-/* Marca d'água decorativa no cartão principal (escondida dos leitores de ecrã) */
+/* Marca d'água decorativa no cartão principal (escondida dos leitores de tela) */
 .tile--next {
   position: relative;
   overflow: hidden;

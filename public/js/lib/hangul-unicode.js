@@ -60,7 +60,7 @@ function assertIndex(value, max, name) {
   }
 }
 
-/** Devolve o código Unicode da sílaba formada pelos índices dados. */
+/** Retorna o código Unicode da sílaba formada pelos índices dados. */
 export function syllableCodePoint(initial, medial, final = 0) {
   assertIndex(initial, INITIALS.length, 'consoante inicial');
   assertIndex(medial, MEDIALS.length, 'vogal');
@@ -73,7 +73,7 @@ export function composeSyllable(initial, medial, final = 0) {
   return String.fromCodePoint(syllableCodePoint(initial, medial, final));
 }
 
-/** Separa uma sílaba nos seus índices, ou devolve null se não for uma sílaba Hangul. */
+/** Separa uma sílaba nos seus índices, ou retorna null se não for uma sílaba Hangul. */
 export function decomposeSyllable(char) {
   const offset = (char?.codePointAt(0) ?? -1) - SYLLABLE_BASE;
   if (char?.length !== 1 || offset < 0 || offset >= INITIALS.length * MEDIAL_COUNT * FINAL_COUNT) {

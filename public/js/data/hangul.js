@@ -63,7 +63,7 @@ export const VOWELS = [
 
 /**
  * Batchim (받침): a consoante no fim da sílaba.
- * Por mais consoantes que existam, no fim da sílaba só se ouvem 7 sons.
+ * Por mais consoantes que existam, no fim da sílaba só se escutam 7 sons.
  */
 // prettier-ignore
 export const BATCHIM_SOUNDS = [

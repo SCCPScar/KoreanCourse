@@ -17,7 +17,7 @@ function svgElement(tag, attrs) {
   return node;
 }
 
-/** Cria o SVG: primeiro a letra em cinzento (guia) e depois os traços animados. */
+/** Cria o SVG: primeiro a letra em cinza (guia) e depois os traços animados. */
 function buildSvg(jamo) {
   const svg = svgElement('svg', {
     viewBox: '0 0 100 100',

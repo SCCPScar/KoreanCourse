@@ -1,16 +1,16 @@
 /**
- * Navegação entre secções com o hash do URL (#inicio, #hangul, …).
+ * Navegação entre seções com o hash do URL (#inicio, #hangul, …).
  *
- * Porquê o hash: funciona no GitHub Pages sem configuração de servidor,
- * e os botões "voltar/avançar" do browser funcionam naturalmente.
+ * Por que o hash: funciona no GitHub Pages sem configuração de servidor,
+ * e os botões "voltar/avançar" do navegador funcionam naturalmente.
  *
- * Cada secção é um <section class="view" id="view-NOME" data-title="Nome"> e cada
+ * Cada seção é um <section class="view" id="view-NOME" data-title="Nome"> e cada
  * link do menu é um <a class="site-nav__link" href="#NOME">.
  */
 
 const APP_NAME = 'Haru';
 
-/** Escolhe a rota a mostrar: a do hash se existir, senão a rota por omissão. */
+/** Escolhe a rota a mostrar: a do hash se existir, senão a rota padrão. */
 export function resolveRoute(hash, routes, fallback) {
   const route = hash.replace(/^#/, '');
   return routes.includes(route) ? route : fallback;
@@ -24,8 +24,8 @@ export function isInPageAnchor(hash, routes, doc = document) {
 
 /**
  * @param {object} options
- * @param {string} options.fallback - rota por omissão (ex.: 'inicio')
- * @param {(route: string) => void} [options.onChange] - chamado sempre que uma secção abre
+ * @param {string} options.fallback - rota padrão (ex.: 'inicio')
+ * @param {(route: string) => void} [options.onChange] - chamado sempre que uma seção abre
  */
 export function initRouter({ fallback, onChange }) {
   const views = [...document.querySelectorAll('.view')];
@@ -44,7 +44,7 @@ export function initRouter({ fallback, onChange }) {
       else link.removeAttribute('aria-current');
     });
 
-    // Leva o foco para o título da secção: quem usa leitor de ecrã percebe que a página mudou.
+    // Leva o foco para o título da seção: quem usa leitor de tela percebe que a página mudou.
     if (moveFocus) {
       document.querySelector(`#view-${route} .view__title`)?.focus();
       window.scrollTo(0, 0);
@@ -53,7 +53,7 @@ export function initRouter({ fallback, onChange }) {
   }
 
   // Âncoras internas (ex.: o link "Pular para o conteúdo" → #conteudo) não são rotas:
-  // nesse caso deixamos o browser fazer o scroll e não mudamos de secção.
+  // nesse caso deixamos o navegador fazer a rolagem e não mudamos de seção.
   window.addEventListener('hashchange', () => {
     if (isInPageAnchor(window.location.hash, routes)) return;
     show(true);

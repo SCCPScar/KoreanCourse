@@ -2,11 +2,11 @@
  * Ordem dos traços das 14 consoantes e 10 vogais básicas, em SVG próprio
  * (o HanziWriter só suporta caracteres chineses).
  *
- * Cada letra é uma lista de traços, pela ordem em que se escrevem. Cada traço é
- * um "path" SVG numa grelha de 100 × 100. Regras gerais da escrita coreana:
+ * Cada letra é uma lista de traços, na ordem em que são escritos. Cada traço é
+ * um "path" SVG numa grade de 100 × 100. Regras gerais da escrita coreana:
  * de cima para baixo e da esquerda para a direita.
  *
- * As letras compostas (ㄲ, ㅐ, ㅘ, …) escrevem-se juntando estas letras básicas.
+ * As letras compostas (ㄲ, ㅐ, ㅘ, …) são escritas juntando estas letras básicas.
  */
 export const STROKES = {
   // Consoantes

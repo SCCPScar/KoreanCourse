@@ -1,6 +1,6 @@
 /**
  * Implementação mínima de localStorage em memória para os testes
- * (o Node não tem localStorage como o browser).
+ * (o Node não tem localStorage como o navegador).
  */
 export function createFakeStorage() {
   const data = new Map();

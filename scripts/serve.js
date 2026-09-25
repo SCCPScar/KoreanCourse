@@ -1,6 +1,6 @@
 /**
  * Servidor estático mínimo para desenvolvimento local da pasta public/.
- * Em produção, quem serve estes ficheiros é o GitHub Pages.
+ * Em produção, quem serve estes arquivos é o GitHub Pages.
  *
  * Uso: npm run dev  →  http://localhost:5173
  */

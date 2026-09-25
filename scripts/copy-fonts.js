@@ -1,11 +1,11 @@
 /**
- * Copia as fontes (Inter + Noto Sans KR) do node_modules para public/fonts
+ * Copia as fontes (Bricolage Grotesque, Lexend, Noto Sans KR e Jua) do node_modules para public/fonts
  * e gera public/css/fonts.css com os caminhos corretos.
  *
- * Porquê: alojar as fontes localmente evita pedidos a CDNs de terceiros
- * (ex.: Google Fonts), que transmitem o IP do visitante — relevante para o RGPD.
+ * Por quê: hospedar as fontes no próprio site evita pedidos a CDNs de terceiros
+ * (ex.: Google Fonts), que recebem o IP do visitante — relevante para o RGPD e a LGPD.
  *
- * Uso: npm run fonts (só é preciso correr quando se atualizam as fontes).
+ * Uso: npm run fonts (só é preciso rodar quando as fontes forem atualizadas).
  */
 import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -34,14 +34,14 @@ const packages = [
     keepBlock: latinOnly,
   },
   {
-    // Coreano do dia a dia. Todos os blocos: o browser só descarrega os que usa.
+    // Coreano do dia a dia. Todos os blocos: o navegador só baixa os que usa.
     dir: 'node_modules/@fontsource-variable/noto-sans-kr',
     css: 'wght.css',
     license: 'OFL-NotoSansKR.txt',
     keepBlock: () => true,
   },
   {
-    // Coreano "de destaque" (logótipo e palavras grandes)
+    // Coreano "de destaque" (logotipo e palavras grandes)
     dir: 'node_modules/@fontsource/jua',
     css: '400.css',
     license: 'OFL-Jua.txt',
@@ -71,7 +71,7 @@ async function processPackage(pkg) {
   }
   await copyFile(path.join(pkgDir, 'LICENSE'), path.join(fontsDir, pkg.license));
 
-  // Mantém só o formato woff2 (suportado por todos os browsers atuais).
+  // Mantém só o formato woff2 (suportado por todos os navegadores atuais).
   return blocks
     .map((block) =>
       block.css
@@ -87,7 +87,7 @@ async function main() {
   const parts = [];
   for (const pkg of packages) parts.push(await processPackage(pkg));
 
-  const header = '/* Ficheiro gerado por scripts/copy-fonts.js — não editar à mão. */\n\n';
+  const header = '/* Arquivo gerado por scripts/copy-fonts.js — não editar à mão. */\n\n';
   await writeFile(cssOut, header + parts.join('\n\n') + '\n');
   console.log('Fontes copiadas para public/fonts e public/css/fonts.css gerado.');
 }

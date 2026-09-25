@@ -1,8 +1,8 @@
 /**
  * Utilitários de DOM.
  *
- * Regra de segurança do projeto: texto vindo do utilizador ou da IA nunca é
- * inserido com innerHTML sem passar por esc(). Sempre que possível, usa-se
+ * Regra de segurança do projeto: texto vindo do usuário ou da IA nunca é
+ * inserido com innerHTML sem passar por esc(). Sempre que possível, usamos
  * el(), que cria elementos com textContent (seguro por definição).
  */
 
@@ -42,8 +42,8 @@ export function el(tag, options = {}, children = []) {
 }
 
 /**
- * Obtém um elemento pelo id e falha com uma mensagem clara se não existir.
- * Assim, um id errado é detetado logo no arranque em vez de causar erros escondidos.
+ * Busca um elemento pelo id e falha com uma mensagem clara se ele não existir.
+ * Assim, um id errado é detectado logo na inicialização em vez de causar erros escondidos.
  */
 export function byId(id) {
   const node = document.getElementById(id);
