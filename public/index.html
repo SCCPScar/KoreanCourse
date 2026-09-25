@@ -58,51 +58,90 @@
             "Coreano" nas configurações de fala do sistema e recarregue a página.</span
           >
         </p>
+        <button
+          class="notice__close"
+          type="button"
+          data-action="dismiss-voice-warning"
+          aria-label="Fechar aviso de áudio"
+        >
+          ✕
+        </button>
       </div>
 
-      <section class="view" id="view-inicio" aria-labelledby="inicio-title">
+      <section class="view" id="view-inicio" data-title="Início" aria-labelledby="inicio-title">
         <header>
           <h1 id="inicio-title" class="view__title" tabindex="-1">
             Olá! <span lang="ko">안녕하세요!</span>
           </h1>
-          <p class="lead">
-            Boas-vindas ao Haru: aprenda coreano do alfabeto até o TOPIK 4, um dia de cada vez.
-          </p>
+          <p class="lead">Coreano, um dia de cada vez. O que vamos estudar hoje?</p>
         </header>
 
-        <div class="card">
-          <h2>Seu nível</h2>
-          <p><span class="badge" id="level-label">Não escolhido</span></p>
-          <button class="btn" type="button" data-action="open-onboarding">Mudar nível</button>
-        </div>
+        <div class="bento">
+          <article class="tile tile--next">
+            <span class="tile__deco" aria-hidden="true" lang="ko">하루</span>
+            <span class="tile__label">Próximo passo</span>
+            <div>
+              <h2 id="home-next-title" class="tile__title">Comece pelo Hangul</h2>
+              <p id="home-next-text"></p>
+            </div>
+            <a id="home-next-link" class="btn btn--light" href="#hangul">Aprender o Hangul</a>
+          </article>
 
-        <div class="card-grid">
-          <article class="card">
-            <h3>1. Comece pelo Hangul</h3>
-            <p>
-              O alfabeto coreano tem 14 consoantes e 10 vogais básicas. Em poucos dias você consegue
-              ler qualquer palavra.
-            </p>
-            <p><a href="#hangul">Aprender o Hangul →</a></p>
+          <article class="tile tile--word">
+            <span class="tile__label">Palavra do dia</span>
+            <div class="tile__row">
+              <span id="home-word-ko" class="tile__ko" lang="ko"></span>
+              <span id="home-word-audio"></span>
+            </div>
+            <span id="home-word-rom" class="tile__rom"></span>
+            <span id="home-word-pt"></span>
           </article>
-          <article class="card">
-            <h3>2. Pratique todos os dias</h3>
-            <p>
-              Sessões curtas e frequentes funcionam melhor do que uma sessão longa por semana. A
-              repetição espaçada ajuda você a não esquecer.
-            </p>
+
+          <article class="tile">
+            <span class="tile__label">Seu nível</span>
+            <span class="tile__big"><span id="level-label">Não escolhido</span></span>
+            <button class="btn btn--small" type="button" data-action="open-onboarding">
+              Mudar nível
+            </button>
           </article>
-          <article class="card">
-            <h3>3. Fale desde o início</h3>
-            <p>
-              Ouça a pronúncia, repita em voz alta e converse em situações do dia a dia, como pedir
-              um café em Seul.
-            </p>
+
+          <article class="tile tile--progress">
+            <span class="tile__label">Vocabulário aprendido</span>
+            <span id="home-progress-count" class="tile__big">0 de 0</span>
+            <div
+              id="home-progress-meter"
+              class="meter"
+              role="progressbar"
+              aria-label="Vocabulário aprendido"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+            >
+              <span id="home-progress-fill" class="meter__fill"></span>
+            </div>
+            <a href="#vocabulario">Ver vocabulário</a>
+          </article>
+
+          <article class="tile tile--grammar">
+            <span class="tile__label">Gramática do seu nível</span>
+            <span class="tile__big"><span id="home-grammar-count">0</span> pontos</span>
+            <a href="#gramatica">Ver gramática</a>
+          </article>
+
+          <article class="tile tile--fact">
+            <span class="tile__label">Você sabia?</span>
+            <p id="home-fact"></p>
           </article>
         </div>
       </section>
 
-      <section class="view" id="view-hangul" aria-labelledby="hangul-title" hidden>
+      <section
+        class="view"
+        id="view-hangul"
+        data-title="Hangul"
+        aria-labelledby="hangul-title"
+        hidden
+      >
         <header>
           <h1 id="hangul-title" class="view__title" tabindex="-1">
             Hangul <span lang="ko">(한글)</span>
@@ -113,13 +152,66 @@
           </p>
         </header>
 
-        <section class="card" aria-labelledby="consonants-title">
+        <div id="hangul-tabs" class="tabs" role="tablist" aria-label="Partes do Hangul">
+          <button
+            id="tab-consoantes"
+            class="tabs__tab"
+            type="button"
+            role="tab"
+            aria-controls="panel-consoantes"
+          >
+            Consoantes
+          </button>
+          <button
+            id="tab-vogais"
+            class="tabs__tab"
+            type="button"
+            role="tab"
+            aria-controls="panel-vogais"
+          >
+            Vogais
+          </button>
+          <button
+            id="tab-batchim"
+            class="tabs__tab"
+            type="button"
+            role="tab"
+            aria-controls="panel-batchim"
+          >
+            Batchim
+          </button>
+          <button
+            id="tab-construtor"
+            class="tabs__tab"
+            type="button"
+            role="tab"
+            aria-controls="panel-construtor"
+          >
+            Construtor
+          </button>
+          <button
+            id="tab-tracos"
+            class="tabs__tab"
+            type="button"
+            role="tab"
+            aria-controls="panel-tracos"
+          >
+            Traços
+          </button>
+        </div>
+
+        <section
+          id="panel-consoantes"
+          class="card"
+          role="tabpanel"
+          aria-labelledby="tab-consoantes"
+        >
           <h2 id="consonants-title">Consoantes</h2>
           <p>Clique numa letra para ouvir a sílaba com ㅏ (por exemplo, ㄱ → 가).</p>
           <div id="consonant-groups"></div>
         </section>
 
-        <section class="card" aria-labelledby="vowels-title">
+        <section id="panel-vogais" class="card" role="tabpanel" aria-labelledby="tab-vogais">
           <h2 id="vowels-title">Vogais</h2>
           <p>
             As vogais nunca aparecem sozinhas: no início da sílaba escrevemos o ㅇ mudo (ㅏ → 아).
@@ -127,7 +219,7 @@
           <div id="vowel-groups"></div>
         </section>
 
-        <section class="card" aria-labelledby="batchim-title">
+        <section id="panel-batchim" class="card" role="tabpanel" aria-labelledby="tab-batchim">
           <h2 id="batchim-title">Batchim <span lang="ko">(받침)</span></h2>
           <p>
             O batchim é a consoante no fim da sílaba, escrita por baixo (ex.: 한 = ㅎ + ㅏ + ㄴ). Há
@@ -150,7 +242,12 @@
           </div>
         </section>
 
-        <section class="card" aria-labelledby="builder-title">
+        <section
+          id="panel-construtor"
+          class="card"
+          role="tabpanel"
+          aria-labelledby="tab-construtor"
+        >
           <h2 id="builder-title">Construtor de sílabas</h2>
           <p>Escolha as letras e veja como o bloco é formado.</p>
           <form id="syllable-builder" class="builder">
@@ -188,7 +285,7 @@
           <p class="builder__formula">Unicode: <code id="builder-formula"></code></p>
         </section>
 
-        <section class="card" aria-labelledby="strokes-title">
+        <section id="panel-tracos" class="card" role="tabpanel" aria-labelledby="tab-tracos">
           <h2 id="strokes-title">Ordem dos traços</h2>
           <p>
             Regra geral: de cima para baixo e da esquerda para a direita. Escolha uma letra básica
@@ -203,7 +300,13 @@
         </section>
       </section>
 
-      <section class="view" id="view-vocabulario" aria-labelledby="vocabulario-title" hidden>
+      <section
+        class="view"
+        id="view-vocabulario"
+        data-title="Vocabulário"
+        aria-labelledby="vocabulario-title"
+        hidden
+      >
         <header>
           <h1 id="vocabulario-title" class="view__title" tabindex="-1">
             Vocabulário <span lang="ko">(어휘)</span>
@@ -211,19 +314,36 @@
           <p class="lead">Aprenda palavras por temas e marque as que você já sabe.</p>
         </header>
 
-        <div id="vocab-categories" class="chip-list" role="group" aria-label="Categorias"></div>
+        <div
+          id="vocab-categories"
+          class="chip-list chip-list--scroll"
+          role="group"
+          aria-label="Categorias"
+        ></div>
         <p id="vocab-description"></p>
         <div class="toolbar">
-          <label class="checkbox">
-            <input id="vocab-hide-learned" type="checkbox" />
-            Esconder palavras aprendidas
-          </label>
+          <div class="toolbar__options">
+            <label class="checkbox">
+              <input id="vocab-level-only" type="checkbox" checked />
+              Só até o meu nível
+            </label>
+            <label class="checkbox">
+              <input id="vocab-hide-learned" type="checkbox" />
+              Esconder aprendidas
+            </label>
+          </div>
           <p id="vocab-counter" class="toolbar__info" aria-live="polite"></p>
         </div>
         <ul id="vocab-list" class="word-list"></ul>
       </section>
 
-      <section class="view" id="view-gramatica" aria-labelledby="gramatica-title" hidden>
+      <section
+        class="view"
+        id="view-gramatica"
+        data-title="Gramática"
+        aria-labelledby="gramatica-title"
+        hidden
+      >
         <header>
           <h1 id="gramatica-title" class="view__title" tabindex="-1">
             Gramática <span lang="ko">(문법)</span>
@@ -233,6 +353,13 @@
             explicação e os exemplos com áudio.
           </p>
         </header>
+        <div class="toolbar">
+          <label class="checkbox">
+            <input id="grammar-level-only" type="checkbox" checked />
+            Só até o meu nível
+          </label>
+          <p id="grammar-counter" class="toolbar__info" aria-live="polite"></p>
+        </div>
         <div id="grammar-list" class="accordion-list"></div>
       </section>
     </main>

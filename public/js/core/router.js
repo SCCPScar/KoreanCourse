@@ -4,9 +4,11 @@
  * Porquê o hash: funciona no GitHub Pages sem configuração de servidor,
  * e os botões "voltar/avançar" do browser funcionam naturalmente.
  *
- * Cada secção é um <section class="view" id="view-NOME"> e cada link do menu
- * é um <a class="site-nav__link" href="#NOME">.
+ * Cada secção é um <section class="view" id="view-NOME" data-title="Nome"> e cada
+ * link do menu é um <a class="site-nav__link" href="#NOME">.
  */
+
+const APP_NAME = 'Haru';
 
 /** Escolhe a rota a mostrar: a do hash se existir, senão a rota por omissão. */
 export function resolveRoute(hash, routes, fallback) {
@@ -23,8 +25,9 @@ export function isInPageAnchor(hash, routes, doc = document) {
 /**
  * @param {object} options
  * @param {string} options.fallback - rota por omissão (ex.: 'inicio')
+ * @param {(route: string) => void} [options.onChange] - chamado sempre que uma secção abre
  */
-export function initRouter({ fallback }) {
+export function initRouter({ fallback, onChange }) {
   const views = [...document.querySelectorAll('.view')];
   const links = [...document.querySelectorAll('.site-nav__link')];
   const routes = views.map((view) => view.id.replace(/^view-/, ''));
@@ -34,6 +37,7 @@ export function initRouter({ fallback }) {
 
     views.forEach((view) => {
       view.hidden = view.id !== `view-${route}`;
+      if (!view.hidden) document.title = `${view.dataset.title} · ${APP_NAME}`;
     });
     links.forEach((link) => {
       if (link.hash === `#${route}`) link.setAttribute('aria-current', 'page');
@@ -45,6 +49,7 @@ export function initRouter({ fallback }) {
       document.querySelector(`#view-${route} .view__title`)?.focus();
       window.scrollTo(0, 0);
     }
+    onChange?.(route);
   }
 
   // Âncoras internas (ex.: o link "Pular para o conteúdo" → #conteudo) não são rotas:

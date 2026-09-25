@@ -1,0 +1,38 @@
+/**
+ * Nível do aluno: guardar, ler, avisar quando muda e filtrar conteúdos.
+ *
+ * Os outros módulos não precisam de saber onde o nível está guardado:
+ * usam getLevel() e onLevelChange().
+ */
+import { LEVELS, findLevel } from '../data/levels.js';
+import { readJSON, writeJSON } from './storage.js';
+
+const STORAGE_KEY = 'level';
+const CHANGE_EVENT = 'haru:levelchange';
+
+/** Nível atual (id), ou null se o aluno ainda não escolheu. */
+export function getLevel() {
+  const id = readJSON(STORAGE_KEY);
+  return findLevel(id) ? id : null;
+}
+
+/** Guarda o nível e avisa quem estiver a ouvir. */
+export function setLevel(id) {
+  if (!findLevel(id)) return;
+  writeJSON(STORAGE_KEY, id);
+  document.dispatchEvent(new CustomEvent(CHANGE_EVENT, { detail: id }));
+}
+
+export function onLevelChange(callback) {
+  document.addEventListener(CHANGE_EVENT, callback);
+}
+
+/**
+ * true se um conteúdo do nível `itemLevel` é adequado para quem está em `userLevel`
+ * (ou seja, é do mesmo nível ou de um nível abaixo). Sem nível escolhido, mostra tudo.
+ */
+export function isWithinLevel(itemLevel, userLevel) {
+  if (!userLevel) return true;
+  const order = LEVELS.map((level) => level.id);
+  return order.indexOf(itemLevel) <= order.indexOf(userLevel);
+}

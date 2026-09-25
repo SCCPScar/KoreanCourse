@@ -3,6 +3,7 @@
  * sem tradução, com nível errado ou com texto que não é Hangul.
  */
 import { describe, expect, it } from 'vitest';
+import { FACTS } from '../../public/js/data/facts.js';
 import { GRAMMAR } from '../../public/js/data/grammar.js';
 import { BATCHIM_SOUNDS, CONSONANTS, VOWELS } from '../../public/js/data/hangul.js';
 import { LEVELS, findLevel } from '../../public/js/data/levels.js';
@@ -98,6 +99,18 @@ describe('hangul', () => {
       expect(strokes.length).toBeGreaterThan(0);
       expect(strokes.length).toBeLessThanOrEqual(4); // o CSS tem atrasos para 4 traços
       strokes.forEach((d) => expect(d).toMatch(/^M[\d. HVLQA]+$/));
+    });
+  });
+});
+
+describe('curiosidades', () => {
+  it('cada parte é texto ou { ko } com Hangul', () => {
+    FACTS.forEach((parts) => {
+      expect(parts.length).toBeGreaterThan(0);
+      parts.forEach((part) => {
+        if (typeof part === 'string') expect(part).not.toBe('');
+        else expect(part.ko).toMatch(HANGUL_TEXT);
+      });
     });
   });
 });

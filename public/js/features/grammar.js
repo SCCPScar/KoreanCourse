@@ -2,6 +2,7 @@
  * Gramática: lista de pontos em acordeão (<details>), ordenados por nível.
  */
 import { byId, el } from '../core/dom.js';
+import { getLevel, isWithinLevel, onLevelChange } from '../core/level.js';
 import { GRAMMAR } from '../data/grammar.js';
 import { LEVELS, findLevel } from '../data/levels.js';
 import { audioButton } from './audio.js';
@@ -61,6 +62,23 @@ function grammarPoint(point) {
 }
 
 export function initGrammar() {
+  const list = byId('grammar-list');
+  const levelOnly = byId('grammar-level-only');
+  const counter = byId('grammar-counter');
   const sorted = [...GRAMMAR].sort((a, b) => levelIndex(a.level) - levelIndex(b.level));
-  byId('grammar-list').replaceChildren(...sorted.map(grammarPoint));
+
+  function render() {
+    const visible = sorted.filter(
+      (point) => !levelOnly.checked || isWithinLevel(point.level, getLevel()),
+    );
+    const hidden = sorted.length - visible.length;
+    counter.textContent =
+      `${visible.length} pontos de gramática.` +
+      (hidden > 0 ? ` Mais ${hidden} em níveis acima.` : '');
+    list.replaceChildren(...visible.map(grammarPoint));
+  }
+
+  levelOnly.addEventListener('change', render);
+  onLevelChange(render);
+  render();
 }

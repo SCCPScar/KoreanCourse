@@ -4,6 +4,7 @@
  */
 import { registerAction } from '../core/actions.js';
 import { byId, el } from '../core/dom.js';
+import { getLevel, isWithinLevel, onLevelChange } from '../core/level.js';
 import { readJSON, writeJSON } from '../core/storage.js';
 import { findLevel } from '../data/levels.js';
 import { CATEGORIES, WORDS } from '../data/vocabulary.js';
@@ -59,16 +60,21 @@ export function initVocabulary() {
   const tabs = byId('vocab-categories');
   const description = byId('vocab-description');
   const hideLearned = byId('vocab-hide-learned');
+  const levelOnly = byId('vocab-level-only');
   const counter = byId('vocab-counter');
   const list = byId('vocab-list');
   let category = CATEGORIES[0].id;
 
-  const categoryWords = () => WORDS.filter((word) => word.category === category);
+  const inCategory = () => WORDS.filter((word) => word.category === category);
+  const categoryWords = () =>
+    inCategory().filter((word) => !levelOnly.checked || isWithinLevel(word.level, getLevel()));
 
   function updateCounter(learned) {
     const words = categoryWords();
     const learnedCount = words.filter((word) => learned.has(word.id)).length;
-    counter.textContent = `${learnedCount} de ${words.length} palavras aprendidas nesta categoria.`;
+    const hidden = inCategory().length - words.length;
+    const hiddenNote = hidden > 0 ? ` Mais ${hidden} em níveis acima.` : '';
+    counter.textContent = `${learnedCount} de ${words.length} palavras aprendidas.${hiddenNote}`;
   }
 
   function render() {
@@ -113,6 +119,8 @@ export function initVocabulary() {
     updateCounter(getLearnedIds());
   });
   hideLearned.addEventListener('change', render);
+  levelOnly.addEventListener('change', render);
+  onLevelChange(render);
 
   render();
 }
