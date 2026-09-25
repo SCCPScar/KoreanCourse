@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-PT">
+<html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -14,7 +14,7 @@
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta
       name="description"
-      content="Aprende coreano do zero ao TOPIK 4: Hangul, vocabulário, gramática, flashcards e tutor de IA — em português."
+      content="Aprenda coreano do zero ao TOPIK 4, um dia de cada vez: Hangul, vocabulário, gramática, flashcards e tutor de IA — em português e de graça."
     />
     <title>Haru — Coreano, um dia de cada vez</title>
     <link rel="icon" href="img/logo.svg" type="image/svg+xml" />
@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="css/components.css" />
   </head>
   <body>
-    <a class="skip-link" href="#conteudo">Saltar para o conteúdo</a>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
     <header class="site-header">
       <div class="container site-header__bar">
@@ -39,7 +39,7 @@
         </a>
         <button id="theme-toggle" class="btn btn--icon" type="button"></button>
       </div>
-      <nav class="container site-nav" aria-label="Secções">
+      <nav class="container site-nav" aria-label="Seções">
         <ul class="site-nav__list">
           <li><a class="site-nav__link" href="#inicio">Início</a></li>
           <li><a class="site-nav__link" href="#hangul">Hangul</a></li>
@@ -54,10 +54,8 @@
         <p>
           <strong>Áudio:</strong>
           <span id="voice-warning-text"
-            >Não encontrámos uma voz coreana no teu browser, por isso o áudio pode não funcionar.
-            Instala uma voz coreana nas definições do sistema (Windows: Definições → Hora e idioma →
-            Voz; Android: Definições → Idioma → Saída de texto para voz; macOS: Definições →
-            Acessibilidade → Conteúdo falado) e recarrega a página.</span
+            >Seu navegador não tem uma voz coreana, então o áudio pode ficar mudo. Instale a voz
+            "Coreano" nas configurações de fala do sistema e recarregue a página.</span
           >
         </p>
       </div>
@@ -68,36 +66,36 @@
             Olá! <span lang="ko">안녕하세요!</span>
           </h1>
           <p class="lead">
-            Bem-vindo à tua plataforma para aprender coreano, do alfabeto até ao TOPIK 4.
+            Boas-vindas ao Haru: aprenda coreano do alfabeto até o TOPIK 4, um dia de cada vez.
           </p>
         </header>
 
         <div class="card">
-          <h2>O teu nível</h2>
-          <p><span class="badge" id="level-label">Por escolher</span></p>
+          <h2>Seu nível</h2>
+          <p><span class="badge" id="level-label">Não escolhido</span></p>
           <button class="btn" type="button" data-action="open-onboarding">Mudar nível</button>
         </div>
 
         <div class="card-grid">
           <article class="card">
-            <h3>1. Começa pelo Hangul</h3>
+            <h3>1. Comece pelo Hangul</h3>
             <p>
-              O alfabeto coreano tem 14 consoantes e 10 vogais básicas. Em poucos dias consegues ler
-              qualquer palavra.
+              O alfabeto coreano tem 14 consoantes e 10 vogais básicas. Em poucos dias você consegue
+              ler qualquer palavra.
             </p>
             <p><a href="#hangul">Aprender o Hangul →</a></p>
           </article>
           <article class="card">
-            <h3>2. Pratica todos os dias</h3>
+            <h3>2. Pratique todos os dias</h3>
             <p>
               Sessões curtas e frequentes funcionam melhor do que uma sessão longa por semana. A
-              repetição espaçada ajuda-te a não esquecer.
+              repetição espaçada ajuda você a não esquecer.
             </p>
           </article>
           <article class="card">
-            <h3>3. Fala desde o início</h3>
+            <h3>3. Fale desde o início</h3>
             <p>
-              Ouve a pronúncia, repete em voz alta e conversa em situações do dia a dia, como pedir
+              Ouça a pronúncia, repita em voz alta e converse em situações do dia a dia, como pedir
               um café em Seul.
             </p>
           </article>
@@ -111,20 +109,20 @@
           </h1>
           <p class="lead">
             O alfabeto coreano foi criado em 1443 pelo rei Sejong para ser fácil de aprender. As
-            letras (jamo) juntam-se em blocos, e cada bloco é uma sílaba.
+            letras (jamo) se juntam em blocos, e cada bloco é uma sílaba.
           </p>
         </header>
 
         <section class="card" aria-labelledby="consonants-title">
           <h2 id="consonants-title">Consoantes</h2>
-          <p>Clica numa letra para ouvir a sílaba com ㅏ (por exemplo, ㄱ → 가).</p>
+          <p>Clique numa letra para ouvir a sílaba com ㅏ (por exemplo, ㄱ → 가).</p>
           <div id="consonant-groups"></div>
         </section>
 
         <section class="card" aria-labelledby="vowels-title">
           <h2 id="vowels-title">Vogais</h2>
           <p>
-            As vogais nunca aparecem sozinhas: no início da sílaba escreve-se o ㅇ mudo (ㅏ → 아).
+            As vogais nunca aparecem sozinhas: no início da sílaba escrevemos o ㅇ mudo (ㅏ → 아).
           </p>
           <div id="vowel-groups"></div>
         </section>
@@ -154,7 +152,7 @@
 
         <section class="card" aria-labelledby="builder-title">
           <h2 id="builder-title">Construtor de sílabas</h2>
-          <p>Escolhe as letras e vê como o bloco é formado.</p>
+          <p>Escolha as letras e veja como o bloco é formado.</p>
           <form id="syllable-builder" class="builder">
             <label class="field">
               <span class="field__label">Consoante inicial</span>
@@ -193,8 +191,8 @@
         <section class="card" aria-labelledby="strokes-title">
           <h2 id="strokes-title">Ordem dos traços</h2>
           <p>
-            Regra geral: de cima para baixo e da esquerda para a direita. Escolhe uma letra básica
-            (as letras compostas escrevem-se juntando estas).
+            Regra geral: de cima para baixo e da esquerda para a direita. Escolha uma letra básica
+            (as letras compostas são escritas juntando estas).
           </p>
           <div id="stroke-picker" class="chip-list" role="group" aria-label="Letras"></div>
           <figure class="stroke-figure">
@@ -210,7 +208,7 @@
           <h1 id="vocabulario-title" class="view__title" tabindex="-1">
             Vocabulário <span lang="ko">(어휘)</span>
           </h1>
-          <p class="lead">Aprende palavras por temas e marca as que já sabes.</p>
+          <p class="lead">Aprenda palavras por temas e marque as que você já sabe.</p>
         </header>
 
         <div id="vocab-categories" class="chip-list" role="group" aria-label="Categorias"></div>
@@ -231,7 +229,7 @@
             Gramática <span lang="ko">(문법)</span>
           </h1>
           <p class="lead">
-            Os pontos estão ordenados do mais simples ao mais avançado. Abre cada um para ver a
+            Os pontos estão ordenados do mais simples ao mais avançado. Abra cada um para ver a
             explicação e os exemplos com áudio.
           </p>
         </header>
@@ -241,8 +239,8 @@
 
     <dialog id="onboarding-dialog" class="dialog" aria-labelledby="onboarding-title">
       <form id="onboarding-form" class="dialog__form" method="dialog">
-        <h2 id="onboarding-title">Qual é o teu nível de coreano?</h2>
-        <p>Assim adaptamos os conteúdos a ti. Podes mudar mais tarde.</p>
+        <h2 id="onboarding-title">Qual é o seu nível de coreano?</h2>
+        <p>Assim mostramos primeiro o que faz sentido para você. Dá para mudar depois.</p>
         <fieldset id="onboarding-choices" class="choice-list">
           <legend class="visually-hidden">Nível</legend>
         </fieldset>

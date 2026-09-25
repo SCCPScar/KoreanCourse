@@ -30,7 +30,7 @@ function renderChoices(container) {
 }
 
 function updateLevelLabel(label) {
-  label.textContent = findLevel(getLevel())?.name ?? 'Por escolher';
+  label.textContent = findLevel(getLevel())?.name ?? 'Não escolhido';
 }
 
 export function initOnboarding() {

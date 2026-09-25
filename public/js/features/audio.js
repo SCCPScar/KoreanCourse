@@ -21,7 +21,7 @@ export function initAudio(warning, warningText) {
 
   if (!isSpeechSupported()) {
     warningText.textContent =
-      'O teu browser não suporta síntese de voz, por isso o áudio não vai funcionar.';
+      'Seu navegador não tem síntese de voz, por isso o áudio não vai funcionar.';
     warning.hidden = false;
     return;
   }

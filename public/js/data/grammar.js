@@ -12,8 +12,8 @@ export const GRAMMAR = [
     title: 'Partícula de tópico',
     level: 'zero',
     explanation: [
-      'Marca o tópico da frase — aquilo de que estamos a falar. É como dizer "quanto a…".',
-      'Usa-se 은 depois de consoante e 는 depois de vogal. Também serve para contrastar ("eu, por acaso, …").',
+      'Marca o tópico da frase — aquilo de que estamos falando. É como dizer "quanto a…".',
+      'Use 은 depois de consoante e 는 depois de vogal. Também serve para contrastar ("eu, já eu…").',
     ],
     examples: [
       { ko: '저는 학생이에요.', rom: 'jeoneun haksaengieyo.', pt: 'Eu sou estudante.' },
@@ -27,7 +27,7 @@ export const GRAMMAR = [
     level: 'zero',
     explanation: [
       'Marca o sujeito, sobretudo quando é informação nova ou quando se quer destacar QUEM faz a ação.',
-      'Usa-se 이 depois de consoante e 가 depois de vogal. Atenção às formas irregulares: 나 → 내가, 저 → 제가, 너 → 네가.',
+      'Use 이 depois de consoante e 가 depois de vogal. Atenção às formas irregulares: 나 → 내가, 저 → 제가, 너 → 네가.',
       'Diferença para 은/는: 저는 학생이에요 apresenta um tema ("quanto a mim…"); 제가 할게요 destaca quem ("sou EU que faço").',
     ],
     examples: [
@@ -43,7 +43,7 @@ export const GRAMMAR = [
     level: 'zero',
     explanation: [
       'Marca o objeto direto — aquilo que recebe a ação do verbo.',
-      'Usa-se 을 depois de consoante e 를 depois de vogal. Na fala informal é muitas vezes omitida.',
+      'Use 을 depois de consoante e 를 depois de vogal. Na fala informal ela é muitas vezes omitida.',
     ],
     examples: [
       { ko: '밥을 먹어요.', rom: 'babeul meogeoyo.', pt: 'Como arroz. / Faço uma refeição.' },
@@ -56,7 +56,7 @@ export const GRAMMAR = [
     title: 'Verbo "ser" (polido)',
     level: 'zero',
     explanation: [
-      'Junta-se diretamente ao nome: 이에요 depois de consoante e 예요 depois de vogal.',
+      'Vai direto depois do substantivo: 이에요 depois de consoante e 예요 depois de vogal.',
       'A forma negativa é 이/가 아니에요 ("não sou / não é").',
     ],
     examples: [
@@ -81,7 +81,7 @@ export const GRAMMAR = [
     examples: [
       { ko: '학교에 가요.', rom: 'hakgyoe gayo.', pt: 'Vou à escola.' },
       { ko: '집에 있어요.', rom: 'jibe isseoyo.', pt: 'Estou em casa.' },
-      { ko: '세 시에 만나요.', rom: 'se sie mannayo.', pt: 'Encontramo-nos às três.' },
+      { ko: '세 시에 만나요.', rom: 'se sie mannayo.', pt: 'A gente se encontra às três.' },
     ],
   },
   {
@@ -108,8 +108,8 @@ export const GRAMMAR = [
     title: 'Presente (polido)',
     level: 'zero',
     explanation: [
-      'Tira-se o -다 do infinitivo para obter o radical. Se a última vogal do radical for ㅏ ou ㅗ, junta-se 아요; caso contrário, 어요. Os verbos em 하다 passam a 해요.',
-      'Quando duas vogais se encontram, contraem-se: 가 + 아요 → 가요, 오 + 아요 → 와요, 마시 + 어요 → 마셔요.',
+      'Tire o -다 do infinitivo para obter o radical. Se a última vogal do radical for ㅏ ou ㅗ, junte 아요; senão, 어요. Os verbos em 하다 viram 해요.',
+      'Quando duas vogais se encontram, elas se contraem: 가 + 아요 → 가요, 오 + 아요 → 와요, 마시 + 어요 → 마셔요.',
     ],
     table: {
       head: ['Infinitivo', 'Radical', 'Presente'],
@@ -127,7 +127,7 @@ export const GRAMMAR = [
         rom: 'jeoneun hangugeoreul gongbuhaeyo.',
         pt: 'Eu estudo coreano.',
       },
-      { ko: '친구를 만나요.', rom: 'chingureul mannayo.', pt: 'Encontro-me com um amigo.' },
+      { ko: '친구를 만나요.', rom: 'chingureul mannayo.', pt: 'Vou me encontrar com um amigo.' },
     ],
   },
   {
@@ -148,9 +148,13 @@ export const GRAMMAR = [
       ],
     },
     examples: [
-      { ko: '어제 영화를 봤어요.', rom: 'eoje yeonghwareul bwasseoyo.', pt: 'Ontem vi um filme.' },
+      {
+        ko: '어제 영화를 봤어요.',
+        rom: 'eoje yeonghwareul bwasseoyo.',
+        pt: 'Ontem eu vi um filme.',
+      },
       { ko: '밥을 먹었어요.', rom: 'babeul meogeosseoyo.', pt: 'Já comi.' },
-      { ko: '숙제를 했어요.', rom: 'sukjereul haesseoyo.', pt: 'Fiz os trabalhos de casa.' },
+      { ko: '숙제를 했어요.', rom: 'sukjereul haesseoyo.', pt: 'Fiz a lição de casa.' },
     ],
   },
   {
@@ -166,7 +170,7 @@ export const GRAMMAR = [
       {
         ko: '내일 친구를 만날 거예요.',
         rom: 'naeil chingureul mannal geoyeyo.',
-        pt: 'Amanhã vou encontrar-me com um amigo.',
+        pt: 'Amanhã vou me encontrar com um amigo.',
       },
       {
         ko: '주말에 책을 읽을 거예요.',
@@ -205,7 +209,7 @@ export const GRAMMAR = [
     title: 'Negação curta',
     level: 'basico',
     explanation: [
-      'Coloca-se 안 antes do verbo ou adjetivo. É a forma mais comum na fala.',
+      'Coloque 안 antes do verbo ou adjetivo. É a forma mais comum na fala.',
       'Nos verbos "nome + 하다", o 안 fica antes do 하다: 공부 안 해요 (e não 안 공부해요).',
     ],
     examples: [
@@ -266,7 +270,7 @@ export const GRAMMAR = [
       {
         ko: '친구를 만나서 영화를 봤어요.',
         rom: 'chingureul mannaseo yeonghwareul bwasseoyo.',
-        pt: 'Encontrei-me com um amigo e (juntos) vimos um filme.',
+        pt: 'Encontrei um amigo e (juntos) vimos um filme.',
       },
     ],
   },
@@ -295,11 +299,11 @@ export const GRAMMAR = [
     title: 'Querer fazer',
     level: 'basico',
     explanation: [
-      'Radical + 고 싶어요 = "quero…". Para falar do desejo de outra pessoa usa-se -고 싶어 해요.',
+      'Radical + 고 싶어요 = "quero…". Para falar do desejo de outra pessoa, use -고 싶어 해요.',
     ],
     examples: [
       { ko: '한국에 가고 싶어요.', rom: 'hanguge gago sipeoyo.', pt: 'Quero ir à Coreia.' },
-      { ko: '뭐 먹고 싶어요?', rom: 'mwo meokgo sipeoyo?', pt: 'O que queres comer?' },
+      { ko: '뭐 먹고 싶어요?', rom: 'mwo meokgo sipeoyo?', pt: 'O que você quer comer?' },
     ],
   },
   {
@@ -329,7 +333,7 @@ export const GRAMMAR = [
       {
         ko: '시간이 있으면 같이 가요.',
         rom: 'sigani isseumyeon gachi gayo.',
-        pt: 'Se tiveres tempo, vamos juntos.',
+        pt: 'Se você tiver tempo, vamos juntos.',
       },
       {
         ko: '비가 오면 집에 있을 거예요.',
@@ -389,7 +393,7 @@ export const GRAMMAR = [
     level: 'avancado',
     explanation: [
       'Radical + 기 때문에. Dá uma razão de forma clara e objetiva; muito usado em textos e no TOPIK escrito.',
-      'Com nomes usa-se 때문에 diretamente: 일 때문에 = "por causa do trabalho".',
+      'Com substantivos, use 때문에 direto: 일 때문에 = "por causa do trabalho".',
     ],
     examples: [
       {
