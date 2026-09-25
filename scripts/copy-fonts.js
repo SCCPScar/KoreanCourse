@@ -15,18 +15,36 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const fontsDir = path.join(root, 'public', 'fonts');
 const cssOut = path.join(root, 'public', 'css', 'fonts.css');
 
+// Só os subconjuntos latinos das fontes latinas: o site está em português.
+const latinOnly = (name) => /-latin(-ext)?-/.test(name);
+
 const packages = [
   {
-    dir: 'node_modules/@fontsource-variable/inter',
-    license: 'OFL-Inter.txt',
-    // O site está em português: só precisamos dos subconjuntos latinos.
-    keepBlock: (name) =>
-      name === 'inter-latin-wght-normal' || name === 'inter-latin-ext-wght-normal',
+    // Títulos
+    dir: 'node_modules/@fontsource-variable/bricolage-grotesque',
+    css: 'wght.css',
+    license: 'OFL-BricolageGrotesque.txt',
+    keepBlock: latinOnly,
   },
   {
+    // Texto
+    dir: 'node_modules/@fontsource-variable/lexend',
+    css: 'wght.css',
+    license: 'OFL-Lexend.txt',
+    keepBlock: latinOnly,
+  },
+  {
+    // Coreano do dia a dia. Todos os blocos: o browser só descarrega os que usa.
     dir: 'node_modules/@fontsource-variable/noto-sans-kr',
+    css: 'wght.css',
     license: 'OFL-NotoSansKR.txt',
-    // Todos os blocos: o browser só descarrega os que contêm os caracteres usados.
+    keepBlock: () => true,
+  },
+  {
+    // Coreano "de destaque" (logótipo e palavras grandes)
+    dir: 'node_modules/@fontsource/jua',
+    css: '400.css',
+    license: 'OFL-Jua.txt',
     keepBlock: () => true,
   },
 ];
@@ -44,7 +62,7 @@ function splitBlocks(css) {
 
 async function processPackage(pkg) {
   const pkgDir = path.join(root, pkg.dir);
-  const css = await readFile(path.join(pkgDir, 'wght.css'), 'utf8');
+  const css = await readFile(path.join(pkgDir, pkg.css), 'utf8');
   const blocks = splitBlocks(css).filter((block) => pkg.keepBlock(block.name));
 
   for (const block of blocks) {
@@ -53,7 +71,14 @@ async function processPackage(pkg) {
   }
   await copyFile(path.join(pkgDir, 'LICENSE'), path.join(fontsDir, pkg.license));
 
-  return blocks.map((block) => block.css.replace('./files/', '../fonts/')).join('\n\n');
+  // Mantém só o formato woff2 (suportado por todos os browsers atuais).
+  return blocks
+    .map((block) =>
+      block.css
+        .replace(/, url\(\.\/files\/[^)]+\.woff\) format\('woff'\)/, '')
+        .replace('./files/', '../fonts/'),
+    )
+    .join('\n\n');
 }
 
 async function main() {

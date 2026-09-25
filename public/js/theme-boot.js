@@ -9,7 +9,7 @@
  */
 (function applyStoredTheme() {
   try {
-    const mode = JSON.parse(localStorage.getItem('hangugeo:theme'));
+    const mode = JSON.parse(localStorage.getItem('haru:theme'));
     if (mode === 'light' || mode === 'dark') document.documentElement.dataset.theme = mode;
   } catch {
     // Sem acesso ao armazenamento: fica o tema do sistema.

@@ -16,7 +16,12 @@ html {
 
 body {
   min-height: 100vh;
-  background: var(--color-bg);
+  /* Padrão 창살 (janelas de madeira do hanok): só CSS, pesa zero KB. */
+  background-color: var(--color-bg);
+  background-image:
+    linear-gradient(var(--color-pattern) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-pattern) 1px, transparent 1px);
+  background-size: 28px 28px;
   color: var(--color-text);
   font-family: var(--font-sans);
   font-size: var(--text-base);
@@ -50,15 +55,24 @@ textarea {
 h1,
 h2,
 h3 {
-  line-height: 1.25;
+  font-family: var(--font-display);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 800;
 }
 
 h2 {
   font-size: var(--text-xl);
+  font-weight: 700;
 }
 
 h3 {
   font-size: var(--text-lg);
+  font-weight: 700;
 }
 
 p + p {
@@ -124,6 +138,9 @@ a:hover {
 }
 
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
   border-bottom: 1px solid var(--color-border);
   background: var(--color-surface);
 }
@@ -133,32 +150,54 @@ a:hover {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
-  padding-block: var(--space-3);
+  padding-block: var(--space-2);
 }
 
 .brand {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
   color: var(--color-text);
   text-decoration: none;
 }
 
+.brand__logo {
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: none;
+}
+
+.brand__name {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
 .brand__ko {
-  font-size: var(--text-lg);
-  font-weight: 700;
+  font-family: var(--font-ko-display);
+  font-size: var(--text-xl);
 }
 
 .brand__pt {
+  font-family: var(--font-display);
   font-size: var(--text-sm);
+  font-weight: 700;
   color: var(--color-text-muted);
 }
 
+/* No celular o menu desliza na horizontal em vez de ocupar várias linhas. */
 .site-nav__list {
   display: flex;
-  flex-wrap: wrap;
   gap: var(--space-1);
-  padding: 0 0 var(--space-3);
+  margin: 0;
+  padding: 0 0 var(--space-2);
+  overflow-x: auto;
+  scrollbar-width: none;
   list-style: none;
+}
+
+.site-nav__list li {
+  flex: none;
 }
 
 .site-nav__link {
@@ -186,6 +225,17 @@ a:hover {
 
 .view > * + * {
   margin-top: var(--space-6);
+}
+
+.view:not([hidden]) {
+  animation: view-in var(--duration-view) var(--ease);
+}
+
+@keyframes view-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
 }
 
 .view__title:focus,

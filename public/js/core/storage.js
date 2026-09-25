@@ -8,7 +8,7 @@
  * Todas as chaves têm o prefixo da app, para que "Apagar os meus dados"
  * remova só o que é nosso.
  */
-export const STORAGE_PREFIX = 'hangugeo:';
+export const STORAGE_PREFIX = 'haru:';
 
 /** Lê um valor JSON. Devolve `fallback` se não existir ou se der erro. */
 export function readJSON(key, fallback = null) {

@@ -3,43 +3,56 @@
  * Aplica-se em dois casos:
  *  1. O sistema pede modo escuro e o utilizador não escolheu "claro";
  *  2. O utilizador escolheu "escuro" explicitamente (data-theme="dark").
+ * Os dois blocos têm de ser iguais.
  */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     color-scheme: dark;
-    --color-bg: #121419;
-    --color-surface: #1b1e25;
-    --color-surface-alt: #252a33;
-    --color-text: #e9ebef;
-    --color-text-muted: #aab1bd;
-    --color-border: #394050;
-    --color-primary: #86b6ff;
-    --color-primary-hover: #a9cbff;
-    --color-on-primary: #0b1a33;
-    --color-accent: #ff8fa0;
-    --color-success: #6fd08f;
-    --color-danger: #ff8a80;
-    --color-focus: #86b6ff;
+    --color-bg: #14131f;
+    --color-surface: #1e1d2d;
+    --color-surface-alt: #29283b;
+    --color-text: #eeeaf6;
+    --color-text-muted: #aba7bf;
+    --color-border: #36354b;
+    --color-border-strong: #6e6b85;
+    --color-primary: #8ea2ff;
+    --color-primary-hover: #aab9ff;
+    --color-primary-deep: #5a6fd6;
+    --color-on-primary: #14131f;
+    --color-accent: #ff7a84;
+    --color-reward: #f7c95c;
+    --color-reward-soft: #4a3d1c;
+    --color-on-reward: #1d1b2f;
+    --color-success: #5cd3a5;
+    --color-danger: #ff7a84;
+    --color-focus: #8ea2ff;
     --color-backdrop: rgb(0 0 0 / 65%);
+    --color-pattern: rgb(142 162 255 / 6%);
     --shadow-card: 0 1px 2px rgb(0 0 0 / 40%);
   }
 }
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --color-bg: #121419;
-  --color-surface: #1b1e25;
-  --color-surface-alt: #252a33;
-  --color-text: #e9ebef;
-  --color-text-muted: #aab1bd;
-  --color-border: #394050;
-  --color-primary: #86b6ff;
-  --color-primary-hover: #a9cbff;
-  --color-on-primary: #0b1a33;
-  --color-accent: #ff8fa0;
-  --color-success: #6fd08f;
-  --color-danger: #ff8a80;
-  --color-focus: #86b6ff;
+  --color-bg: #14131f;
+  --color-surface: #1e1d2d;
+  --color-surface-alt: #29283b;
+  --color-text: #eeeaf6;
+  --color-text-muted: #aba7bf;
+  --color-border: #36354b;
+  --color-border-strong: #6e6b85;
+  --color-primary: #8ea2ff;
+  --color-primary-hover: #aab9ff;
+  --color-primary-deep: #5a6fd6;
+  --color-on-primary: #14131f;
+  --color-accent: #ff7a84;
+  --color-reward: #f7c95c;
+  --color-reward-soft: #4a3d1c;
+  --color-on-reward: #1d1b2f;
+  --color-success: #5cd3a5;
+  --color-danger: #ff7a84;
+  --color-focus: #8ea2ff;
   --color-backdrop: rgb(0 0 0 / 65%);
+  --color-pattern: rgb(142 162 255 / 6%);
   --shadow-card: 0 1px 2px rgb(0 0 0 / 40%);
 }
