@@ -38,11 +38,26 @@
       <nav class="container site-nav" aria-label="Secções">
         <ul class="site-nav__list">
           <li><a class="site-nav__link" href="#inicio">Início</a></li>
+          <li><a class="site-nav__link" href="#hangul">Hangul</a></li>
+          <li><a class="site-nav__link" href="#vocabulario">Vocabulário</a></li>
+          <li><a class="site-nav__link" href="#gramatica">Gramática</a></li>
         </ul>
       </nav>
     </header>
 
     <main id="conteudo" class="container site-main">
+      <div id="voice-warning" class="notice" role="status" hidden>
+        <p>
+          <strong>Áudio:</strong>
+          <span id="voice-warning-text"
+            >Não encontrámos uma voz coreana no teu browser, por isso o áudio pode não funcionar.
+            Instala uma voz coreana nas definições do sistema (Windows: Definições → Hora e idioma →
+            Voz; Android: Definições → Idioma → Saída de texto para voz; macOS: Definições →
+            Acessibilidade → Conteúdo falado) e recarrega a página.</span
+          >
+        </p>
+      </div>
+
       <section class="view" id="view-inicio" aria-labelledby="inicio-title">
         <header>
           <h1 id="inicio-title" class="view__title" tabindex="-1">
@@ -66,6 +81,7 @@
               O alfabeto coreano tem 14 consoantes e 10 vogais básicas. Em poucos dias consegues ler
               qualquer palavra.
             </p>
+            <p><a href="#hangul">Aprender o Hangul →</a></p>
           </article>
           <article class="card">
             <h3>2. Pratica todos os dias</h3>
@@ -82,6 +98,140 @@
             </p>
           </article>
         </div>
+      </section>
+
+      <section class="view" id="view-hangul" aria-labelledby="hangul-title" hidden>
+        <header>
+          <h1 id="hangul-title" class="view__title" tabindex="-1">
+            Hangul <span lang="ko">(한글)</span>
+          </h1>
+          <p class="lead">
+            O alfabeto coreano foi criado em 1443 pelo rei Sejong para ser fácil de aprender. As
+            letras (jamo) juntam-se em blocos, e cada bloco é uma sílaba.
+          </p>
+        </header>
+
+        <section class="card" aria-labelledby="consonants-title">
+          <h2 id="consonants-title">Consoantes</h2>
+          <p>Clica numa letra para ouvir a sílaba com ㅏ (por exemplo, ㄱ → 가).</p>
+          <div id="consonant-groups"></div>
+        </section>
+
+        <section class="card" aria-labelledby="vowels-title">
+          <h2 id="vowels-title">Vogais</h2>
+          <p>
+            As vogais nunca aparecem sozinhas: no início da sílaba escreve-se o ㅇ mudo (ㅏ → 아).
+          </p>
+          <div id="vowel-groups"></div>
+        </section>
+
+        <section class="card" aria-labelledby="batchim-title">
+          <h2 id="batchim-title">Batchim <span lang="ko">(받침)</span></h2>
+          <p>
+            O batchim é a consoante no fim da sílaba, escrita por baixo (ex.: 한 = ㅎ + ㅏ + ㄴ). Há
+            muitas consoantes possíveis, mas no fim da sílaba só se ouvem 7 sons.
+          </p>
+          <div class="table-wrap">
+            <table class="data-table">
+              <caption class="visually-hidden">
+                Os 7 sons finais do coreano
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Som</th>
+                  <th scope="col">Letras</th>
+                  <th scope="col">Exemplo</th>
+                </tr>
+              </thead>
+              <tbody id="batchim-rows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="builder-title">
+          <h2 id="builder-title">Construtor de sílabas</h2>
+          <p>Escolhe as letras e vê como o bloco é formado.</p>
+          <form id="syllable-builder" class="builder">
+            <label class="field">
+              <span class="field__label">Consoante inicial</span>
+              <select id="builder-initial" class="field__input" lang="ko"></select>
+            </label>
+            <label class="field">
+              <span class="field__label">Vogal</span>
+              <select id="builder-medial" class="field__input" lang="ko"></select>
+            </label>
+            <label class="field">
+              <span class="field__label">Consoante final (batchim)</span>
+              <select id="builder-final" class="field__input" lang="ko"></select>
+            </label>
+          </form>
+          <div class="builder__output">
+            <output id="builder-result" class="builder__syllable" for="syllable-builder" lang="ko"
+              >가</output
+            >
+            <div>
+              <p>Romanização: <strong id="builder-roman">ga</strong></p>
+              <button
+                id="builder-audio"
+                class="btn btn--icon"
+                type="button"
+                data-action="speak"
+                data-speak="가"
+                aria-label="Ouvir 가"
+              >
+                🔊
+              </button>
+            </div>
+          </div>
+          <p class="builder__formula">Unicode: <code id="builder-formula"></code></p>
+        </section>
+
+        <section class="card" aria-labelledby="strokes-title">
+          <h2 id="strokes-title">Ordem dos traços</h2>
+          <p>
+            Regra geral: de cima para baixo e da esquerda para a direita. Escolhe uma letra básica
+            (as letras compostas escrevem-se juntando estas).
+          </p>
+          <div id="stroke-picker" class="chip-list" role="group" aria-label="Letras"></div>
+          <figure class="stroke-figure">
+            <div id="stroke-canvas" class="stroke-canvas"></div>
+            <figcaption id="stroke-caption" lang="ko"></figcaption>
+          </figure>
+          <button class="btn" type="button" data-action="replay-strokes">↻ Repetir animação</button>
+        </section>
+      </section>
+
+      <section class="view" id="view-vocabulario" aria-labelledby="vocabulario-title" hidden>
+        <header>
+          <h1 id="vocabulario-title" class="view__title" tabindex="-1">
+            Vocabulário <span lang="ko">(어휘)</span>
+          </h1>
+          <p class="lead">Aprende palavras por temas e marca as que já sabes.</p>
+        </header>
+
+        <div id="vocab-categories" class="chip-list" role="group" aria-label="Categorias"></div>
+        <p id="vocab-description"></p>
+        <div class="toolbar">
+          <label class="checkbox">
+            <input id="vocab-hide-learned" type="checkbox" />
+            Esconder palavras aprendidas
+          </label>
+          <p id="vocab-counter" class="toolbar__info" aria-live="polite"></p>
+        </div>
+        <ul id="vocab-list" class="word-list"></ul>
+      </section>
+
+      <section class="view" id="view-gramatica" aria-labelledby="gramatica-title" hidden>
+        <header>
+          <h1 id="gramatica-title" class="view__title" tabindex="-1">
+            Gramática <span lang="ko">(문법)</span>
+          </h1>
+          <p class="lead">
+            Os pontos estão ordenados do mais simples ao mais avançado. Abre cada um para ver a
+            explicação e os exemplos com áudio.
+          </p>
+        </header>
+        <div id="grammar-list" class="accordion-list"></div>
       </section>
     </main>
 
