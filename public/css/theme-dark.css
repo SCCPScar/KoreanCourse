@@ -1,0 +1,45 @@
+/*
+ * Modo escuro: SÓ redefine as variáveis de variables.css.
+ * Aplica-se em dois casos:
+ *  1. O sistema pede modo escuro e o utilizador não escolheu "claro";
+ *  2. O utilizador escolheu "escuro" explicitamente (data-theme="dark").
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --color-bg: #121419;
+    --color-surface: #1b1e25;
+    --color-surface-alt: #252a33;
+    --color-text: #e9ebef;
+    --color-text-muted: #aab1bd;
+    --color-border: #394050;
+    --color-primary: #86b6ff;
+    --color-primary-hover: #a9cbff;
+    --color-on-primary: #0b1a33;
+    --color-accent: #ff8fa0;
+    --color-success: #6fd08f;
+    --color-danger: #ff8a80;
+    --color-focus: #86b6ff;
+    --color-backdrop: rgb(0 0 0 / 65%);
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 40%);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-bg: #121419;
+  --color-surface: #1b1e25;
+  --color-surface-alt: #252a33;
+  --color-text: #e9ebef;
+  --color-text-muted: #aab1bd;
+  --color-border: #394050;
+  --color-primary: #86b6ff;
+  --color-primary-hover: #a9cbff;
+  --color-on-primary: #0b1a33;
+  --color-accent: #ff8fa0;
+  --color-success: #6fd08f;
+  --color-danger: #ff8a80;
+  --color-focus: #86b6ff;
+  --color-backdrop: rgb(0 0 0 / 65%);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 40%);
+}

@@ -1,0 +1,13 @@
+# Dependências
+node_modules/
+
+# Segredos locais — NUNCA fazer commit
+.env
+.dev.vars
+
+# Ficheiros gerados
+.wrangler/
+coverage/
+
+# Sistema
+.DS_Store

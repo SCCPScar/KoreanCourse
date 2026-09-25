@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--
+      O GitHub Pages não permite definir cabeçalhos HTTP, por isso a CSP vai numa meta tag.
+      Só se aceitam scripts, estilos e fontes do próprio site (sem inline, sem CDNs).
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta
+      name="description"
+      content="Aprende coreano do zero ao TOPIK 4: Hangul, vocabulário, gramática, flashcards e tutor de IA — em português."
+    />
+    <title>한국어 배우기 — Aprender Coreano</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="css/fonts.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/theme-dark.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#conteudo">Saltar para o conteúdo</a>
+
+    <header class="site-header">
+      <div class="container site-header__bar">
+        <a class="brand" href="#inicio">
+          <span class="brand__ko" lang="ko">한국어 배우기</span>
+          <span class="brand__pt">Aprender Coreano</span>
+        </a>
+        <button id="theme-toggle" class="btn btn--icon" type="button"></button>
+      </div>
+      <nav class="container site-nav" aria-label="Secções">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="#inicio">Início</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="conteudo" class="container site-main">
+      <section class="view" id="view-inicio" aria-labelledby="inicio-title">
+        <header>
+          <h1 id="inicio-title" class="view__title" tabindex="-1">
+            Olá! <span lang="ko">안녕하세요!</span>
+          </h1>
+          <p class="lead">
+            Bem-vindo à tua plataforma para aprender coreano, do alfabeto até ao TOPIK 4.
+          </p>
+        </header>
+
+        <div class="card">
+          <h2>O teu nível</h2>
+          <p><span class="badge" id="level-label">Por escolher</span></p>
+          <button class="btn" type="button" data-action="open-onboarding">Mudar nível</button>
+        </div>
+
+        <div class="card-grid">
+          <article class="card">
+            <h3>1. Começa pelo Hangul</h3>
+            <p>
+              O alfabeto coreano tem 14 consoantes e 10 vogais básicas. Em poucos dias consegues ler
+              qualquer palavra.
+            </p>
+          </article>
+          <article class="card">
+            <h3>2. Pratica todos os dias</h3>
+            <p>
+              Sessões curtas e frequentes funcionam melhor do que uma sessão longa por semana. A
+              repetição espaçada ajuda-te a não esquecer.
+            </p>
+          </article>
+          <article class="card">
+            <h3>3. Fala desde o início</h3>
+            <p>
+              Ouve a pronúncia, repete em voz alta e conversa em situações do dia a dia, como pedir
+              um café em Seul.
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="onboarding-dialog" class="dialog" aria-labelledby="onboarding-title">
+      <form id="onboarding-form" class="dialog__form" method="dialog">
+        <h2 id="onboarding-title">Qual é o teu nível de coreano?</h2>
+        <p>Assim adaptamos os conteúdos a ti. Podes mudar mais tarde.</p>
+        <fieldset id="onboarding-choices" class="choice-list">
+          <legend class="visually-hidden">Nível</legend>
+        </fieldset>
+        <div class="dialog__actions">
+          <button class="btn btn--primary" type="submit">Começar</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+/*
+ * Tokens de design (modo claro).
+ * Todas as cores do site vêm daqui; o modo escuro só redefine estas variáveis
+ * em theme-dark.css. Contrastes verificados para WCAG AA (texto ≥ 4.5:1).
+ * Inspiração: as cores do 태극기 (bandeira da Coreia do Sul).
+ */
+:root {
+  color-scheme: light;
+
+  /* Cores */
+  --color-bg: #f7f7f9;
+  --color-surface: #ffffff;
+  --color-surface-alt: #eef1f6;
+  --color-text: #1b1d22;
+  --color-text-muted: #4f5664;
+  --color-border: #d3d8e0;
+  --color-primary: #0b4ea2;
+  --color-primary-hover: #093f84;
+  --color-on-primary: #ffffff;
+  --color-accent: #b5102b;
+  --color-success: #17753a;
+  --color-danger: #b3261e;
+  --color-focus: #0b4ea2;
+  --color-backdrop: rgb(15 18 25 / 55%);
+
+  /* Tipografia */
+  --font-sans:
+    'Inter Variable', 'Noto Sans KR Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-ko: 'Noto Sans KR Variable', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --line-height: 1.6;
+
+  /* Espaçamento, formas e sombras */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-full: 999px;
+  --shadow-card: 0 1px 2px rgb(15 18 25 / 6%), 0 2px 8px rgb(15 18 25 / 6%);
+  --content-width: 64rem;
+}

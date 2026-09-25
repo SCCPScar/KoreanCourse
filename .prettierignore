@@ -1,0 +1,6 @@
+node_modules/
+public/fonts/
+public/css/fonts.css
+package-lock.json
+coverage/
+.wrangler/
