@@ -7,7 +7,6 @@
  */
 
 const VOICE_WAIT_MS = 1500;
-let koreanVoicePromise;
 
 export function isSpeechSupported() {
   return typeof window !== 'undefined' && 'speechSynthesis' in window;
@@ -20,39 +19,49 @@ export function findKoreanVoice(voices) {
   );
 }
 
+/** A voz coreana disponível AGORA (pode ser null se as vozes ainda não carregaram). */
+function getKoreanVoice() {
+  return findKoreanVoice(window.speechSynthesis.getVoices());
+}
+
 /**
- * As vozes carregam de forma assíncrona em alguns browsers (Chrome):
- * espera pelo evento 'voiceschanged', com um limite de tempo.
+ * Espera que o browser carregue a lista de vozes (no Chrome é assíncrono),
+ * com um limite de tempo para não ficar à espera para sempre.
  */
-function loadKoreanVoice() {
-  koreanVoicePromise ??= new Promise((resolve) => {
+function waitForVoices() {
+  return new Promise((resolve) => {
     const synth = window.speechSynthesis;
-    const tryResolve = () => {
-      const voices = synth.getVoices();
-      if (voices.length === 0) return false;
-      resolve(findKoreanVoice(voices));
-      return true;
-    };
-    if (tryResolve()) return;
-    synth.addEventListener('voiceschanged', tryResolve, { once: true });
-    setTimeout(() => resolve(findKoreanVoice(synth.getVoices())), VOICE_WAIT_MS);
+    if (synth.getVoices().length > 0) {
+      resolve();
+      return;
+    }
+    synth.addEventListener('voiceschanged', () => resolve(), { once: true });
+    setTimeout(resolve, VOICE_WAIT_MS);
   });
-  return koreanVoicePromise;
 }
 
 /** true se o browser tiver uma voz coreana instalada. */
 export async function hasKoreanVoice() {
   if (!isSpeechSupported()) return false;
-  return Boolean(await loadKoreanVoice());
+  await waitForVoices();
+  return Boolean(getKoreanVoice());
+}
+
+/**
+ * Chama `callback` sempre que a lista de vozes mudar.
+ * Útil quando as vozes chegam depois do tempo limite de waitForVoices().
+ */
+export function onVoicesChanged(callback) {
+  if (isSpeechSupported()) window.speechSynthesis.addEventListener('voiceschanged', callback);
 }
 
 /** Lê o texto em voz alta, em coreano. */
-export async function speak(text, { rate = 0.85 } = {}) {
+export function speak(text, { rate = 0.85 } = {}) {
   if (!isSpeechSupported() || !text) return;
-  const voice = await loadKoreanVoice();
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = 'ko-KR';
   utterance.rate = rate;
+  const voice = getKoreanVoice();
   if (voice) utterance.voice = voice;
   window.speechSynthesis.cancel(); // interrompe o áudio anterior, se houver
   window.speechSynthesis.speak(utterance);

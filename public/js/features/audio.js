@@ -4,7 +4,7 @@
  */
 import { registerAction } from '../core/actions.js';
 import { el } from '../core/dom.js';
-import { hasKoreanVoice, isSpeechSupported, speak } from '../core/speech.js';
+import { hasKoreanVoice, isSpeechSupported, onVoicesChanged, speak } from '../core/speech.js';
 
 /** Cria um botão de áudio (só com ícone, por isso tem aria-label). */
 export function audioButton(text) {
@@ -26,7 +26,12 @@ export function initAudio(warning, warningText) {
     return;
   }
 
-  hasKoreanVoice().then((available) => {
-    warning.hidden = available;
-  });
+  const update = () => {
+    hasKoreanVoice().then((available) => {
+      warning.hidden = available;
+    });
+  };
+  update();
+  // Se as vozes chegarem mais tarde, o aviso desaparece sozinho.
+  onVoicesChanged(update);
 }

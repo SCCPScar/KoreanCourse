@@ -14,6 +14,12 @@ export function resolveRoute(hash, routes, fallback) {
   return routes.includes(route) ? route : fallback;
 }
 
+/** true se o hash aponta para um elemento da página que não é uma rota. */
+export function isInPageAnchor(hash, routes, doc = document) {
+  const id = hash.replace(/^#/, '');
+  return id !== '' && !routes.includes(id) && doc.getElementById(id) !== null;
+}
+
 /**
  * @param {object} options
  * @param {string} options.fallback - rota por omissão (ex.: 'inicio')
@@ -41,6 +47,11 @@ export function initRouter({ fallback }) {
     }
   }
 
-  window.addEventListener('hashchange', () => show(true));
+  // Âncoras internas (ex.: o link "Pular para o conteúdo" → #conteudo) não são rotas:
+  // nesse caso deixamos o browser fazer o scroll e não mudamos de secção.
+  window.addEventListener('hashchange', () => {
+    if (isInPageAnchor(window.location.hash, routes)) return;
+    show(true);
+  });
   show(false);
 }

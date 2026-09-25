@@ -188,7 +188,8 @@ a:hover {
   margin-top: var(--space-6);
 }
 
-.view__title:focus {
+.view__title:focus,
+.site-main:focus {
   outline: none;
 }
 
