@@ -3,6 +3,7 @@
  * sem tradução, com nível errado ou com texto que não é Hangul.
  */
 import { describe, expect, it } from 'vitest';
+import { LINES, STATIONS } from '../../public/js/data/course.js';
 import { FACTS } from '../../public/js/data/facts.js';
 import { GRAMMAR } from '../../public/js/data/grammar.js';
 import { BATCHIM_SOUNDS, CONSONANTS, VOWELS } from '../../public/js/data/hangul.js';
@@ -112,5 +113,47 @@ describe('curiosidades', () => {
         else expect(part.ko).toMatch(HANGUL_TEXT);
       });
     });
+  });
+});
+
+describe('percurso (mapa do metrô)', () => {
+  it('estações têm ids únicos, linha válida e selo', () => {
+    expect(new Set(STATIONS.map((s) => s.id)).size).toBe(STATIONS.length);
+    STATIONS.forEach((station) => {
+      expect(LINES.map((line) => line.id)).toContain(station.line);
+      expect(station.stamp.ko).toMatch(HANGUL_TEXT);
+      expect(station.stamp.pt).not.toBe('');
+    });
+  });
+
+  it('a Linha 1 está completa', () => {
+    const line1 = STATIONS.filter((s) => s.line === 'l1');
+    expect(line1).toHaveLength(10);
+    line1.forEach((station) => expect(station.steps.length).toBeGreaterThan(0));
+  });
+
+  it.each(
+    STATIONS.filter((s) => s.steps).flatMap((s) => s.steps.map((step, i) => [s.id, i, step])),
+  )('%s passo %i é válido', (_id, _index, step) => {
+    if (step.type === 'learn') {
+      step.items.forEach((item) => {
+        expect(item.ko).toMatch(HANGUL_TEXT);
+        expect(item.rom).toMatch(ROMANIZATION);
+      });
+    } else if (step.type === 'choice') {
+      expect(step.options).toContain(step.answer);
+      expect(new Set(step.options).size).toBe(step.options.length);
+      expect(['ko', 'pt', 'rom']).toContain(step.lang);
+      if (step.ko) expect(step.ko).toMatch(HANGUL_TEXT);
+    } else if (step.type === 'build') {
+      const all = [...step.tiles, ...step.extra];
+      expect(new Set(all).size).toBe(all.length);
+      all.forEach((tile) => expect(tile).toMatch(HANGUL_TEXT));
+    } else if (step.type === 'read') {
+      expect(step.ko).toMatch(HANGUL_TEXT);
+      step.answers.forEach((answer) => expect(answer).toMatch(ROMANIZATION));
+    } else {
+      throw new Error(`Tipo de passo desconhecido: ${step.type}`);
+    }
   });
 });
