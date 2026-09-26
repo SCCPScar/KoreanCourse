@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <title>Haru</title>
+  <!-- A letra ㅎ (primeira de 하루, "um dia") desenhada como um sol a nascer no horizonte. -->
+  <rect width="120" height="120" rx="30" fill="#2f4ac8"/>
+  <rect x="49" y="21" width="22" height="9" rx="4.5" fill="#ffffff"/>
+  <rect x="24" y="38" width="72" height="11" rx="5.5" fill="#ffffff"/>
+  <circle cx="60" cy="77" r="19" fill="none" stroke="#f2b233" stroke-width="12"/>
+</svg>

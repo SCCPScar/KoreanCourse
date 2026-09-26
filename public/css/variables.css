@@ -1,32 +1,48 @@
 /*
- * Tokens de design (modo claro).
- * Todas as cores do site vêm daqui; o modo escuro só redefine estas variáveis
- * em theme-dark.css. Contrastes verificados para WCAG AA (texto ≥ 4.5:1).
- * Inspiração: as cores do 태극기 (bandeira da Coreia do Sul).
+ * Tokens de design do Haru (modo claro) — paleta "Obangsaek moderno".
+ *
+ * Baseada no 오방색 (obangsaek), as cinco cores tradicionais coreanas:
+ * azul, vermelho, amarelo, branco e preto.
+ * Regras de uso:
+ *  - Azul (primary): a ação principal de cada tela.
+ *  - Amarelo (reward): SÓ recompensas e progresso. Nunca texto sobre fundo claro.
+ *  - Vermelho (accent): destaques pontuais, selos e erros.
+ * Contrastes medidos com a fórmula WCAG 2 (texto ≥ 4.5:1, contornos ≥ 3:1).
+ * O modo escuro redefine estas variáveis em theme-dark.css.
  */
 :root {
   color-scheme: light;
 
-  /* Cores */
-  --color-bg: #f7f7f9;
+  /* Cores base */
+  --color-bg: #fbf8f2; /* papel hanji */
   --color-surface: #ffffff;
-  --color-surface-alt: #eef1f6;
-  --color-text: #1b1d22;
-  --color-text-muted: #4f5664;
-  --color-border: #d3d8e0;
-  --color-primary: #0b4ea2;
-  --color-primary-hover: #093f84;
-  --color-on-primary: #ffffff;
-  --color-accent: #b5102b;
-  --color-success: #17753a;
-  --color-danger: #b3261e;
-  --color-focus: #0b4ea2;
-  --color-backdrop: rgb(15 18 25 / 55%);
+  --color-surface-alt: #f3eee4;
+  --color-text: #1d1b2f; /* tinta */
+  --color-text-muted: #5a5870; /* 6.46:1 no fundo */
+  --color-border: #e4ddcf; /* decorativa (cartões) */
+  --color-border-strong: #8a879c; /* contorno de campos: 3.48:1 */
+
+  /* Cores de marca */
+  --color-primary: #2f4ac8; /* 청 azul — 6.75:1 no fundo */
+  --color-primary-hover: #22379a;
+  --color-primary-deep: #22379a; /* "sombra sólida" dos botões */
+  --color-on-primary: #ffffff; /* 7.16:1 sobre o azul */
+  --color-accent: #c8323f; /* 적 vermelho — 4.97:1 */
+  --color-reward: #f2b233; /* 황 amarelo — só fundos */
+  --color-reward-soft: #ffe7a3;
+  --color-on-reward: #1d1b2f; /* 8.95:1 sobre o amarelo */
+  --color-success: #157a58; /* 5.31:1 */
+  --color-danger: #c8323f;
+  --color-focus: #2f4ac8;
+  --color-backdrop: rgb(29 27 47 / 55%);
+  --color-pattern: rgb(47 74 200 / 6%); /* padrão 창살 do fundo */
 
   /* Tipografia */
+  --font-display: 'Bricolage Grotesque Variable', 'Lexend Variable', system-ui, sans-serif;
   --font-sans:
-    'Inter Variable', 'Noto Sans KR Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    'Lexend Variable', 'Noto Sans KR Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-ko: 'Noto Sans KR Variable', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font-ko-display: 'Jua', 'Noto Sans KR Variable', sans-serif;
   --text-sm: 0.875rem;
   --text-base: 1rem;
   --text-lg: 1.25rem;
@@ -41,9 +57,35 @@
   --space-4: 1rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
-  --radius-sm: 0.375rem;
-  --radius-md: 0.75rem;
+  --radius-sm: 0.625rem;
+  --radius-md: 0.875rem; /* 14px: botões */
+  --radius-lg: 1.125rem; /* 18px: cartões */
   --radius-full: 999px;
-  --shadow-card: 0 1px 2px rgb(15 18 25 / 6%), 0 2px 8px rgb(15 18 25 / 6%);
-  --content-width: 64rem;
+  --shadow-card: 0 1px 2px rgb(29 27 47 / 6%), 0 6px 20px rgb(29 27 47 / 5%);
+  --content-width: 68rem;
+
+  /* Barra de navegação flutuante ("vidro fosco") — escura nos dois temas */
+  --navbar-height: 4rem;
+  --navbar-width: 50rem; /* 800px: cabe logo + 6 links + conta + botão (precisa de ~780px) */
+  --color-nav-bg: rgb(20 19 31 / 88%); /* tinta do Haru, 88% opaca */
+  /* O painel do menu (celular) fica DENTRO da barra: um backdrop-filter dentro de outro
+     não borra a página, então o painel é opaco para o texto ficar legível. */
+  --color-nav-menu-bg: rgb(20 19 31);
+  --color-nav-border: rgb(255 255 255 / 10%);
+  --color-nav-text: #eeeaf6; /* ≥ 13:1 sobre o fundo da barra */
+  --color-nav-text-muted: #c9c5d8;
+  --color-nav-hover: rgb(255 255 255 / 10%);
+  --color-nav-cta: var(--color-reward); /* amarelo: 8.95:1 com o texto tinta */
+  --color-nav-cta-text: #1d1b2f;
+
+  /* Camadas (z-index): quanto maior, mais na frente */
+  --z-navbar: 50;
+  --z-curtain: 100;
+  --z-skip-link: 110;
+
+  /* Movimento (ver tabela de tempos no estudo de marca) */
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --duration-press: 120ms;
+  --duration-state: 200ms;
+  --duration-view: 250ms;
 }

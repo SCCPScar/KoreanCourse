@@ -1,0 +1,248 @@
+/*
+ * Barra de navegação flutuante em formato de pílula ("vidro fosco").
+ *
+ * position: fixed + margin-inline: auto centraliza sem usar transform —
+ * assim o transform fica livre para a animação de entrada da barra.
+ * O backdrop-filter borra o conteúdo que passa por trás da barra.
+ */
+
+.navbar {
+  position: fixed;
+  top: var(--space-4);
+  right: 0;
+  left: 0;
+  z-index: var(--z-navbar);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: min(var(--navbar-width), 100% - 2 * var(--space-4));
+  min-height: var(--navbar-height);
+  margin-inline: auto;
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  border: 1px solid var(--color-nav-border);
+  border-radius: 24px;
+  background: var(--color-nav-bg);
+  color: var(--color-nav-text);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 18%);
+  -webkit-backdrop-filter: blur(32px);
+  backdrop-filter: blur(32px);
+}
+
+/* Logo à esquerda */
+
+.navbar__brand {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-2);
+  color: inherit;
+  text-decoration: none;
+}
+
+.navbar__logo {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.navbar__name {
+  font-family: var(--font-ko-display);
+  font-size: var(--text-lg);
+}
+
+/* Links no centro */
+
+.navbar__links {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-nav__link {
+  display: block;
+  padding: var(--space-2) var(--space-2);
+  font-size: 0.9375rem;
+  border-radius: var(--radius-full);
+  color: var(--color-nav-text-muted);
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    background-color 0.2s var(--ease),
+    color 0.2s var(--ease);
+}
+
+.site-nav__link:hover {
+  background: var(--color-nav-hover);
+  color: var(--color-nav-text);
+}
+
+.site-nav__link[aria-current='page'] {
+  background: var(--color-nav-hover);
+  color: var(--color-nav-text);
+  box-shadow: inset 0 -2px 0 var(--color-nav-cta);
+}
+
+/* Ações à direita: tema, botão de destaque (CTA) e menu */
+
+.navbar__actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.navbar__icon-btn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: inherit;
+  font-size: var(--text-lg);
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease);
+}
+
+.navbar__icon-btn:hover {
+  background: var(--color-nav-hover);
+}
+
+.navbar__cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-4);
+  border-radius: 32px;
+  background: var(--color-nav-cta);
+  color: var(--color-nav-cta-text);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform 0.2s var(--ease),
+    filter 0.2s var(--ease);
+}
+
+.navbar__cta:hover {
+  color: var(--color-nav-cta-text);
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.navbar :focus-visible {
+  outline-color: var(--color-nav-cta);
+}
+
+/* O botão de menu e o CTA de dentro do menu só existem no celular. */
+.navbar__toggle,
+.navbar__menu-cta {
+  display: none;
+}
+
+/* Ícone "hambúrguer" feito com CSS: três riscos que viram um X quando o menu abre. */
+.navbar__burger,
+.navbar__burger::before,
+.navbar__burger::after {
+  display: block;
+  width: 1.25rem;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition:
+    transform 0.2s var(--ease),
+    opacity 0.2s var(--ease);
+}
+
+.navbar__burger {
+  position: relative;
+}
+
+.navbar__burger::before,
+.navbar__burger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+}
+
+.navbar__burger::before {
+  top: -6px;
+}
+
+.navbar__burger::after {
+  top: 6px;
+}
+
+.navbar.is-open .navbar__burger {
+  background: transparent;
+}
+
+.navbar.is-open .navbar__burger::before {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.navbar.is-open .navbar__burger::after {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Celular e tablet (< 860px): links somem e aparece o botão de menu. */
+@media (max-width: 859px) {
+  .navbar {
+    justify-content: space-between;
+  }
+
+  .navbar__toggle {
+    display: grid;
+  }
+
+  .navbar__cta--bar {
+    display: none;
+  }
+
+  .navbar__links {
+    position: absolute;
+    top: calc(100% + var(--space-2));
+    right: 0;
+    left: 0;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-2);
+    border: 1px solid var(--color-nav-border);
+    border-radius: 24px;
+    background: var(--color-nav-menu-bg);
+  }
+
+  /* Fechado = display none: os links saem da ordem do Tab e dos leitores de tela. */
+  .navbar:not(.is-open) .navbar__links {
+    display: none;
+  }
+
+  .navbar.is-open .navbar__links {
+    animation: menu-in 0.2s var(--ease);
+  }
+
+  .site-nav__link {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .navbar__menu-cta {
+    display: block;
+    padding-top: var(--space-1);
+  }
+
+  .navbar__menu-cta .navbar__cta {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}

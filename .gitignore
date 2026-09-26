@@ -3,11 +3,11 @@ node_modules/
 
 # Segredos locais — NUNCA fazer commit
 .env
-.dev.vars
 
-# Ficheiros gerados
-.wrangler/
+# Arquivos gerados
 coverage/
+test-results/
+playwright-report/
 
 # Sistema
 .DS_Store

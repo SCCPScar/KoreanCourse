@@ -1,14 +1,29 @@
-import { describe, expect, it } from 'vitest';
-import { THEME_MODES, nextThemeMode } from '../../public/js/core/theme.js';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { getThemeMode } from '../../public/js/core/theme.js';
+import { STORAGE_PREFIX } from '../../public/js/core/storage.js';
+import { createFakeStorage } from '../helpers/fakeStorage.js';
 
-describe('nextThemeMode', () => {
-  it('percorre automático → claro → escuro → automático', () => {
-    expect(nextThemeMode('system')).toBe('light');
-    expect(nextThemeMode('light')).toBe('dark');
-    expect(nextThemeMode('dark')).toBe('system');
+describe('getThemeMode', () => {
+  let storage;
+
+  beforeEach(() => {
+    storage = createFakeStorage();
+    vi.stubGlobal('localStorage', storage);
   });
 
-  it('um modo desconhecido volta ao início do ciclo', () => {
-    expect(nextThemeMode('roxo')).toBe(THEME_MODES[0]);
+  afterEach(() => vi.unstubAllGlobals());
+
+  it('usa "automático" quando nada foi escolhido', () => {
+    expect(getThemeMode()).toBe('system');
+  });
+
+  it('lê o modo salvo', () => {
+    storage.setItem(`${STORAGE_PREFIX}theme`, '"dark"');
+    expect(getThemeMode()).toBe('dark');
+  });
+
+  it('ignora valores inválidos', () => {
+    storage.setItem(`${STORAGE_PREFIX}theme`, '"roxo"');
+    expect(getThemeMode()).toBe('system');
   });
 });

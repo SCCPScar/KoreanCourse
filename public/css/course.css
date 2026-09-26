@@ -1,0 +1,657 @@
+/*
+ * Percurso: mapa do metrô, passaporte de selos e janela da lição.
+ * Cores das linhas = as cores do obangsaek (azul, vermelho, amarelo, jade).
+ */
+
+/* ───────── Mapa ───────── */
+
+.metro {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: var(--space-4);
+}
+
+.line {
+  --line-color: var(--color-primary);
+  --line-on-color: var(--color-on-primary);
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.line--2 {
+  --line-color: var(--color-accent);
+  --line-on-color: var(--color-on-primary);
+}
+
+.line--3 {
+  --line-color: var(--color-reward);
+  --line-on-color: var(--color-on-reward);
+}
+
+.line--4 {
+  --line-color: var(--color-success);
+  --line-on-color: var(--color-on-primary);
+}
+
+.line__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.line__badge {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--line-color);
+  color: var(--line-on-color);
+  font-family: var(--font-display);
+  font-weight: 800;
+}
+
+.line__name {
+  font-size: var(--text-base);
+}
+
+.line__meta,
+.line__goal {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.line__goal {
+  padding-top: var(--space-2);
+  border-top: 1px dashed var(--color-border);
+}
+
+/* Estações: uma linha vertical colorida (o trilho) liga as bolinhas. */
+.stations {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.station {
+  position: relative;
+}
+
+.station:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  top: 1.4rem;
+  bottom: -0.6rem;
+  left: 0.95rem;
+  width: 4px;
+  border-radius: 2px;
+  background: var(--line-color);
+  opacity: 0.35;
+}
+
+.station--done:not(:last-child)::before {
+  opacity: 1;
+}
+
+.station__btn {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-2) var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--duration-state);
+}
+
+button.station__btn:hover {
+  background: var(--color-surface-alt);
+}
+
+.station__btn[aria-disabled='true'] {
+  cursor: default;
+  color: var(--color-text-muted);
+}
+
+.station__dot {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0.2rem 0 0 0.2rem;
+  border: 4px solid var(--line-color);
+  border-radius: 50%;
+  background: var(--color-surface);
+}
+
+.station--done .station__dot {
+  background: var(--line-color);
+}
+
+.station--locked .station__dot,
+.station--soon .station__dot {
+  border-style: dashed;
+  border-color: var(--color-border-strong);
+}
+
+.station--next .station__dot {
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--line-color) 30%, transparent);
+  animation: station-pulse 1.8s var(--ease) infinite;
+}
+
+@keyframes station-pulse {
+  50% {
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--line-color) 10%, transparent);
+  }
+}
+
+.station__text {
+  display: grid;
+}
+
+.station__title {
+  font-weight: 600;
+}
+
+.station--next .station__title {
+  color: var(--color-primary);
+}
+
+.station__meta {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* ───────── Selos (Início, passaporte e fim da lição) ───────── */
+
+.seal {
+  display: grid;
+  place-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 3px solid var(--color-accent);
+  border-radius: 50%;
+  color: var(--color-accent);
+  font-family: var(--font-ko-display);
+  line-height: 1.1;
+  text-align: center;
+  transform: rotate(-10deg);
+}
+
+.seal--small {
+  font-size: 0.85rem;
+}
+
+.seal--empty {
+  border-style: dashed;
+  border-color: var(--color-border-strong);
+  transform: none;
+}
+
+.seal--big {
+  width: 8rem;
+  height: 8rem;
+  border-width: 5px;
+  font-size: 1.4rem;
+  box-shadow:
+    inset 0 0 0 4px var(--color-surface),
+    inset 0 0 0 6px var(--color-accent);
+}
+
+/* O carimbo: cai de cima, maior, e "bate" no papel. */
+.seal.is-stamping {
+  animation: stamp 600ms var(--ease) both;
+}
+
+@keyframes stamp {
+  0% {
+    opacity: 0;
+    transform: rotate(-10deg) scale(1.9);
+  }
+
+  55% {
+    opacity: 1;
+    transform: rotate(-10deg) scale(0.94);
+  }
+
+  100% {
+    transform: rotate(-10deg) scale(1);
+  }
+}
+
+/* ───────── Passaporte ───────── */
+
+.passport__summary {
+  font-weight: 600;
+}
+
+.passport {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.passport__title {
+  margin-bottom: var(--space-3);
+  font-size: var(--text-base);
+}
+
+.passport__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.passport__item {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-1);
+  text-align: center;
+}
+
+.passport__label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.passport__date {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+/* ───────── Início: bolinhas da linha ───────── */
+
+.dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dots__dot {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--color-surface-alt);
+  box-shadow: inset 0 0 0 1px var(--color-border);
+}
+
+.dots__dot.is-done {
+  background: var(--color-primary);
+  box-shadow: none;
+}
+
+.dots__dot.is-now {
+  background: var(--color-surface);
+  box-shadow: inset 0 0 0 3px var(--color-primary);
+}
+
+.tile--line {
+  grid-column: span 2;
+}
+
+.tile__small {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* ───────── Janela da lição ───────── */
+
+.lesson {
+  width: min(100%, 44rem);
+  height: min(100%, 48rem);
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.lesson[open] {
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+}
+
+.lesson::backdrop {
+  background: var(--color-backdrop);
+}
+
+@media (max-width: 767px) {
+  .lesson {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+}
+
+.lesson__top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+.lesson__close {
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: var(--text-lg);
+  cursor: pointer;
+}
+
+.lesson__close:hover {
+  background: var(--color-surface-alt);
+}
+
+.lesson__meter {
+  flex: 1;
+}
+
+.lesson__stage {
+  display: grid;
+  align-content: start;
+  gap: var(--space-4);
+  padding: var(--space-2) var(--space-6) var(--space-6);
+  overflow-y: auto;
+}
+
+.lesson__heading {
+  font-size: var(--text-xl);
+}
+
+.lesson__heading:focus {
+  outline: none;
+}
+
+.lesson__eyebrow {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.lesson__text {
+  color: var(--color-text-muted);
+}
+
+.lesson__items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lesson__item {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.lesson__ko-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.lesson__ko {
+  font-family: var(--font-ko-display);
+  font-size: clamp(2.5rem, 9vw, 3.5rem);
+  line-height: 1.2;
+}
+
+.lesson__item .lesson__ko {
+  font-size: var(--text-xl);
+}
+
+.lesson__rom {
+  color: var(--color-primary);
+  font-style: italic;
+}
+
+.lesson__pt {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.lesson__translate {
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
+.lesson__listen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.lesson__reveal {
+  border: 0;
+  background: none;
+  color: var(--color-primary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.lesson__options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  gap: var(--space-3);
+}
+
+/* Opções de resposta: botões "pressionáveis" como no estudo de marca. */
+.opt {
+  min-height: 3.25rem;
+  padding: var(--space-3);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--text-base);
+  box-shadow: 0 3px 0 var(--color-border-strong);
+  cursor: pointer;
+  transition:
+    transform var(--duration-press) var(--ease),
+    border-color var(--duration-state),
+    background-color var(--duration-state);
+}
+
+.opt[lang='ko'] {
+  font-size: var(--text-lg);
+}
+
+.opt:active:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+.opt[aria-pressed='true'] {
+  border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 10%, var(--color-surface));
+  box-shadow: 0 3px 0 var(--color-primary);
+}
+
+.opt:disabled {
+  cursor: default;
+}
+
+.opt.is-right {
+  border-color: var(--color-success);
+  background: color-mix(in srgb, var(--color-success) 14%, var(--color-surface));
+  box-shadow: 0 3px 0 var(--color-success);
+}
+
+.opt.is-wrong {
+  border-color: var(--color-danger);
+  background: color-mix(in srgb, var(--color-danger) 12%, var(--color-surface));
+  box-shadow: 0 3px 0 var(--color-danger);
+  animation: nudge 300ms var(--ease);
+}
+
+@keyframes nudge {
+  25% {
+    transform: translateX(-5px);
+  }
+
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* Montar frases: a resposta fica numa "linha de caderno" e as peças embaixo. */
+.build__answer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  min-height: 3.5rem;
+  padding: var(--space-2) 0;
+  border-bottom: 2px solid var(--color-border-strong);
+}
+
+.build__pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tile-btn {
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--text-lg);
+  box-shadow: 0 3px 0 var(--color-border-strong);
+  cursor: pointer;
+}
+
+.tile-btn:disabled {
+  cursor: default;
+}
+
+.lesson__input {
+  width: 100%;
+}
+
+/* Retorno: verde quando acerta, vermelho quando erra. */
+.lesson__feedback {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-6);
+  animation: feedback-in var(--duration-view) var(--ease);
+}
+
+.lesson__feedback.is-right {
+  background: color-mix(in srgb, var(--color-success) 16%, var(--color-bg));
+  color: var(--color-text);
+}
+
+.lesson__feedback.is-right strong {
+  color: var(--color-success);
+}
+
+.lesson__feedback.is-wrong {
+  background: color-mix(in srgb, var(--color-danger) 14%, var(--color-bg));
+}
+
+.lesson__feedback.is-wrong strong {
+  color: var(--color-danger);
+}
+
+@keyframes feedback-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.lesson__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--space-4) var(--space-6) var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.lesson__primary {
+  min-width: 10rem;
+}
+
+.lesson__stamp-preview {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.lesson__stamp-preview .seal {
+  flex: none;
+}
+
+.lesson__finish {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  padding-block: var(--space-4);
+  text-align: center;
+}
+
+.lesson__score {
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
+/* Confirmação de saída: cobre a lição até a pessoa escolher. */
+.lesson__exit {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  background: color-mix(in srgb, var(--color-bg) 94%, transparent);
+  text-align: center;
+}
+
+.lesson__exit[hidden] {
+  display: none;
+}
+
+.lesson__exit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+}

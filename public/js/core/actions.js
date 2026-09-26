@@ -2,7 +2,7 @@
  * Delegação de eventos com data-action.
  *
  * Em vez de onclick="" no HTML (proibido pelas regras do projeto e pela CSP),
- * os botões têm data-action="nome" e registamos aqui o que cada ação faz.
+ * os botões têm data-action="nome" e registramos aqui o que cada ação faz.
  * Um único listener no documento trata todos os cliques — incluindo botões
  * criados mais tarde pelo JavaScript.
  */
@@ -10,7 +10,7 @@ const handlers = new Map();
 
 /** Associa uma função a uma ação. O handler recebe (elemento, evento). */
 export function registerAction(name, handler) {
-  if (handlers.has(name)) throw new Error(`A ação "${name}" já está registada.`);
+  if (handlers.has(name)) throw new Error(`A ação "${name}" já está registrada.`);
   handlers.set(name, handler);
 }
 

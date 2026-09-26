@@ -25,7 +25,7 @@ export const LEVELS = [
   },
 ];
 
-/** Devolve o nível com este id, ou undefined se não existir. */
+/** Retorna o nível com este id, ou undefined se não existir. */
 export function findLevel(id) {
   return LEVELS.find((level) => level.id === id);
 }

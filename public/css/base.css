@@ -16,7 +16,12 @@ html {
 
 body {
   min-height: 100vh;
-  background: var(--color-bg);
+  /* Padrão 창살 (janelas de madeira do hanok): só CSS, pesa zero KB. */
+  background-color: var(--color-bg);
+  background-image:
+    linear-gradient(var(--color-pattern) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-pattern) 1px, transparent 1px);
+  background-size: 28px 28px;
   color: var(--color-text);
   font-family: var(--font-sans);
   font-size: var(--text-base);
@@ -42,23 +47,34 @@ textarea {
   display: none !important;
 }
 
-/* Texto coreano usa sempre a fonte coreana. */
+/* Texto coreano usa sempre a fonte coreana e só quebra entre palavras
+   (sem isso, o navegador quebra palavras no meio, entre quaisquer sílabas). */
 [lang='ko'] {
   font-family: var(--font-ko);
+  word-break: keep-all;
 }
 
 h1,
 h2,
 h3 {
-  line-height: 1.25;
+  font-family: var(--font-display);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 800;
 }
 
 h2 {
   font-size: var(--text-xl);
+  font-weight: 700;
 }
 
 h3 {
   font-size: var(--text-lg);
+  font-weight: 700;
 }
 
 p + p {
@@ -102,7 +118,7 @@ a:hover {
   position: absolute;
   top: var(--space-2);
   left: var(--space-2);
-  z-index: 10;
+  z-index: var(--z-skip-link);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
   background: var(--color-primary);
@@ -123,72 +139,28 @@ a:hover {
   padding-inline: var(--space-4);
 }
 
-.site-header {
-  border-bottom: 1px solid var(--color-border);
-  background: var(--color-surface);
-}
-
-.site-header__bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4);
-  padding-block: var(--space-3);
-}
-
-.brand {
-  display: flex;
-  flex-direction: column;
-  color: var(--color-text);
-  text-decoration: none;
-}
-
-.brand__ko {
-  font-size: var(--text-lg);
-  font-weight: 700;
-}
-
-.brand__pt {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-}
-
-.site-nav__list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-1);
-  padding: 0 0 var(--space-3);
-  list-style: none;
-}
-
-.site-nav__link {
-  display: inline-block;
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-full);
-  color: var(--color-text-muted);
-  font-weight: 500;
-  text-decoration: none;
-}
-
-.site-nav__link:hover {
-  background: var(--color-surface-alt);
-  color: var(--color-text);
-}
-
-.site-nav__link[aria-current='page'] {
-  background: var(--color-primary);
-  color: var(--color-on-primary);
-}
-
 .site-main {
-  padding-block: var(--space-6) var(--space-8);
+  /* Espaço no topo para o conteúdo não ficar embaixo da barra flutuante. */
+  padding-block: calc(var(--navbar-height) + var(--space-8)) var(--space-8);
 }
 
 .view > * + * {
   margin-top: var(--space-6);
 }
 
-.view__title:focus {
+.view:not([hidden]) {
+  animation: view-in var(--duration-view) var(--ease);
+}
+
+@keyframes view-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.view__title:focus,
+.site-main:focus {
   outline: none;
 }
 

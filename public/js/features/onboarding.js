@@ -1,19 +1,11 @@
 /**
  * Onboarding: na primeira visita, pede ao aluno que escolha o nível.
- * A escolha fica guardada no localStorage e pode ser alterada no Início.
+ * O nível pode ser alterado depois, no Início.
  */
 import { registerAction } from '../core/actions.js';
 import { byId, el } from '../core/dom.js';
-import { readJSON, writeJSON } from '../core/storage.js';
+import { getLevel, onLevelChange, setLevel } from '../core/level.js';
 import { LEVELS, findLevel } from '../data/levels.js';
-
-const STORAGE_KEY = 'level';
-
-/** Nível atual do aluno (id), ou null se ainda não escolheu. */
-export function getLevel() {
-  const id = readJSON(STORAGE_KEY);
-  return findLevel(id) ? id : null;
-}
 
 function renderChoices(container) {
   const choices = LEVELS.map((level) => {
@@ -30,7 +22,7 @@ function renderChoices(container) {
 }
 
 function updateLevelLabel(label) {
-  label.textContent = findLevel(getLevel())?.name ?? 'Por escolher';
+  label.textContent = findLevel(getLevel())?.name ?? 'Não escolhido';
 }
 
 export function initOnboarding() {
@@ -40,6 +32,7 @@ export function initOnboarding() {
 
   renderChoices(byId('onboarding-choices'));
   updateLevelLabel(label);
+  onLevelChange(() => updateLevelLabel(label));
 
   function open() {
     const current = form.querySelector(`input[value="${getLevel()}"]`);
@@ -47,11 +40,9 @@ export function initOnboarding() {
     dialog.showModal();
   }
 
-  // O form usa method="dialog": ao submeter, o <dialog> fecha sozinho.
+  // O form usa method="dialog": ao enviar, o <dialog> fecha sozinho.
   form.addEventListener('submit', () => {
-    const level = new FormData(form).get('level');
-    if (findLevel(level)) writeJSON(STORAGE_KEY, level);
-    updateLevelLabel(label);
+    setLevel(new FormData(form).get('level'));
   });
 
   // Na primeira visita, o diálogo não pode ser fechado sem escolher (tecla Esc).

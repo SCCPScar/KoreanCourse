@@ -1,94 +1,585 @@
 <!doctype html>
-<html lang="pt-PT">
+<html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--
       O GitHub Pages não permite definir cabeçalhos HTTP, por isso a CSP vai numa meta tag.
-      Só se aceitam scripts, estilos e fontes do próprio site (sem inline, sem CDNs).
+      Só são aceitos scripts, estilos e fontes do próprio site (sem inline, sem CDNs).
     -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://wwkuzlwxmngvgyhjycyn.supabase.co; media-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'"
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta
       name="description"
-      content="Aprende coreano do zero ao TOPIK 4: Hangul, vocabulário, gramática, flashcards e tutor de IA — em português."
+      content="Aprenda coreano do zero ao TOPIK 4, um dia de cada vez: Hangul, vocabulário, gramática, flashcards e jogos — em português e de graça."
     />
-    <title>한국어 배우기 — Aprender Coreano</title>
-    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <title>Haru — Coreano, um dia de cada vez</title>
+    <link rel="icon" href="img/logo.svg" type="image/svg+xml" />
+    <script src="js/theme-boot.js"></script>
     <link rel="stylesheet" href="css/fonts.css" />
     <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/theme-dark.css" />
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/course.css" />
+    <link rel="stylesheet" href="css/review.css" />
+    <link rel="stylesheet" href="css/practice.css" />
+    <link rel="stylesheet" href="css/account.css" />
+    <link rel="stylesheet" href="css/navbar.css" />
+    <link rel="stylesheet" href="css/transition.css" />
   </head>
   <body>
-    <a class="skip-link" href="#conteudo">Saltar para o conteúdo</a>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
     <header class="site-header">
-      <div class="container site-header__bar">
-        <a class="brand" href="#inicio">
-          <span class="brand__ko" lang="ko">한국어 배우기</span>
-          <span class="brand__pt">Aprender Coreano</span>
+      <nav id="navbar" class="navbar" aria-label="Principal">
+        <a class="navbar__brand" href="#inicio">
+          <img class="navbar__logo" src="img/logo.svg" alt="" width="36" height="36" />
+          <span class="navbar__name" lang="ko">하루</span>
+          <span class="visually-hidden">Haru — Início</span>
         </a>
-        <button id="theme-toggle" class="btn btn--icon" type="button"></button>
-      </div>
-      <nav class="container site-nav" aria-label="Secções">
-        <ul class="site-nav__list">
+
+        <ul id="nav-menu" class="navbar__links">
           <li><a class="site-nav__link" href="#inicio">Início</a></li>
+          <li><a class="site-nav__link" href="#percurso">Percurso</a></li>
+          <li><a class="site-nav__link" href="#praticar">Praticar</a></li>
+          <li><a class="site-nav__link" href="#hangul">Hangul</a></li>
+          <li><a class="site-nav__link" href="#vocabulario">Vocabulário</a></li>
+          <li><a class="site-nav__link" href="#gramatica">Gramática</a></li>
+          <li class="navbar__menu-cta">
+            <a class="navbar__cta" href="#percurso" data-action="open-next-station"
+              >Estudar agora</a
+            >
+          </li>
         </ul>
+
+        <div class="navbar__actions">
+          <button
+            id="account-button"
+            class="navbar__icon-btn navbar__account"
+            type="button"
+            data-action="open-account"
+            aria-label="Entrar e configurações"
+          >
+            <svg
+              id="account-button-icon"
+              class="navbar__account-icon"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" />
+            </svg>
+            <span
+              id="account-button-initial"
+              class="navbar__initial"
+              aria-hidden="true"
+              hidden
+            ></span>
+          </button>
+          <a
+            class="navbar__cta navbar__cta--bar"
+            href="#percurso"
+            data-action="open-next-station"
+            aria-label="Estudar agora: abrir a próxima lição"
+            >Estudar</a
+          >
+          <button
+            id="nav-toggle"
+            class="navbar__icon-btn navbar__toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="nav-menu"
+            aria-label="Abrir menu"
+          >
+            <span class="navbar__burger" aria-hidden="true"></span>
+          </button>
+        </div>
       </nav>
     </header>
 
-    <main id="conteudo" class="container site-main">
-      <section class="view" id="view-inicio" aria-labelledby="inicio-title">
+    <main id="conteudo" class="container site-main" tabindex="-1">
+      <div id="voice-warning" class="notice" role="status" hidden>
+        <p>
+          <strong>Áudio:</strong>
+          <span id="voice-warning-text"
+            >Seu navegador não tem uma voz coreana, então o áudio pode ficar mudo. Instale a voz
+            "Coreano" nas configurações de fala do sistema e recarregue a página.</span
+          >
+        </p>
+        <button
+          class="notice__close"
+          type="button"
+          data-action="dismiss-voice-warning"
+          aria-label="Fechar aviso de áudio"
+        >
+          ✕
+        </button>
+      </div>
+
+      <section class="view" id="view-inicio" data-title="Início" aria-labelledby="inicio-title">
         <header>
           <h1 id="inicio-title" class="view__title" tabindex="-1">
             Olá! <span lang="ko">안녕하세요!</span>
           </h1>
+          <p class="lead">Coreano, um dia de cada vez. O que vamos estudar hoje?</p>
+        </header>
+
+        <div class="bento">
+          <article class="tile tile--next">
+            <span class="tile__deco" aria-hidden="true" lang="ko">하루</span>
+            <span id="home-next-label" class="tile__label">Próximo passo</span>
+            <div>
+              <h2 id="home-next-title" class="tile__title">Vogais básicas</h2>
+              <p id="home-next-text"></p>
+            </div>
+            <a
+              id="home-next-link"
+              class="btn btn--light"
+              href="#percurso"
+              data-action="open-next-station"
+              >Começar lição</a
+            >
+          </article>
+
+          <article class="tile tile--streak">
+            <span class="tile__label">Dias seguidos</span>
+            <div class="streak__head">
+              <span id="home-streak-count" class="tile__big">0 dias</span>
+              <ol id="home-streak-week" class="week" aria-label="Últimos 7 dias"></ol>
+            </div>
+            <span id="home-streak-note" class="tile__small"></span>
+            <div
+              id="home-goal-meter"
+              class="meter meter--ink"
+              role="progressbar"
+              aria-label="Meta de estudo de hoje"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+            >
+              <span id="home-goal-fill" class="meter__fill"></span>
+            </div>
+            <span id="home-goal-text" class="tile__small"></span>
+          </article>
+
+          <article class="tile tile--review">
+            <span class="tile__label">Revisões</span>
+            <span id="home-review-count" class="tile__big">0 cartões</span>
+            <span id="home-review-text" class="tile__small"></span>
+            <button class="btn btn--primary btn--small" type="button" data-action="open-review">
+              Revisar agora
+            </button>
+          </article>
+
+          <article class="tile tile--word">
+            <span class="tile__label">Palavra do dia</span>
+            <div class="tile__row">
+              <span id="home-word-ko" class="tile__ko" lang="ko"></span>
+              <span id="home-word-audio"></span>
+            </div>
+            <span id="home-word-rom" class="tile__rom"></span>
+            <span id="home-word-pt"></span>
+          </article>
+
+          <article class="tile tile--line">
+            <span id="home-line-name" class="tile__label">Linha 1</span>
+            <ol id="home-line-dots" class="dots" aria-label="Estações da linha"></ol>
+            <span id="home-line-count" class="tile__small"></span>
+            <a href="#percurso">Ver o mapa</a>
+          </article>
+
+          <article class="tile">
+            <span class="tile__label">Seu nível</span>
+            <span class="tile__big"><span id="level-label">Não escolhido</span></span>
+            <span class="tile__small"
+              ><span id="home-grammar-count">0</span> pontos de gramática.
+              <a href="#gramatica">Ver</a></span
+            >
+            <button class="btn btn--small" type="button" data-action="open-onboarding">
+              Mudar nível
+            </button>
+          </article>
+
+          <article class="tile">
+            <span class="tile__label">Passaporte</span>
+            <span id="home-stamps" class="tile__big">0 selos</span>
+            <a href="#percurso">Ver selos</a>
+          </article>
+
+          <article class="tile tile--wide">
+            <span class="tile__label">Vocabulário</span>
+            <span id="home-progress-count" class="tile__big">0 de 0</span>
+            <div
+              id="home-progress-meter"
+              class="meter"
+              role="progressbar"
+              aria-label="Vocabulário aprendido"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+            >
+              <span id="home-progress-fill" class="meter__fill"></span>
+            </div>
+            <a href="#vocabulario">Ver palavras</a>
+          </article>
+
+          <article class="tile tile--fact">
+            <span class="tile__label">Você sabia?</span>
+            <p id="home-fact"></p>
+          </article>
+        </div>
+      </section>
+
+      <section
+        class="view"
+        id="view-percurso"
+        data-title="Percurso"
+        aria-labelledby="percurso-title"
+        hidden
+      >
+        <header>
+          <h1 id="percurso-title" class="view__title" tabindex="-1">
+            Percurso <span lang="ko">(노선도)</span>
+          </h1>
           <p class="lead">
-            Bem-vindo à tua plataforma para aprender coreano, do alfabeto até ao TOPIK 4.
+            O curso é um mapa do metrô de Seul: cada linha é um trimestre e cada estação é uma lição
+            de 6 a 15 minutos. Conclua uma estação para abrir a próxima.
           </p>
         </header>
 
-        <div class="card">
-          <h2>O teu nível</h2>
-          <p><span class="badge" id="level-label">Por escolher</span></p>
-          <button class="btn" type="button" data-action="open-onboarding">Mudar nível</button>
+        <div id="route-tabs" class="tabs" role="tablist" aria-label="Percurso">
+          <button
+            id="tab-mapa"
+            class="tabs__tab"
+            type="button"
+            role="tab"
+            aria-controls="panel-mapa"
+          >
+            Mapa
+          </button>
+          <button
+            id="tab-passaporte"
+            class="tabs__tab"
+            type="button"
+            role="tab"
+            aria-controls="panel-passaporte"
+          >
+            Passaporte
+          </button>
         </div>
 
-        <div class="card-grid">
-          <article class="card">
-            <h3>1. Começa pelo Hangul</h3>
-            <p>
-              O alfabeto coreano tem 14 consoantes e 10 vogais básicas. Em poucos dias consegues ler
-              qualquer palavra.
-            </p>
+        <section id="panel-mapa" role="tabpanel" aria-labelledby="tab-mapa">
+          <div id="metro-lines" class="metro"></div>
+        </section>
+
+        <section
+          id="panel-passaporte"
+          class="card"
+          role="tabpanel"
+          aria-labelledby="tab-passaporte"
+        >
+          <p id="passport-summary" class="passport__summary"></p>
+          <div id="passport" class="passport"></div>
+        </section>
+      </section>
+
+      <section
+        class="view"
+        id="view-praticar"
+        data-title="Praticar"
+        aria-labelledby="praticar-title"
+        hidden
+      >
+        <header>
+          <h1 id="praticar-title" class="view__title" tabindex="-1">
+            Praticar <span lang="ko">(연습)</span>
+          </h1>
+          <p class="lead">
+            Atividades curtas para fixar o que você aprendeu. Todas contam para os seus dias
+            seguidos.
+          </p>
+        </header>
+
+        <div class="practice-grid">
+          <article class="tile practice-card">
+            <span class="practice-card__mark" aria-hidden="true" lang="ko">복습</span>
+            <h2 class="tile__title">Revisão</h2>
+            <p>Flashcards com repetição espaçada: cada palavra volta antes de você esquecer.</p>
+            <p id="practice-review-count" class="tile__small"></p>
+            <button class="btn btn--primary" type="button" data-action="open-review">
+              Revisar
+            </button>
           </article>
-          <article class="card">
-            <h3>2. Pratica todos os dias</h3>
+
+          <article class="tile practice-card">
+            <span class="practice-card__mark" aria-hidden="true" lang="ko">퀴즈</span>
+            <h2 class="tile__title">Quiz relâmpago</h2>
             <p>
-              Sessões curtas e frequentes funcionam melhor do que uma sessão longa por semana. A
-              repetição espaçada ajuda-te a não esquecer.
+              10 perguntas do seu nível: ler, traduzir e ouvir. Acerte em sequência para fazer
+              combo.
             </p>
+            <p class="tile__small">Cerca de 2 minutos.</p>
+            <button class="btn btn--primary" type="button" data-action="open-quiz">Jogar</button>
           </article>
-          <article class="card">
-            <h3>3. Fala desde o início</h3>
-            <p>
-              Ouve a pronúncia, repete em voz alta e conversa em situações do dia a dia, como pedir
-              um café em Seul.
-            </p>
+
+          <article class="tile practice-card">
+            <span class="practice-card__mark" aria-hidden="true" lang="ko">읽기</span>
+            <h2 class="tile__title">Leitura rápida</h2>
+            <p>Quantas palavras em Hangul você consegue ler em 60 segundos?</p>
+            <p id="practice-reading-best" class="tile__small"></p>
+            <button class="btn btn--primary" type="button" data-action="open-reading">Jogar</button>
+          </article>
+
+          <article class="tile practice-card">
+            <span class="practice-card__mark" aria-hidden="true" lang="ko">발음</span>
+            <h2 class="tile__title">Pronúncia</h2>
+            <p>Leia uma frase em voz alta e veja se o coreano entende você.</p>
+            <p id="practice-mic-note" class="tile__small"></p>
+            <button class="btn btn--primary" type="button" data-action="open-pronunciation">
+              Treinar
+            </button>
           </article>
         </div>
+      </section>
+
+      <section
+        class="view"
+        id="view-hangul"
+        data-title="Hangul"
+        aria-labelledby="hangul-title"
+        hidden
+      >
+        <header>
+          <h1 id="hangul-title" class="view__title" tabindex="-1">
+            Hangul <span lang="ko">(한글)</span>
+          </h1>
+          <p class="lead">
+            O alfabeto coreano foi criado em 1443 pelo rei Sejong para ser fácil de aprender. As
+            letras (jamo) se juntam em blocos, e cada bloco é uma sílaba.
+          </p>
+        </header>
+
+        <div id="hangul-tabs" class="tabs" role="tablist" aria-label="Partes do Hangul">
+          <button
+            id="tab-consoantes"
+            class="tabs__tab"
+            type="button"
+            role="tab"
+            aria-controls="panel-consoantes"
+          >
+            Consoantes
+          </button>
+          <button
+            id="tab-vogais"
+            class="tabs__tab"
+            type="button"
+            role="tab"
+            aria-controls="panel-vogais"
+          >
+            Vogais
+          </button>
+          <button
+            id="tab-batchim"
+            class="tabs__tab"
+            type="button"
+            role="tab"
+            aria-controls="panel-batchim"
+          >
+            Batchim
+          </button>
+          <button
+            id="tab-construtor"
+            class="tabs__tab"
+            type="button"
+            role="tab"
+            aria-controls="panel-construtor"
+          >
+            Construtor
+          </button>
+          <button
+            id="tab-tracos"
+            class="tabs__tab"
+            type="button"
+            role="tab"
+            aria-controls="panel-tracos"
+          >
+            Traços
+          </button>
+        </div>
+
+        <section
+          id="panel-consoantes"
+          class="card"
+          role="tabpanel"
+          aria-labelledby="tab-consoantes"
+        >
+          <h2 id="consonants-title">Consoantes</h2>
+          <p>Clique numa letra para ouvir a sílaba com ㅏ (por exemplo, ㄱ → 가).</p>
+          <div id="consonant-groups"></div>
+        </section>
+
+        <section id="panel-vogais" class="card" role="tabpanel" aria-labelledby="tab-vogais">
+          <h2 id="vowels-title">Vogais</h2>
+          <p>
+            As vogais nunca aparecem sozinhas: no início da sílaba escrevemos o ㅇ mudo (ㅏ → 아).
+          </p>
+          <div id="vowel-groups"></div>
+        </section>
+
+        <section id="panel-batchim" class="card" role="tabpanel" aria-labelledby="tab-batchim">
+          <h2 id="batchim-title">Batchim <span lang="ko">(받침)</span></h2>
+          <p>
+            O batchim é a consoante no fim da sílaba, escrita por baixo (ex.: 한 = ㅎ + ㅏ + ㄴ). Há
+            muitas consoantes possíveis, mas no fim da sílaba só se ouvem 7 sons.
+          </p>
+          <div class="table-wrap">
+            <table class="data-table">
+              <caption class="visually-hidden">
+                Os 7 sons finais do coreano
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Som</th>
+                  <th scope="col">Letras</th>
+                  <th scope="col">Exemplo</th>
+                </tr>
+              </thead>
+              <tbody id="batchim-rows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section
+          id="panel-construtor"
+          class="card"
+          role="tabpanel"
+          aria-labelledby="tab-construtor"
+        >
+          <h2 id="builder-title">Construtor de sílabas</h2>
+          <p>Escolha as letras e veja como o bloco é formado.</p>
+          <form id="syllable-builder" class="builder">
+            <label class="field">
+              <span class="field__label">Consoante inicial</span>
+              <select id="builder-initial" class="field__input" lang="ko"></select>
+            </label>
+            <label class="field">
+              <span class="field__label">Vogal</span>
+              <select id="builder-medial" class="field__input" lang="ko"></select>
+            </label>
+            <label class="field">
+              <span class="field__label">Consoante final (batchim)</span>
+              <select id="builder-final" class="field__input" lang="ko"></select>
+            </label>
+          </form>
+          <div class="builder__output">
+            <output id="builder-result" class="builder__syllable" for="syllable-builder" lang="ko"
+              >가</output
+            >
+            <div>
+              <p>Romanização: <strong id="builder-roman">ga</strong></p>
+              <button
+                id="builder-audio"
+                class="btn btn--icon"
+                type="button"
+                data-action="speak"
+                data-speak="가"
+                aria-label="Ouvir 가"
+              >
+                🔊
+              </button>
+            </div>
+          </div>
+          <p class="builder__formula">Unicode: <code id="builder-formula"></code></p>
+        </section>
+
+        <section id="panel-tracos" class="card" role="tabpanel" aria-labelledby="tab-tracos">
+          <h2 id="strokes-title">Ordem dos traços</h2>
+          <p>
+            Regra geral: de cima para baixo e da esquerda para a direita. Escolha uma letra básica
+            (as letras compostas são escritas juntando estas).
+          </p>
+          <div id="stroke-picker" class="chip-list" role="group" aria-label="Letras"></div>
+          <figure class="stroke-figure">
+            <div id="stroke-canvas" class="stroke-canvas"></div>
+            <figcaption id="stroke-caption" lang="ko"></figcaption>
+          </figure>
+          <button class="btn" type="button" data-action="replay-strokes">↻ Repetir animação</button>
+        </section>
+      </section>
+
+      <section
+        class="view"
+        id="view-vocabulario"
+        data-title="Vocabulário"
+        aria-labelledby="vocabulario-title"
+        hidden
+      >
+        <header>
+          <h1 id="vocabulario-title" class="view__title" tabindex="-1">
+            Vocabulário <span lang="ko">(어휘)</span>
+          </h1>
+          <p class="lead">Aprenda palavras por temas e marque as que você já sabe.</p>
+        </header>
+
+        <div
+          id="vocab-categories"
+          class="chip-list chip-list--scroll"
+          role="group"
+          aria-label="Categorias"
+        ></div>
+        <p id="vocab-description"></p>
+        <div class="toolbar">
+          <div class="toolbar__options">
+            <label class="checkbox">
+              <input id="vocab-level-only" type="checkbox" checked />
+              Só até o meu nível
+            </label>
+            <label class="checkbox">
+              <input id="vocab-hide-learned" type="checkbox" />
+              Esconder aprendidas
+            </label>
+          </div>
+          <p id="vocab-counter" class="toolbar__info" aria-live="polite"></p>
+        </div>
+        <ul id="vocab-list" class="word-list"></ul>
+      </section>
+
+      <section
+        class="view"
+        id="view-gramatica"
+        data-title="Gramática"
+        aria-labelledby="gramatica-title"
+        hidden
+      >
+        <header>
+          <h1 id="gramatica-title" class="view__title" tabindex="-1">
+            Gramática <span lang="ko">(문법)</span>
+          </h1>
+          <p class="lead">
+            Os pontos estão ordenados do mais simples ao mais avançado. Abra cada um para ver a
+            explicação e os exemplos com áudio.
+          </p>
+        </header>
+        <div class="toolbar">
+          <label class="checkbox">
+            <input id="grammar-level-only" type="checkbox" checked />
+            Só até o meu nível
+          </label>
+          <p id="grammar-counter" class="toolbar__info" aria-live="polite"></p>
+        </div>
+        <div id="grammar-list" class="accordion-list"></div>
       </section>
     </main>
 
     <dialog id="onboarding-dialog" class="dialog" aria-labelledby="onboarding-title">
       <form id="onboarding-form" class="dialog__form" method="dialog">
-        <h2 id="onboarding-title">Qual é o teu nível de coreano?</h2>
-        <p>Assim adaptamos os conteúdos a ti. Podes mudar mais tarde.</p>
+        <h2 id="onboarding-title">Qual é o seu nível de coreano?</h2>
+        <p>Assim mostramos primeiro o que faz sentido para você. Dá para mudar depois.</p>
         <fieldset id="onboarding-choices" class="choice-list">
           <legend class="visually-hidden">Nível</legend>
         </fieldset>
@@ -98,6 +589,382 @@
       </form>
     </dialog>
 
+    <dialog id="account-dialog" class="dialog account" aria-labelledby="account-title">
+      <div class="account__head">
+        <h2 id="account-title">Conta e configurações</h2>
+        <button class="lesson__close" type="button" data-action="close-account" aria-label="Fechar">
+          ✕
+        </button>
+      </div>
+
+      <p id="account-message" class="account__message" role="status" hidden></p>
+
+      <section id="account-section" class="account__section" aria-label="Conta">
+        <!-- Sem sessão: entrar ou criar conta -->
+        <div id="account-view-guest">
+          <p class="account__intro">
+            Crie uma conta grátis para guardar seu progresso e continuar em qualquer aparelho. Sem
+            conta, o progresso fica só neste navegador.
+          </p>
+          <div id="auth-tabs" class="tabs" role="tablist" aria-label="Entrar ou criar conta">
+            <button
+              id="tab-entrar"
+              class="tabs__tab"
+              type="button"
+              role="tab"
+              aria-controls="signin-form"
+            >
+              Entrar
+            </button>
+            <button
+              id="tab-criar"
+              class="tabs__tab"
+              type="button"
+              role="tab"
+              aria-controls="signup-form"
+            >
+              Criar conta
+            </button>
+          </div>
+
+          <form id="signin-form" class="account__form" role="tabpanel" aria-labelledby="tab-entrar">
+            <div class="account__fields">
+              <label class="field" for="signin-email">
+                <span class="field__label">Email</span>
+                <input
+                  id="signin-email"
+                  class="field__input"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                />
+              </label>
+              <label class="field" for="signin-password">
+                <span class="field__label">Senha</span>
+                <input
+                  id="signin-password"
+                  class="field__input"
+                  name="password"
+                  type="password"
+                  autocomplete="current-password"
+                  required
+                />
+              </label>
+              <button class="btn btn--primary" type="submit">Entrar</button>
+              <button class="account__link" type="button" data-action="account-forgot">
+                Esqueci minha senha
+              </button>
+            </div>
+          </form>
+
+          <form id="signup-form" class="account__form" role="tabpanel" aria-labelledby="tab-criar">
+            <div class="account__fields">
+              <label class="field" for="signup-name">
+                <span class="field__label">Como quer ser chamado(a)?</span>
+                <input
+                  id="signup-name"
+                  class="field__input"
+                  name="name"
+                  type="text"
+                  autocomplete="given-name"
+                  maxlength="60"
+                  required
+                />
+              </label>
+              <label class="field" for="signup-email">
+                <span class="field__label">Email</span>
+                <input
+                  id="signup-email"
+                  class="field__input"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                />
+              </label>
+              <label class="field" for="signup-password">
+                <span class="field__label">Senha (mínimo 8 caracteres, com letras e números)</span>
+                <input
+                  id="signup-password"
+                  class="field__input"
+                  name="password"
+                  type="password"
+                  autocomplete="new-password"
+                  minlength="8"
+                  required
+                />
+              </label>
+              <label class="checkbox checkbox--top" for="signup-age">
+                <input id="signup-age" name="age" type="checkbox" required />
+                <span>Tenho 13 anos ou mais.</span>
+              </label>
+              <label class="checkbox checkbox--top" for="signup-privacy">
+                <input id="signup-privacy" name="privacy" type="checkbox" required />
+                <span
+                  >Li e aceito a
+                  <a href="privacidade.html" target="_blank" rel="noopener"
+                    >política de privacidade</a
+                  >.</span
+                >
+              </label>
+              <button class="btn btn--primary" type="submit">Criar conta</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Esqueci a senha -->
+        <div id="account-view-forgot" hidden>
+          <form id="forgot-form" class="account__fields">
+            <p>Digite o email da sua conta. Vamos enviar um link para você criar uma nova senha.</p>
+            <label class="field" for="forgot-email">
+              <span class="field__label">Email</span>
+              <input
+                id="forgot-email"
+                class="field__input"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+              />
+            </label>
+            <button class="btn btn--primary" type="submit">Enviar link</button>
+            <button class="account__link" type="button" data-action="account-back">Voltar</button>
+          </form>
+        </div>
+
+        <!-- Nova senha (depois de abrir o link do email) -->
+        <div id="account-view-recovery" hidden>
+          <form id="recovery-form" class="account__fields">
+            <p>Escolha uma nova senha para a sua conta.</p>
+            <label class="field" for="recovery-password">
+              <span class="field__label"
+                >Nova senha (mínimo 8 caracteres, com letras e números)</span
+              >
+              <input
+                id="recovery-password"
+                class="field__input"
+                name="password"
+                type="password"
+                autocomplete="new-password"
+                minlength="8"
+                required
+              />
+            </label>
+            <button class="btn btn--primary" type="submit">Salvar nova senha</button>
+          </form>
+        </div>
+
+        <!-- Com sessão -->
+        <div id="account-view-user" class="account__fields" hidden>
+          <p>
+            Olá, <strong id="account-user-name">estudante</strong>!<br />
+            <span id="account-user-email" class="account__muted"></span>
+          </p>
+          <p id="account-sync" class="account__sync" aria-live="polite"></p>
+          <div class="account__actions">
+            <button class="btn" type="button" data-action="account-sign-out">Sair</button>
+            <button class="btn" type="button" data-action="account-export">
+              Baixar meus dados
+            </button>
+          </div>
+          <button
+            class="account__link account__link--danger"
+            type="button"
+            data-action="account-delete"
+          >
+            Apagar minha conta
+          </button>
+        </div>
+
+        <!-- Confirmação para apagar a conta -->
+        <div id="account-view-delete" class="account__fields" hidden>
+          <p>
+            <strong>Apagar sua conta para sempre?</strong> Seu progresso, suas palavras e seus selos
+            serão apagados do servidor. Isso não pode ser desfeito.
+          </p>
+          <div class="account__actions">
+            <button class="btn" type="button" data-action="account-back">Cancelar</button>
+            <button class="btn btn--danger" type="button" data-action="account-delete-confirm">
+              Sim, apagar tudo
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <p id="account-unavailable" class="account__muted" hidden>
+        As contas estão indisponíveis agora (sem conexão com o servidor). Você pode continuar
+        estudando: o progresso fica salvo neste navegador.
+      </p>
+
+      <section class="account__settings" aria-labelledby="settings-title">
+        <h3 id="settings-title">Configurações</h3>
+        <fieldset id="theme-options" class="account__options">
+          <legend class="field__label">Tema</legend>
+          <label class="choice-inline"
+            ><input type="radio" name="theme" value="system" /> Automático</label
+          >
+          <label class="choice-inline"
+            ><input type="radio" name="theme" value="light" /> Claro</label
+          >
+          <label class="choice-inline"
+            ><input type="radio" name="theme" value="dark" /> Escuro</label
+          >
+        </fieldset>
+        <fieldset id="goal-options" class="account__options">
+          <legend class="field__label">Meta diária de estudo</legend>
+          <label class="choice-inline"
+            ><input type="radio" name="daily-goal" value="5" /> 5 min</label
+          >
+          <label class="choice-inline"
+            ><input type="radio" name="daily-goal" value="10" /> 10 min</label
+          >
+          <label class="choice-inline"
+            ><input type="radio" name="daily-goal" value="15" /> 15 min</label
+          >
+          <label class="choice-inline"
+            ><input type="radio" name="daily-goal" value="30" /> 30 min</label
+          >
+        </fieldset>
+        <div class="account__row">
+          <span>Nível de coreano</span>
+          <button class="btn btn--small" type="button" data-action="open-onboarding">
+            Mudar nível
+          </button>
+        </div>
+        <p class="account__muted">
+          <a href="privacidade.html">Política de privacidade</a>
+        </p>
+      </section>
+    </dialog>
+
+    <dialog id="practice-dialog" class="lesson practice" aria-label="Praticar">
+      <div class="lesson__top">
+        <button
+          class="lesson__close"
+          type="button"
+          data-action="practice-close"
+          aria-label="Fechar"
+        >
+          ✕
+        </button>
+        <div
+          id="practice-meter"
+          class="meter lesson__meter"
+          role="progressbar"
+          aria-label="Progresso"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+        >
+          <span id="practice-meter-fill" class="meter__fill"></span>
+        </div>
+      </div>
+      <div id="practice-stage" class="lesson__stage"></div>
+      <div id="practice-footer" class="lesson__footer review__footer"></div>
+    </dialog>
+
+    <dialog id="review-dialog" class="lesson review" aria-labelledby="review-heading">
+      <div class="lesson__top">
+        <button
+          class="lesson__close"
+          type="button"
+          data-action="review-close"
+          aria-label="Fechar a revisão"
+        >
+          ✕
+        </button>
+        <div
+          id="review-meter"
+          class="meter lesson__meter"
+          role="progressbar"
+          aria-label="Progresso da revisão"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+        >
+          <span id="review-meter-fill" class="meter__fill"></span>
+        </div>
+      </div>
+      <div id="review-stage" class="lesson__stage"></div>
+      <div id="review-footer" class="lesson__footer review__footer"></div>
+    </dialog>
+
+    <dialog id="lesson-dialog" class="lesson" aria-labelledby="lesson-heading">
+      <div class="lesson__top">
+        <button
+          class="lesson__close"
+          type="button"
+          data-action="lesson-close"
+          aria-label="Sair da lição"
+        >
+          ✕
+        </button>
+        <div
+          id="lesson-meter"
+          class="meter lesson__meter"
+          role="progressbar"
+          aria-label="Progresso da lição"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+        >
+          <span id="lesson-meter-fill" class="meter__fill"></span>
+        </div>
+      </div>
+      <div id="lesson-stage" class="lesson__stage"></div>
+      <div id="lesson-feedback" class="lesson__feedback" role="status" hidden></div>
+      <div class="lesson__footer">
+        <button id="lesson-primary" class="btn btn--primary lesson__primary" type="button">
+          Começar
+        </button>
+      </div>
+      <div
+        id="lesson-exit"
+        class="lesson__exit"
+        role="alertdialog"
+        aria-labelledby="lesson-exit-text"
+        hidden
+      >
+        <p id="lesson-exit-text">Sair da lição? O que você fez nesta estação não será salvo.</p>
+        <div class="lesson__exit-actions">
+          <button class="btn" type="button" data-action="lesson-exit-confirm">Sair</button>
+          <button class="btn btn--primary" type="button" data-action="lesson-exit-cancel">
+            Continuar estudando
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Cortina da transição entre seções (decorativa: escondida dos leitores de tela). -->
+    <div id="curtain" class="curtain" aria-hidden="true" hidden>
+      <svg
+        class="curtain__svg"
+        viewBox="0 0 1080 1080"
+        preserveAspectRatio="none"
+        focusable="false"
+      >
+        <path
+          id="curtain-path"
+          class="curtain__path"
+          pathLength="1"
+          d="M180 -80 C180 180 900 60 900 300 C900 540 180 420 180 660 C180 900 900 780 900 1020 C900 1260 60 1160 60 1500"
+        />
+      </svg>
+      <div class="curtain__center">
+        <img
+          id="curtain-logo"
+          class="curtain__logo"
+          src="img/logo.svg"
+          alt=""
+          width="120"
+          height="120"
+        />
+      </div>
+    </div>
+
+    <!-- Biblioteca oficial do Supabase (cópia local, ver scripts/copy-vendor.js). -->
+    <script src="vendor/supabase.js"></script>
     <script type="module" src="js/main.js"></script>
   </body>
 </html>
