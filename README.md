@@ -1,22 +1,25 @@
 # Haru (하루) · Coreano, um dia de cada vez
 
-Plataforma web **gratuita** para aprender coreano do zero ao **TOPIK 3–4** em cerca de um ano,
-com interface em **português do Brasil**. O Hangul aparece sempre acompanhado da
-**romanização revista** e da tradução.
+Plataforma web **gratuita** para aprender coreano **do zero**, com interface em **português do
+Brasil**. O Hangul aparece sempre acompanhado da **romanização revista** e da tradução.
+
+**Escopo atual, com honestidade:** as Linhas 1 e 2 formam um curso completo de cerca de
+**6 meses** (A1 → A2, nível do TOPIK 1–2) para quem estuda uns 15 minutos por dia. As Linhas
+3 e 4 (B1) existem em versão introdutória e vão crescer.
 
 🌐 Site: <https://sccpscar.github.io/KoreanCourse/>
 
 ## Funcionalidades
 
-| Área                 | O que tem                                                                                                                     |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| **Percurso**         | Um "mapa do metrô de Seul": 4 linhas (trimestres) × 10 estações (lições de 6 a 15 min), do A1 ao B1+, com Passaporte de selos |
-| **Praticar**         | Flashcards com repetição espaçada (SM-2), Quiz relâmpago, Leitura rápida (60 s) e Pronúncia com microfone                     |
-| **Hangul**           | Tabelas de vogais e consoantes, treino de leitura, batchim e ordem dos traços animada                                         |
-| **Vocabulário**      | 318 palavras em 12 categorias e 4 níveis, com áudio                                                                           |
-| **Gramática**        | 22 pontos explicados com exemplos e tabelas                                                                                   |
-| **Motivação**        | Dias seguidos (com 1 dia de descanso por semana), meta diária de 5 a 30 min, sem "vidas" nem notificações de culpa            |
-| **Conta (opcional)** | Registro para maiores de 13 anos, sincronização entre aparelhos, exportar e apagar os dados                                   |
+| Área                 | O que tem                                                                                                                                                                    |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Percurso**         | Um "mapa do metrô de Seul" com 80 estações (lições de 6 a 15 min): Linhas 1 e 2 completas (30 estações cada) e Linhas 3 e 4 introdutórias (10 cada), com Passaporte de selos |
+| **Praticar**         | Flashcards com repetição espaçada (SM-2), Quiz relâmpago, Leitura rápida (60 s) e Pronúncia com microfone                                                                    |
+| **Hangul**           | Tabelas de vogais e consoantes, treino de leitura, batchim e ordem dos traços animada                                                                                        |
+| **Vocabulário**      | 703 palavras em 17 categorias e 4 níveis, com áudio                                                                                                                          |
+| **Gramática**        | 38 pontos explicados com exemplos e tabelas                                                                                                                                  |
+| **Motivação**        | Dias seguidos (com 1 dia de descanso por semana), meta diária de 5 a 30 min, sem "vidas" nem notificações de culpa                                                           |
+| **Conta (opcional)** | Registro para maiores de 13 anos, sincronização entre aparelhos, exportar e apagar os dados                                                                                  |
 
 Sem conta, tudo funciona igual e o progresso fica no navegador.
 
@@ -73,7 +76,7 @@ npm run dev        # site em http://localhost:5173
 | `npm run lint`     | ESLint + verificação de formatação (Prettier)                  |
 | `npm run format`   | Formata todos os arquivos                                      |
 | `npm test`         | Testes unitários (Vitest)                                      |
-| `npm run test:e2e` | Testes no navegador (Playwright), inclusive jogar as 40 lições |
+| `npm run test:e2e` | Testes no navegador (Playwright), inclusive jogar as 80 lições |
 | `npm run fonts`    | Copia as fontes do npm para `public/fonts/`                    |
 | `npm run vendor`   | Copia a biblioteca do Supabase para `public/vendor/`           |
 
@@ -129,6 +132,9 @@ cronômetro têm um modo sem tempo.
 
 ## Próximos passos
 
+- Ampliar as Linhas 3 e 4 para 30 estações cada (meses 7 a 12) e o vocabulário para ~1.500
+  palavras.
+- Diálogos e textos mais longos para ouvir e ler.
 - Revisão da romanização e das frases por um falante nativo.
 - Tutor com IA (conversa e correção de textos): adiado, para o projeto continuar sem custos.
 
