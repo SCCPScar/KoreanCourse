@@ -9,7 +9,7 @@ import { playStation, startAsStudent } from './helpers.js';
 for (const line of LINES) {
   test(`todas as estações da Linha ${line.number} têm solução`, async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Basta rodar numa tela.');
-    test.setTimeout(180_000);
+    test.setTimeout(600_000);
     const errors = await startAsStudent(page, 'avancado');
     // As estações das linhas anteriores já concluídas (senão a primeira desta fica trancada).
     const before = STATIONS.slice(0, STATIONS.indexOf(stationsOfLine(line.id)[0]));

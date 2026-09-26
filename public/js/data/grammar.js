@@ -426,4 +426,317 @@ export const GRAMMAR = [
       },
     ],
   },
+  {
+    id: 'demonstrativos',
+    pattern: '이 / 그 / 저',
+    title: 'Isto, isso e aquilo',
+    level: 'zero',
+    explanation: [
+      '이 = perto de quem fala; 그 = perto de quem ouve (ou algo já mencionado); 저 = longe dos dois.',
+      'Vêm sempre antes de um substantivo: 이 사람 (esta pessoa). Com 거 (coisa) formam 이거, 그거 e 저거.',
+    ],
+    table: {
+      head: ['', 'Perto de mim', 'Perto de você', 'Longe'],
+      rows: [
+        ['coisa', '이거', '그거', '저거'],
+        ['lugar', '여기', '거기', '저기'],
+        ['pessoa', '이 사람', '그 사람', '저 사람'],
+      ],
+    },
+    examples: [
+      { ko: '이거 뭐예요?', rom: 'igeo mwoyeyo?', pt: 'O que é isto?' },
+      { ko: '저 사람은 누구예요?', rom: 'jeo sarameun nuguyeyo?', pt: 'Quem é aquela pessoa?' },
+    ],
+  },
+  {
+    id: 'contadores',
+    pattern: 'número + 개 / 명 / 잔 / 병 / 장',
+    title: 'Contadores',
+    level: 'zero',
+    explanation: [
+      'Para contar coisas, usamos número NATIVO + contador. A ordem é: coisa + número + contador (사과 두 개 = duas maçãs).',
+      'Antes do contador, 하나, 둘, 셋, 넷 e 스물 encurtam: 한, 두, 세, 네, 스무.',
+    ],
+    table: {
+      head: ['Contador', 'Para contar', 'Exemplo'],
+      rows: [
+        ['개', 'coisas em geral', '한 개'],
+        ['명', 'pessoas', '두 명'],
+        ['잔', 'copos, xícaras', '세 잔'],
+        ['병', 'garrafas', '네 병'],
+        ['장', 'folhas, ingressos', '다섯 장'],
+        ['살', 'idade', '스무 살'],
+      ],
+    },
+    examples: [
+      { ko: '커피 두 잔 주세요.', rom: 'keopi du jan juseyo.', pt: 'Dois cafés, por favor.' },
+      { ko: '가족이 네 명이에요.', rom: 'gajogi ne myeongieyo.', pt: 'Somos quatro na família.' },
+    ],
+  },
+  {
+    id: 'pedido-juseyo',
+    pattern: 'N 주세요 / -아/어 주세요',
+    title: 'Pedir coisas e favores',
+    level: 'zero',
+    explanation: [
+      'Substantivo + 주세요 = "me dê, por favor": 물 주세요.',
+      'Verbo na forma -아/어 + 주세요 = "faça (isso) para mim, por favor": 기다려 주세요. 좀 antes do verbo deixa o pedido mais suave.',
+    ],
+    examples: [
+      { ko: '영수증 주세요.', rom: 'yeongsujeung juseyo.', pt: 'O recibo, por favor.' },
+      {
+        ko: '사진 좀 찍어 주세요.',
+        rom: 'sajin jom jjigeo juseyo.',
+        pt: 'Tire uma foto, por favor.',
+      },
+    ],
+  },
+  {
+    id: 'meio-rota',
+    pattern: '(으)로 · 에서 … 까지',
+    title: 'Meio de transporte e trajeto',
+    level: 'basico',
+    explanation: [
+      '(으)로 indica o meio ou a direção: 버스로 (de ônibus), 오른쪽으로 (para a direita). Depois de vogal ou ㄹ, só 로; depois das outras consoantes, 으로.',
+      '에서 … 까지 = de … até … (lugares). Para o tempo, use 부터 … 까지: 아홉 시부터 여섯 시까지.',
+    ],
+    examples: [
+      { ko: '지하철로 가요.', rom: 'jihacheollo gayo.', pt: 'Vou de metrô.' },
+      {
+        ko: '집에서 학교까지 걸어서 가요.',
+        rom: 'jibeseo hakgyokkaji georeoseo gayo.',
+        pt: 'Vou a pé de casa até a escola.',
+      },
+      {
+        ko: '월요일부터 금요일까지 일해요.',
+        rom: 'woryoilbuteo geumyoilkkaji ilhaeyo.',
+        pt: 'Trabalho de segunda a sexta.',
+      },
+    ],
+  },
+  {
+    id: 'progressivo',
+    pattern: '-고 있다',
+    title: '"Estar fazendo" (progressivo)',
+    level: 'basico',
+    explanation: [
+      'Radical + 고 있어요 = ação em andamento: 먹다 → 먹고 있어요 (estou comendo).',
+      'No passado: -고 있었어요 (estava fazendo).',
+    ],
+    examples: [
+      {
+        ko: '지금 뭐 하고 있어요?',
+        rom: 'jigeum mwo hago isseoyo?',
+        pt: 'O que você está fazendo agora?',
+      },
+      { ko: '음악을 듣고 있어요.', rom: 'eumageul deutgo isseoyo.', pt: 'Estou ouvindo música.' },
+    ],
+  },
+  {
+    id: 'imperativo',
+    pattern: '-(으)세요 · -지 마세요',
+    title: 'Instruções e proibições educadas',
+    level: 'basico',
+    explanation: [
+      'Radical + (으)세요 = faça (educado): 가세요, 앉으세요. Depois de consoante entra 으.',
+      'Radical + 지 마세요 = não faça: 걱정하지 마세요 (não se preocupe).',
+    ],
+    examples: [
+      { ko: '여기 앉으세요.', rom: 'yeogi anjeuseyo.', pt: 'Sente-se aqui.' },
+      { ko: '늦지 마세요.', rom: 'neutji maseyo.', pt: 'Não se atrase.' },
+    ],
+  },
+  {
+    id: 'convite',
+    pattern: '-(으)ㄹ까요?',
+    title: '"Vamos…?" e "Será que…?"',
+    level: 'basico',
+    explanation: [
+      'Radical + (으)ㄹ까요? convida ou pede a opinião do outro: 같이 갈까요? (vamos juntos?).',
+      'Depois de vogal, -ㄹ까요; depois de consoante, -을까요 (먹을까요?).',
+    ],
+    examples: [
+      { ko: '커피 마실까요?', rom: 'keopi masilkkayo?', pt: 'Vamos tomar um café?' },
+      { ko: '어디서 만날까요?', rom: 'eodiseo mannalkkayo?', pt: 'Onde nos encontramos?' },
+    ],
+  },
+  {
+    id: 'incapacidade',
+    pattern: '못 / -지 못하다',
+    title: '"Não consigo"',
+    level: 'basico',
+    explanation: [
+      '못 antes do verbo = não conseguir (por incapacidade ou impedimento), diferente de 안, que é não querer ou simplesmente não fazer.',
+      'Nos verbos com 하다, o 못 entra antes do 하다: 수영 못 해요.',
+    ],
+    examples: [
+      {
+        ko: '매운 음식을 못 먹어요.',
+        rom: 'maeun eumsigeul mot meogeoyo.',
+        pt: 'Não consigo comer comida apimentada.',
+      },
+      { ko: '어제 못 잤어요.', rom: 'eoje mot jasseoyo.', pt: 'Ontem não consegui dormir.' },
+    ],
+  },
+  {
+    id: 'adjetivo-nome',
+    pattern: '-(으)ㄴ + substantivo',
+    title: 'Adjetivo antes do substantivo',
+    level: 'basico',
+    explanation: [
+      'Para descrever uma coisa, o adjetivo vem antes dela com -(으)ㄴ: 크다 → 큰 가방, 작다 → 작은 방.',
+      'Adjetivos com 있다/없다 usam -는: 맛있는 음식, 재미없는 영화.',
+    ],
+    examples: [
+      { ko: '좋은 사람이에요.', rom: 'joeun saramieyo.', pt: 'É uma boa pessoa.' },
+      {
+        ko: '맛있는 음식을 먹었어요.',
+        rom: 'masinneun eumsigeul meogeosseoyo.',
+        pt: 'Comi uma comida gostosa.',
+      },
+    ],
+  },
+  {
+    id: 'irregulares',
+    pattern: 'ㅂ · ㄷ · ㅡ · 르',
+    title: 'Verbos irregulares',
+    level: 'basico',
+    explanation: [
+      'Alguns radicais mudam antes de uma vogal. Os mais comuns são estes quatro grupos.',
+      'Dica: aprenda cada verbo junto com a forma -아/어요, como um par (듣다 · 들어요).',
+    ],
+    table: {
+      head: ['Tipo', 'Infinitivo', 'Presente', 'O que muda'],
+      rows: [
+        ['ㅂ', '덥다', '더워요', 'ㅂ vira 우'],
+        ['ㄷ', '듣다', '들어요', 'ㄷ vira ㄹ'],
+        ['ㅡ', '바쁘다', '바빠요', 'o ㅡ some'],
+        ['르', '모르다', '몰라요', '르 vira ㄹ라/ㄹ러'],
+      ],
+    },
+    examples: [
+      { ko: '한국어가 어려워요.', rom: 'hangugeoga eoryeowoyo.', pt: 'Coreano é difícil.' },
+      { ko: '음악을 들어요.', rom: 'eumageul deureoyo.', pt: 'Escuto música.' },
+    ],
+  },
+  {
+    id: 'objetivo',
+    pattern: '-(으)러 가다/오다',
+    title: 'Ir ou vir PARA fazer algo',
+    level: 'basico',
+    explanation: [
+      'Radical + (으)러 + 가다/오다 indica o objetivo do movimento: 먹으러 가요 (vou comer).',
+      'Só funciona com verbos de movimento (가다, 오다, 다니다…).',
+    ],
+    examples: [
+      { ko: '밥 먹으러 가요.', rom: 'bap meogeureo gayo.', pt: 'Vou comer.' },
+      {
+        ko: '한국어 배우러 왔어요.',
+        rom: 'hangugeo baeureo wasseoyo.',
+        pt: 'Vim aprender coreano.',
+      },
+    ],
+  },
+  {
+    id: 'quando-ttae',
+    pattern: '-(으)ㄹ 때',
+    title: '"Quando…"',
+    level: 'basico',
+    explanation: [
+      'Radical + (으)ㄹ 때 = quando (no momento em que). Substantivos usam só 때: 방학 때.',
+      'Para algo já concluído: -았/었을 때 (한국에 갔을 때 = quando fui à Coreia).',
+    ],
+    examples: [
+      {
+        ko: '시간이 있을 때 책을 읽어요.',
+        rom: 'sigani isseul ttae chaegeul ilgeoyo.',
+        pt: 'Quando tenho tempo, leio.',
+      },
+      {
+        ko: '어릴 때 브라질에 살았어요.',
+        rom: 'eoril ttae beurajire sarasseoyo.',
+        pt: 'Quando era criança, morava no Brasil.',
+      },
+    ],
+  },
+  {
+    id: 'nominalizacao',
+    pattern: '-기 · -는 것',
+    title: 'Verbo como substantivo',
+    level: 'basico',
+    explanation: [
+      '-기 e -는 것 transformam o verbo em "o ato de…": 보기 (ver), 요리하는 것 (cozinhar).',
+      'Muito usado com gostos e hobbies: 노래하는 것을 좋아해요 (gosto de cantar). Na fala, 것을 vira 걸.',
+    ],
+    examples: [
+      {
+        ko: '제 취미는 영화 보기예요.',
+        rom: 'je chwimineun yeonghwa bogiyeyo.',
+        pt: 'Meu hobby é ver filmes.',
+      },
+      {
+        ko: '요리하는 것을 좋아해요.',
+        rom: 'yorihaneun geoseul joahaeyo.',
+        pt: 'Gosto de cozinhar.',
+      },
+    ],
+  },
+  {
+    id: 'frequencia-mada',
+    pattern: '마다 · 매일',
+    title: '"Todo / cada"',
+    level: 'basico',
+    explanation: [
+      'N + 마다 = cada / todo: 주말마다 (todo fim de semana), 아침마다 (toda manhã).',
+      'Algumas palavras já têm 매 (cada): 매일 (todo dia), 매주 (toda semana), 매년 (todo ano).',
+    ],
+    examples: [
+      {
+        ko: '주말마다 등산해요.',
+        rom: 'jumalmada deungsanhaeyo.',
+        pt: 'Faço trilha todo fim de semana.',
+      },
+      {
+        ko: '매일 한국어를 공부해요.',
+        rom: 'maeil hangugeoreul gongbuhaeyo.',
+        pt: 'Estudo coreano todos os dias.',
+      },
+    ],
+  },
+  {
+    id: 'experiencia',
+    pattern: '-아/어 보다 · -(으)ㄴ 적이 있다',
+    title: 'Experimentar e "já fiz"',
+    level: 'intermedio',
+    explanation: [
+      '-아/어 보세요 = experimente (fazer): 입어 보세요 (experimente vestir).',
+      '-(으)ㄴ 적이 있어요 = já fiz alguma vez; com 없어요 = nunca fiz.',
+    ],
+    examples: [
+      {
+        ko: '이거 한번 먹어 보세요.',
+        rom: 'igeo hanbeon meogeo boseyo.',
+        pt: 'Experimente comer isto.',
+      },
+      { ko: '한국에 간 적이 있어요.', rom: 'hanguge gan jeogi isseoyo.', pt: 'Já fui à Coreia.' },
+    ],
+  },
+  {
+    id: 'permissao',
+    pattern: '-아/어도 되다 · -(으)면 안 되다',
+    title: 'Pode e não pode',
+    level: 'intermedio',
+    explanation: [
+      '-아/어도 돼요? = posso…? A resposta positiva: 네, 돼요.',
+      '-(으)면 안 돼요 = não pode (proibição).',
+    ],
+    examples: [
+      { ko: '사진 찍어도 돼요?', rom: 'sajin jjigeodo dwaeyo?', pt: 'Posso tirar foto?' },
+      {
+        ko: '여기서 담배 피우면 안 돼요.',
+        rom: 'yeogiseo dambae piumyeon an dwaeyo.',
+        pt: 'Não pode fumar aqui.',
+      },
+    ],
+  },
 ];

@@ -35,7 +35,7 @@ export const LINES = [
     name: 'Conversar',
     months: 'Meses 7–9',
     level: 'intermedio',
-    tag: 'B1 · TOPIK 3',
+    tag: 'B1 · versão introdutória',
     goal: 'Falar sem roteiro',
   },
   {
@@ -44,7 +44,7 @@ export const LINES = [
     name: 'Viver em coreano',
     months: 'Meses 10–12',
     level: 'avancado',
-    tag: 'B1+ · TOPIK 3–4',
+    tag: 'B1+ · versão introdutória',
     goal: 'Autonomia',
   },
 ];
