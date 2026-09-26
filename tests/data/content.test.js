@@ -126,9 +126,12 @@ describe('percurso (mapa do metrô)', () => {
     });
   });
 
-  it.each(LINES)('a $name tem 10 estações completas', (line) => {
+  // Linhas 1 e 2: seis meses de curso completos. Linhas 3 e 4: versão introdutória.
+  const EXPECTED_STATIONS = { l1: 30, l2: 30, l3: 10, l4: 10 };
+
+  it.each(LINES)('a $name tem todas as estações completas', (line) => {
     const stations = STATIONS.filter((s) => s.line === line.id);
-    expect(stations).toHaveLength(10);
+    expect(stations).toHaveLength(EXPECTED_STATIONS[line.id]);
     stations.forEach((station) => {
       expect(station.steps.length).toBeGreaterThanOrEqual(8);
       expect(station.steps.filter((step) => step.type !== 'learn').length).toBeGreaterThanOrEqual(
