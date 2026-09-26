@@ -189,8 +189,8 @@
   transform: translateY(-6px) rotate(-45deg);
 }
 
-/* Celular (< 768px): links somem e aparece o botão de menu. */
-@media (max-width: 767px) {
+/* Celular e tablet (< 860px): links somem e aparece o botão de menu. */
+@media (max-width: 859px) {
   .navbar {
     justify-content: space-between;
   }

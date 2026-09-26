@@ -21,6 +21,11 @@ import { initLessonPlayer } from './features/lesson-player.js';
 import { initMetroMap } from './features/metro-map.js';
 import { initOnboarding } from './features/onboarding.js';
 import { initPassport } from './features/passport.js';
+import { initPractice } from './features/practice.js';
+import { initPracticeDialog } from './features/practice-dialog.js';
+import { initPronunciation } from './features/pronunciation.js';
+import { initQuiz } from './features/quiz.js';
+import { initReadingGame } from './features/reading-game.js';
 import { initStrokeOrder } from './features/stroke-order.js';
 import { initVocabulary } from './features/vocabulary.js';
 
@@ -35,6 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initTabs(byId('auth-tabs'));
   initLessonPlayer();
   initFlashcards();
+  initPracticeDialog();
+  initQuiz();
+  initReadingGame();
+  initPronunciation();
   initMetroMap();
   initPassport();
   initHangulTables();
@@ -43,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initVocabulary();
   initGrammar();
   const renderHome = initHome();
+  const renderPractice = initPractice();
   initRouter({
     fallback: 'inicio',
     transition: createPageTransition({
@@ -53,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }),
     onChange: (route) => {
       if (route === 'inicio') renderHome();
+      if (route === 'praticar') renderPractice();
     },
   });
   initOnboarding();

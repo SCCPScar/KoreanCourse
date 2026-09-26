@@ -1,0 +1,123 @@
+/* Seção Praticar e os jogos (quiz, leitura rápida e pronúncia). */
+
+.practice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: var(--space-3);
+}
+
+.practice-card {
+  position: relative;
+  overflow: hidden;
+  align-content: start;
+}
+
+.practice-card .btn {
+  justify-self: start;
+  margin-top: auto;
+}
+
+/* Palavra coreana decorativa no canto do cartão */
+.practice-card__mark {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-3);
+  font-family: var(--font-ko-display);
+  font-size: 2.25rem;
+  line-height: 1;
+  color: var(--color-primary);
+  opacity: 0.14;
+  pointer-events: none;
+}
+
+/* ───────── Quiz ───────── */
+
+.quiz__prompt {
+  font-size: var(--text-xl);
+  font-weight: 600;
+}
+
+/* ───────── Leitura rápida ───────── */
+
+.reading__bar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.reading__clock {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.reading__word {
+  font-family: var(--font-ko-display);
+  font-size: clamp(2.75rem, 12vw, 4.5rem);
+  line-height: 1.15;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+/* ───────── Pronúncia ───────── */
+
+.pron__consent {
+  display: grid;
+  gap: var(--space-2);
+  padding-left: var(--space-5);
+}
+
+.pron__meaning {
+  color: var(--color-text-muted);
+}
+
+.pron__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.review__footer .pron__actions {
+  justify-content: flex-end;
+}
+
+.pron__result:empty {
+  display: none;
+}
+
+.pron__result {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  border-left: 4px solid var(--color-border-strong);
+}
+
+.pron__result[data-tone='right'] {
+  border-left-color: var(--color-success);
+}
+
+.pron__result[data-tone='wrong'] {
+  border-left-color: var(--color-accent);
+}
+
+/* Botão com aparência de link (ação secundária, discreta) */
+.link-button {
+  justify-self: end;
+  padding: var(--space-1) 0;
+  border: 0;
+  background: none;
+  color: var(--color-text-muted);
+  font: inherit;
+  font-size: var(--text-sm);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.link-button:hover {
+  color: var(--color-text);
+}

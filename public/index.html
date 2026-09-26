@@ -9,7 +9,7 @@
     -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://wwkuzlwxmngvgyhjycyn.supabase.co; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://wwkuzlwxmngvgyhjycyn.supabase.co; media-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'"
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta
@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="css/components.css" />
     <link rel="stylesheet" href="css/course.css" />
     <link rel="stylesheet" href="css/review.css" />
+    <link rel="stylesheet" href="css/practice.css" />
     <link rel="stylesheet" href="css/account.css" />
     <link rel="stylesheet" href="css/navbar.css" />
     <link rel="stylesheet" href="css/transition.css" />
@@ -44,6 +45,7 @@
         <ul id="nav-menu" class="navbar__links">
           <li><a class="site-nav__link" href="#inicio">Início</a></li>
           <li><a class="site-nav__link" href="#percurso">Percurso</a></li>
+          <li><a class="site-nav__link" href="#praticar">Praticar</a></li>
           <li><a class="site-nav__link" href="#hangul">Hangul</a></li>
           <li><a class="site-nav__link" href="#vocabulario">Vocabulário</a></li>
           <li><a class="site-nav__link" href="#gramatica">Gramática</a></li>
@@ -284,6 +286,65 @@
           <p id="passport-summary" class="passport__summary"></p>
           <div id="passport" class="passport"></div>
         </section>
+      </section>
+
+      <section
+        class="view"
+        id="view-praticar"
+        data-title="Praticar"
+        aria-labelledby="praticar-title"
+        hidden
+      >
+        <header>
+          <h1 id="praticar-title" class="view__title" tabindex="-1">
+            Praticar <span lang="ko">(연습)</span>
+          </h1>
+          <p class="lead">
+            Atividades curtas para fixar o que você aprendeu. Todas contam para os seus dias
+            seguidos.
+          </p>
+        </header>
+
+        <div class="practice-grid">
+          <article class="tile practice-card">
+            <span class="practice-card__mark" aria-hidden="true" lang="ko">복습</span>
+            <h2 class="tile__title">Revisão</h2>
+            <p>Flashcards com repetição espaçada: cada palavra volta antes de você esquecer.</p>
+            <p id="practice-review-count" class="tile__small"></p>
+            <button class="btn btn--primary" type="button" data-action="open-review">
+              Revisar
+            </button>
+          </article>
+
+          <article class="tile practice-card">
+            <span class="practice-card__mark" aria-hidden="true" lang="ko">퀴즈</span>
+            <h2 class="tile__title">Quiz relâmpago</h2>
+            <p>
+              10 perguntas do seu nível: ler, traduzir e ouvir. Acerte em sequência para fazer
+              combo.
+            </p>
+            <p class="tile__small">Cerca de 2 minutos.</p>
+            <button class="btn btn--primary" type="button" data-action="open-quiz">Jogar</button>
+          </article>
+
+          <article class="tile practice-card">
+            <span class="practice-card__mark" aria-hidden="true" lang="ko">읽기</span>
+            <h2 class="tile__title">Leitura rápida</h2>
+            <p>Quantas palavras em Hangul você consegue ler em 60 segundos?</p>
+            <p id="practice-reading-best" class="tile__small"></p>
+            <button class="btn btn--primary" type="button" data-action="open-reading">Jogar</button>
+          </article>
+
+          <article class="tile practice-card">
+            <span class="practice-card__mark" aria-hidden="true" lang="ko">발음</span>
+            <h2 class="tile__title">Pronúncia</h2>
+            <p>Leia uma frase em voz alta e veja se o coreano entende você.</p>
+            <p id="practice-mic-note" class="tile__small"></p>
+            <button class="btn btn--primary" type="button" data-action="open-pronunciation">
+              Treinar
+            </button>
+          </article>
+        </div>
       </section>
 
       <section
@@ -775,6 +836,32 @@
           <a href="privacidade.html">Política de privacidade</a>
         </p>
       </section>
+    </dialog>
+
+    <dialog id="practice-dialog" class="lesson practice" aria-label="Praticar">
+      <div class="lesson__top">
+        <button
+          class="lesson__close"
+          type="button"
+          data-action="practice-close"
+          aria-label="Fechar"
+        >
+          ✕
+        </button>
+        <div
+          id="practice-meter"
+          class="meter lesson__meter"
+          role="progressbar"
+          aria-label="Progresso"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+        >
+          <span id="practice-meter-fill" class="meter__fill"></span>
+        </div>
+      </div>
+      <div id="practice-stage" class="lesson__stage"></div>
+      <div id="practice-footer" class="lesson__footer review__footer"></div>
     </dialog>
 
     <dialog id="review-dialog" class="lesson review" aria-labelledby="review-heading">

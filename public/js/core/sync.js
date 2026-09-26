@@ -18,6 +18,7 @@ import {
   replaceCourseProgress,
 } from './course-progress.js';
 import { clearDailyGoal, getSavedGoal, onDailyGoalChange, setDailyGoal } from './daily-goal.js';
+import { clearRecords } from './game-records.js';
 import { getLearnedIds, onLearnedWordsChange, replaceLearnedIds } from './learned-words.js';
 import { clearLevel, getLevel, onLevelChange, setLevel } from './level.js';
 import { getStudyDays, onStudyChange, replaceStudyDays } from './study-log.js';
@@ -166,6 +167,7 @@ export function clearLocalUserData() {
   replaceStudyDays({});
   clearLevel();
   clearDailyGoal();
+  clearRecords();
   applyingRemote = false;
 }
 

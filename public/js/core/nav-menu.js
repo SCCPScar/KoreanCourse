@@ -7,7 +7,7 @@
  *  - Esc fecha o menu e devolve o foco ao botão;
  *  - clicar num link, fora do menu ou aumentar a tela para desktop também fecha.
  */
-const DESKTOP_QUERY = '(min-width: 768px)';
+const DESKTOP_QUERY = '(min-width: 860px)';
 
 export function initNavMenu({ nav, toggle, menu }) {
   const isOpen = () => toggle.getAttribute('aria-expanded') === 'true';
