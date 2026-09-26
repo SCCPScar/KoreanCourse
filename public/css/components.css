@@ -768,12 +768,8 @@
   opacity: 0.92;
 }
 
-.tile--progress {
-  grid-column: span 2;
-}
-
 .tile--fact {
-  grid-column: span 3;
+  grid-column: span 2;
   border-color: transparent;
   background: var(--color-reward-soft);
 }
@@ -791,7 +787,6 @@
     grid-row: auto;
   }
 
-  .tile--grammar,
   .tile--fact {
     grid-column: span 2;
   }

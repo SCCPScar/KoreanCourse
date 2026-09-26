@@ -1,37 +1,22 @@
 /**
  * Início em grade de cartões ("bento"): responde logo a "o que faço hoje?".
  *
- * Só mostra dados reais: palavra do dia, progresso do vocabulário, pontos de
- * gramática do nível e uma curiosidade cultural. Sequência de dias e revisões
- * aparecem quando essas funcionalidades existirem.
+ * Só mostra dados reais: a próxima estação do percurso, a linha atual,
+ * os selos do passaporte, a palavra do dia, o vocabulário aprendido e uma
+ * curiosidade cultural.
  */
 import { byId, el } from '../core/dom.js';
+import { getCourseProgress, onCourseProgressChange } from '../core/course-progress.js';
 import { getLevel, isWithinLevel, onLevelChange } from '../core/level.js';
+import { findLine, stationsOfLine } from '../data/course.js';
 import { FACTS } from '../data/facts.js';
 import { GRAMMAR } from '../data/grammar.js';
-import { findLevel } from '../data/levels.js';
 import { WORDS } from '../data/vocabulary.js';
+import { currentLine, isCompleted, lineStats, nextStation } from '../lib/course-progress.js';
 import { pickDaily } from '../lib/daily.js';
 import { audioButton } from './audio.js';
+import { countStamps } from './passport.js';
 import { getLearnedIds } from './vocabulary.js';
-
-/** Próximo passo sugerido, conforme o nível. */
-function nextStep(level, wordsAtLevel) {
-  if (!level || level === 'zero') {
-    return {
-      title: 'Comece pelo Hangul',
-      text: '14 consoantes e 10 vogais básicas. Em poucos dias você lê qualquer palavra.',
-      href: '#hangul',
-      cta: 'Aprender o Hangul',
-    };
-  }
-  return {
-    title: 'Palavras do seu nível',
-    text: `${wordsAtLevel} palavras esperando por você no nível ${findLevel(level).name}.`,
-    href: '#vocabulario',
-    cta: 'Estudar vocabulário',
-  };
-}
 
 function renderFact(container, parts) {
   const nodes = parts.map((part) =>
@@ -40,11 +25,56 @@ function renderFact(container, parts) {
   container.replaceChildren(...nodes);
 }
 
+/** Cartão "Próximo passo": a próxima estação, ou o mapa se tudo estiver feito. */
+function renderNext(ui, progress, level) {
+  const station = nextStation(progress, level);
+  if (!station) {
+    ui.label.textContent = 'Percurso em dia';
+    ui.title.textContent = 'Todas as estações disponíveis concluídas!';
+    ui.text.textContent = 'Novas estações chegam em breve. Enquanto isso, revise o vocabulário.';
+    ui.link.textContent = 'Ver o mapa';
+    return;
+  }
+  const line = findLine(station.line);
+  const position = stationsOfLine(line.id).indexOf(station) + 1;
+  ui.label.textContent = `Próximo passo · Linha ${line.number} · Estação ${position}`;
+  ui.title.textContent = station.title;
+  ui.text.textContent = `${station.minutes} minutos. No fim, você ganha o selo "${station.stamp.pt}".`;
+  ui.link.textContent = 'Começar lição';
+}
+
+/** Cartão da linha atual: uma bolinha por estação (cheia = concluída). */
+function renderLine(ui, progress, level) {
+  const line = currentLine(progress, level);
+  const next = nextStation(progress, level);
+  const stations = stationsOfLine(line.id);
+  const stats = lineStats(line.id, progress);
+  ui.name.textContent = `Linha ${line.number} · ${line.name}`;
+  ui.dots.replaceChildren(
+    ...stations.map((station) => {
+      const done = isCompleted(progress, station.id);
+      const now = station.id === next?.id;
+      const label = `${station.title}: ${done ? 'concluída' : now ? 'próxima' : 'a fazer'}`;
+      return el('li', {
+        className: done ? 'dots__dot is-done' : now ? 'dots__dot is-now' : 'dots__dot',
+        attrs: { 'aria-label': label },
+      });
+    }),
+  );
+  ui.count.textContent = `${stats.done} de ${stats.total} estações · meta: ${line.goal}`;
+}
+
 export function initHome() {
   const next = {
+    label: byId('home-next-label'),
     title: byId('home-next-title'),
     text: byId('home-next-text'),
     link: byId('home-next-link'),
+  };
+  const line = {
+    name: byId('home-line-name'),
+    dots: byId('home-line-dots'),
+    count: byId('home-line-count'),
   };
   const word = {
     ko: byId('home-word-ko'),
@@ -52,29 +82,31 @@ export function initHome() {
     pt: byId('home-word-pt'),
     audio: byId('home-word-audio'),
   };
-  const progress = {
+  const vocab = {
     count: byId('home-progress-count'),
     meter: byId('home-progress-meter'),
     fill: byId('home-progress-fill'),
   };
+  const stamps = byId('home-stamps');
   const grammarCount = byId('home-grammar-count');
   const fact = byId('home-fact');
 
   function render() {
     const level = getLevel();
+    const progress = getCourseProgress();
+    renderNext(next, progress, level);
+    renderLine(line, progress, level);
+
+    const { earned, total } = countStamps(progress);
+    stamps.textContent = `${earned} de ${total} selos`;
+
     const wordsAtLevel = WORDS.filter((item) => isWithinLevel(item.level, level));
     const learned = getLearnedIds();
     const learnedAtLevel = wordsAtLevel.filter((item) => learned.has(item.id)).length;
-
-    const step = nextStep(level, wordsAtLevel.length);
-    next.title.textContent = step.title;
-    next.text.textContent = step.text;
-    next.link.textContent = step.cta;
-    next.link.href = step.href;
-    // O botão de destaque da barra ("Estudar agora") leva ao mesmo próximo passo.
-    document.querySelectorAll('[data-next-step]').forEach((link) => {
-      link.href = step.href;
-    });
+    const percent = Math.round((learnedAtLevel / wordsAtLevel.length) * 100);
+    vocab.count.textContent = `${learnedAtLevel} de ${wordsAtLevel.length}`;
+    vocab.meter.setAttribute('aria-valuenow', String(percent));
+    vocab.fill.style.width = `${percent}%`;
 
     const daily = pickDaily(wordsAtLevel);
     word.ko.textContent = daily.ko;
@@ -82,19 +114,15 @@ export function initHome() {
     word.pt.textContent = daily.pt;
     word.audio.replaceChildren(audioButton(daily.ko));
 
-    const percent = Math.round((learnedAtLevel / wordsAtLevel.length) * 100);
-    progress.count.textContent = `${learnedAtLevel} de ${wordsAtLevel.length}`;
-    progress.meter.setAttribute('aria-valuenow', String(percent));
-    progress.fill.style.width = `${percent}%`;
-
-    const points = GRAMMAR.filter((point) => isWithinLevel(point.level, level)).length;
-    grammarCount.textContent = String(points);
-
+    grammarCount.textContent = String(
+      GRAMMAR.filter((point) => isWithinLevel(point.level, level)).length,
+    );
     renderFact(fact, pickDaily(FACTS));
   }
 
   onLevelChange(render);
+  onCourseProgressChange(render);
   render();
-  // O progresso muda em outras seções: redesenha sempre que o Início é aberto.
+  // O vocabulário muda em outra seção: redesenha sempre que o Início é aberto.
   return render;
 }

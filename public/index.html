@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="css/theme-dark.css" />
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/course.css" />
     <link rel="stylesheet" href="css/navbar.css" />
     <link rel="stylesheet" href="css/transition.css" />
   </head>
@@ -40,17 +41,26 @@
 
         <ul id="nav-menu" class="navbar__links">
           <li><a class="site-nav__link" href="#inicio">Início</a></li>
+          <li><a class="site-nav__link" href="#percurso">Percurso</a></li>
           <li><a class="site-nav__link" href="#hangul">Hangul</a></li>
           <li><a class="site-nav__link" href="#vocabulario">Vocabulário</a></li>
           <li><a class="site-nav__link" href="#gramatica">Gramática</a></li>
           <li class="navbar__menu-cta">
-            <a class="navbar__cta" href="#hangul" data-next-step>Estudar agora</a>
+            <a class="navbar__cta" href="#percurso" data-action="open-next-station"
+              >Estudar agora</a
+            >
           </li>
         </ul>
 
         <div class="navbar__actions">
           <button id="theme-toggle" class="navbar__icon-btn" type="button"></button>
-          <a class="navbar__cta navbar__cta--bar" href="#hangul" data-next-step>Estudar agora</a>
+          <a
+            class="navbar__cta navbar__cta--bar"
+            href="#percurso"
+            data-action="open-next-station"
+            aria-label="Estudar agora: abrir a próxima lição"
+            >Estudar</a
+          >
           <button
             id="nav-toggle"
             class="navbar__icon-btn navbar__toggle"
@@ -95,12 +105,18 @@
         <div class="bento">
           <article class="tile tile--next">
             <span class="tile__deco" aria-hidden="true" lang="ko">하루</span>
-            <span class="tile__label">Próximo passo</span>
+            <span id="home-next-label" class="tile__label">Próximo passo</span>
             <div>
-              <h2 id="home-next-title" class="tile__title">Comece pelo Hangul</h2>
+              <h2 id="home-next-title" class="tile__title">Vogais básicas</h2>
               <p id="home-next-text"></p>
             </div>
-            <a id="home-next-link" class="btn btn--light" href="#hangul">Aprender o Hangul</a>
+            <a
+              id="home-next-link"
+              class="btn btn--light"
+              href="#percurso"
+              data-action="open-next-station"
+              >Começar lição</a
+            >
           </article>
 
           <article class="tile tile--word">
@@ -116,13 +132,30 @@
           <article class="tile">
             <span class="tile__label">Seu nível</span>
             <span class="tile__big"><span id="level-label">Não escolhido</span></span>
+            <span class="tile__small"
+              ><span id="home-grammar-count">0</span> pontos de gramática.
+              <a href="#gramatica">Ver</a></span
+            >
             <button class="btn btn--small" type="button" data-action="open-onboarding">
               Mudar nível
             </button>
           </article>
 
-          <article class="tile tile--progress">
-            <span class="tile__label">Vocabulário aprendido</span>
+          <article class="tile tile--line">
+            <span id="home-line-name" class="tile__label">Linha 1</span>
+            <ol id="home-line-dots" class="dots" aria-label="Estações da linha"></ol>
+            <span id="home-line-count" class="tile__small"></span>
+            <a href="#percurso">Ver o mapa</a>
+          </article>
+
+          <article class="tile">
+            <span class="tile__label">Passaporte</span>
+            <span id="home-stamps" class="tile__big">0 selos</span>
+            <a href="#percurso">Ver selos</a>
+          </article>
+
+          <article class="tile">
+            <span class="tile__label">Vocabulário</span>
             <span id="home-progress-count" class="tile__big">0 de 0</span>
             <div
               id="home-progress-meter"
@@ -135,13 +168,7 @@
             >
               <span id="home-progress-fill" class="meter__fill"></span>
             </div>
-            <a href="#vocabulario">Ver vocabulário</a>
-          </article>
-
-          <article class="tile tile--grammar">
-            <span class="tile__label">Gramática do seu nível</span>
-            <span class="tile__big"><span id="home-grammar-count">0</span> pontos</span>
-            <a href="#gramatica">Ver gramática</a>
+            <a href="#vocabulario">Ver palavras</a>
           </article>
 
           <article class="tile tile--fact">
@@ -149,6 +176,59 @@
             <p id="home-fact"></p>
           </article>
         </div>
+      </section>
+
+      <section
+        class="view"
+        id="view-percurso"
+        data-title="Percurso"
+        aria-labelledby="percurso-title"
+        hidden
+      >
+        <header>
+          <h1 id="percurso-title" class="view__title" tabindex="-1">
+            Percurso <span lang="ko">(노선도)</span>
+          </h1>
+          <p class="lead">
+            O curso é um mapa do metrô de Seul: cada linha é um trimestre e cada estação é uma lição
+            de 5 a 10 minutos. Conclua uma estação para abrir a próxima.
+          </p>
+        </header>
+
+        <div id="route-tabs" class="tabs" role="tablist" aria-label="Percurso">
+          <button
+            id="tab-mapa"
+            class="tabs__tab"
+            type="button"
+            role="tab"
+            aria-controls="panel-mapa"
+          >
+            Mapa
+          </button>
+          <button
+            id="tab-passaporte"
+            class="tabs__tab"
+            type="button"
+            role="tab"
+            aria-controls="panel-passaporte"
+          >
+            Passaporte
+          </button>
+        </div>
+
+        <section id="panel-mapa" role="tabpanel" aria-labelledby="tab-mapa">
+          <div id="metro-lines" class="metro"></div>
+        </section>
+
+        <section
+          id="panel-passaporte"
+          class="card"
+          role="tabpanel"
+          aria-labelledby="tab-passaporte"
+        >
+          <p id="passport-summary" class="passport__summary"></p>
+          <div id="passport" class="passport"></div>
+        </section>
       </section>
 
       <section
@@ -391,6 +471,52 @@
           <button class="btn btn--primary" type="submit">Começar</button>
         </div>
       </form>
+    </dialog>
+
+    <dialog id="lesson-dialog" class="lesson" aria-labelledby="lesson-heading">
+      <div class="lesson__top">
+        <button
+          class="lesson__close"
+          type="button"
+          data-action="lesson-close"
+          aria-label="Sair da lição"
+        >
+          ✕
+        </button>
+        <div
+          id="lesson-meter"
+          class="meter lesson__meter"
+          role="progressbar"
+          aria-label="Progresso da lição"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+        >
+          <span id="lesson-meter-fill" class="meter__fill"></span>
+        </div>
+      </div>
+      <div id="lesson-stage" class="lesson__stage"></div>
+      <div id="lesson-feedback" class="lesson__feedback" role="status" hidden></div>
+      <div class="lesson__footer">
+        <button id="lesson-primary" class="btn btn--primary lesson__primary" type="button">
+          Começar
+        </button>
+      </div>
+      <div
+        id="lesson-exit"
+        class="lesson__exit"
+        role="alertdialog"
+        aria-labelledby="lesson-exit-text"
+        hidden
+      >
+        <p id="lesson-exit-text">Sair da lição? O que você fez nesta estação não será salvo.</p>
+        <div class="lesson__exit-actions">
+          <button class="btn" type="button" data-action="lesson-exit-confirm">Sair</button>
+          <button class="btn btn--primary" type="button" data-action="lesson-exit-cancel">
+            Continuar estudando
+          </button>
+        </div>
+      </div>
     </dialog>
 
     <!-- Cortina da transição entre seções (decorativa: escondida dos leitores de tela). -->

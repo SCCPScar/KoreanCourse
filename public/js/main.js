@@ -14,7 +14,10 @@ import { initGrammar } from './features/grammar.js';
 import { initHangulTables } from './features/hangul-tables.js';
 import { initHangulTrainer } from './features/hangul-trainer.js';
 import { initHome } from './features/home.js';
+import { initLessonPlayer } from './features/lesson-player.js';
+import { initMetroMap } from './features/metro-map.js';
 import { initOnboarding } from './features/onboarding.js';
+import { initPassport } from './features/passport.js';
 import { initStrokeOrder } from './features/stroke-order.js';
 import { initVocabulary } from './features/vocabulary.js';
 
@@ -24,6 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavMenu({ nav: byId('navbar'), toggle: byId('nav-toggle'), menu: byId('nav-menu') });
   initAudio(byId('voice-warning'), byId('voice-warning-text'));
   initTabs(byId('hangul-tabs'));
+  initTabs(byId('route-tabs'));
+  initLessonPlayer();
+  initMetroMap();
+  initPassport();
   initHangulTables();
   initHangulTrainer();
   initStrokeOrder();

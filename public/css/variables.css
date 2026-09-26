@@ -66,7 +66,7 @@
 
   /* Barra de navegação flutuante ("vidro fosco") — escura nos dois temas */
   --navbar-height: 4rem;
-  --navbar-width: 42.5rem; /* 680px */
+  --navbar-width: 45rem; /* 720px: cabe logo + 5 links + tema + botão */
   --color-nav-bg: rgb(20 19 31 / 88%); /* tinta do Haru, 88% opaca */
   /* O painel do menu (celular) fica DENTRO da barra: um backdrop-filter dentro de outro
      não borra a página, então o painel é opaco para o texto ficar legível. */

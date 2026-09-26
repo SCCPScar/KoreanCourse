@@ -94,7 +94,8 @@ export function initRouter({ fallback, onChange, transition }) {
   if (transition) {
     document.addEventListener('click', (event) => {
       const link = event.target.closest('a[href]');
-      if (!link) return;
+      // defaultPrevented: outro módulo já tratou o clique (ex.: "Estudar agora" abre a lição).
+      if (!link || event.defaultPrevented) return;
       const route = routeForClick(
         {
           href: link.getAttribute('href'),
