@@ -126,10 +126,15 @@ describe('percurso (mapa do metrô)', () => {
     });
   });
 
-  it('a Linha 1 está completa', () => {
-    const line1 = STATIONS.filter((s) => s.line === 'l1');
-    expect(line1).toHaveLength(10);
-    line1.forEach((station) => expect(station.steps.length).toBeGreaterThan(0));
+  it.each(LINES)('a $name tem 10 estações completas', (line) => {
+    const stations = STATIONS.filter((s) => s.line === line.id);
+    expect(stations).toHaveLength(10);
+    stations.forEach((station) => {
+      expect(station.steps.length).toBeGreaterThanOrEqual(8);
+      expect(station.steps.filter((step) => step.type !== 'learn').length).toBeGreaterThanOrEqual(
+        5,
+      );
+    });
   });
 
   it.each(
