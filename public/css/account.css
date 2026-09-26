@@ -137,7 +137,7 @@
   font-size: var(--text-base);
 }
 
-.account__theme {
+.account__options {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2) var(--space-4);
@@ -146,7 +146,7 @@
   border: 0;
 }
 
-.account__theme legend {
+.account__options legend {
   width: 100%;
   margin-bottom: var(--space-1);
 }

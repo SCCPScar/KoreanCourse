@@ -85,3 +85,112 @@ export function stationToRow(userId, stationId, record) {
     attempts: record.attempts ?? 1,
   };
 }
+
+/* ───────── Flashcards ───────── */
+/*
+ * Cartões: se o mesmo cartão foi revisto nos dois aparelhos, vale a revisão
+ * MAIS RECENTE (é ela que sabe quando o cartão deve voltar).
+ */
+
+export function mergeCardStates(local = {}, remote = {}) {
+  const ids = new Set([...Object.keys(local), ...Object.keys(remote)]);
+  return Object.fromEntries(
+    [...ids].map((id) => {
+      const a = local[id];
+      const b = remote[id];
+      if (!a || !b) return [id, a ?? b];
+      return [id, new Date(a.reviewedAt) >= new Date(b.reviewedAt) ? a : b];
+    }),
+  );
+}
+
+export const cardsToUpload = (merged, remote = {}) =>
+  Object.keys(merged).filter((id) => remote[id]?.reviewedAt !== merged[id].reviewedAt);
+
+export function rowsToCards(rows = []) {
+  return Object.fromEntries(
+    rows.map((row) => [
+      row.card_id,
+      {
+        reps: row.reps,
+        interval: row.interval_days,
+        ease: Number(row.ease),
+        due: row.due_on,
+        lapses: row.lapses,
+        added: row.added_on,
+        reviewedAt: new Date(row.reviewed_at).toISOString(),
+      },
+    ]),
+  );
+}
+
+export function cardToRow(userId, cardId, state) {
+  return {
+    user_id: userId,
+    card_id: cardId,
+    reps: state.reps,
+    interval_days: state.interval,
+    ease: state.ease,
+    due_on: state.due,
+    lapses: state.lapses,
+    added_on: state.added,
+    reviewed_at: state.reviewedAt,
+  };
+}
+
+/* ───────── Dias de estudo ───────── */
+/*
+ * Dias: fica o MAIOR valor de cada campo. Não somamos os dois lados porque,
+ * depois de uma sincronização, os dois lados têm o mesmo número — somar
+ * contaria o mesmo estudo duas vezes.
+ */
+
+export function mergeStudyDays(local = {}, remote = {}) {
+  const days = new Set([...Object.keys(local), ...Object.keys(remote)]);
+  return Object.fromEntries(
+    [...days].map((day) => {
+      const a = local[day] ?? { minutes: 0, cards: 0, lessons: 0 };
+      const b = remote[day] ?? { minutes: 0, cards: 0, lessons: 0 };
+      return [
+        day,
+        {
+          minutes: Math.max(a.minutes, b.minutes),
+          cards: Math.max(a.cards, b.cards),
+          lessons: Math.max(a.lessons, b.lessons),
+        },
+      ];
+    }),
+  );
+}
+
+export const daysToUpload = (merged, remote = {}) =>
+  Object.keys(merged).filter((day) => {
+    const current = remote[day];
+    const record = merged[day];
+    return (
+      !current ||
+      current.minutes !== record.minutes ||
+      current.cards !== record.cards ||
+      current.lessons !== record.lessons
+    );
+  });
+
+export function rowsToStudyDays(rows = []) {
+  return Object.fromEntries(
+    rows.map((row) => [
+      row.day,
+      { minutes: Number(row.minutes), cards: row.cards, lessons: row.lessons },
+    ]),
+  );
+}
+
+export const studyDayToRow = (userId, day, record) => ({
+  user_id: userId,
+  day,
+  minutes: record.minutes,
+  cards: record.cards,
+  lessons: record.lessons,
+});
+
+/** Meta diária: como o nível, a da conta vence. */
+export const mergeGoal = (localGoal, remoteGoal) => remoteGoal ?? localGoal ?? null;

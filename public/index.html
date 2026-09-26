@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/components.css" />
     <link rel="stylesheet" href="css/course.css" />
+    <link rel="stylesheet" href="css/review.css" />
     <link rel="stylesheet" href="css/account.css" />
     <link rel="stylesheet" href="css/navbar.css" />
     <link rel="stylesheet" href="css/transition.css" />
@@ -143,6 +144,36 @@
             >
           </article>
 
+          <article class="tile tile--streak">
+            <span class="tile__label">Dias seguidos</span>
+            <div class="streak__head">
+              <span id="home-streak-count" class="tile__big">0 dias</span>
+              <ol id="home-streak-week" class="week" aria-label="Últimos 7 dias"></ol>
+            </div>
+            <span id="home-streak-note" class="tile__small"></span>
+            <div
+              id="home-goal-meter"
+              class="meter meter--ink"
+              role="progressbar"
+              aria-label="Meta de estudo de hoje"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+            >
+              <span id="home-goal-fill" class="meter__fill"></span>
+            </div>
+            <span id="home-goal-text" class="tile__small"></span>
+          </article>
+
+          <article class="tile tile--review">
+            <span class="tile__label">Revisões</span>
+            <span id="home-review-count" class="tile__big">0 cartões</span>
+            <span id="home-review-text" class="tile__small"></span>
+            <button class="btn btn--primary btn--small" type="button" data-action="open-review">
+              Revisar agora
+            </button>
+          </article>
+
           <article class="tile tile--word">
             <span class="tile__label">Palavra do dia</span>
             <div class="tile__row">
@@ -151,6 +182,13 @@
             </div>
             <span id="home-word-rom" class="tile__rom"></span>
             <span id="home-word-pt"></span>
+          </article>
+
+          <article class="tile tile--line">
+            <span id="home-line-name" class="tile__label">Linha 1</span>
+            <ol id="home-line-dots" class="dots" aria-label="Estações da linha"></ol>
+            <span id="home-line-count" class="tile__small"></span>
+            <a href="#percurso">Ver o mapa</a>
           </article>
 
           <article class="tile">
@@ -165,20 +203,13 @@
             </button>
           </article>
 
-          <article class="tile tile--line">
-            <span id="home-line-name" class="tile__label">Linha 1</span>
-            <ol id="home-line-dots" class="dots" aria-label="Estações da linha"></ol>
-            <span id="home-line-count" class="tile__small"></span>
-            <a href="#percurso">Ver o mapa</a>
-          </article>
-
           <article class="tile">
             <span class="tile__label">Passaporte</span>
             <span id="home-stamps" class="tile__big">0 selos</span>
             <a href="#percurso">Ver selos</a>
           </article>
 
-          <article class="tile">
+          <article class="tile tile--wide">
             <span class="tile__label">Vocabulário</span>
             <span id="home-progress-count" class="tile__big">0 de 0</span>
             <div
@@ -707,7 +738,7 @@
 
       <section class="account__settings" aria-labelledby="settings-title">
         <h3 id="settings-title">Configurações</h3>
-        <fieldset id="theme-options" class="account__theme">
+        <fieldset id="theme-options" class="account__options">
           <legend class="field__label">Tema</legend>
           <label class="choice-inline"
             ><input type="radio" name="theme" value="system" /> Automático</label
@@ -717,6 +748,21 @@
           >
           <label class="choice-inline"
             ><input type="radio" name="theme" value="dark" /> Escuro</label
+          >
+        </fieldset>
+        <fieldset id="goal-options" class="account__options">
+          <legend class="field__label">Meta diária de estudo</legend>
+          <label class="choice-inline"
+            ><input type="radio" name="daily-goal" value="5" /> 5 min</label
+          >
+          <label class="choice-inline"
+            ><input type="radio" name="daily-goal" value="10" /> 10 min</label
+          >
+          <label class="choice-inline"
+            ><input type="radio" name="daily-goal" value="15" /> 15 min</label
+          >
+          <label class="choice-inline"
+            ><input type="radio" name="daily-goal" value="30" /> 30 min</label
           >
         </fieldset>
         <div class="account__row">
@@ -729,6 +775,32 @@
           <a href="privacidade.html">Política de privacidade</a>
         </p>
       </section>
+    </dialog>
+
+    <dialog id="review-dialog" class="lesson review" aria-labelledby="review-heading">
+      <div class="lesson__top">
+        <button
+          class="lesson__close"
+          type="button"
+          data-action="review-close"
+          aria-label="Fechar a revisão"
+        >
+          ✕
+        </button>
+        <div
+          id="review-meter"
+          class="meter lesson__meter"
+          role="progressbar"
+          aria-label="Progresso da revisão"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+        >
+          <span id="review-meter-fill" class="meter__fill"></span>
+        </div>
+      </div>
+      <div id="review-stage" class="lesson__stage"></div>
+      <div id="review-footer" class="lesson__footer review__footer"></div>
     </dialog>
 
     <dialog id="lesson-dialog" class="lesson" aria-labelledby="lesson-heading">

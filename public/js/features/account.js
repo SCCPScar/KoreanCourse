@@ -23,9 +23,12 @@ import {
   updatePassword,
 } from '../core/auth.js';
 import { getCourseProgress } from '../core/course-progress.js';
+import { getCardStates } from '../core/cards.js';
+import { getSavedGoal } from '../core/daily-goal.js';
 import { byId } from '../core/dom.js';
 import { getLearnedIds } from '../core/learned-words.js';
 import { getLevel } from '../core/level.js';
+import { getStudyDays } from '../core/study-log.js';
 import {
   clearLocalUserData,
   initSyncListeners,
@@ -210,6 +213,9 @@ function onExport() {
     nivel: getLevel(),
     estacoesConcluidas: getCourseProgress().stations,
     palavrasAprendidas: [...getLearnedIds()],
+    metaDiariaMinutos: getSavedGoal(),
+    cartoes: getCardStates(),
+    diasDeEstudo: getStudyDays(),
   };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const link = document.createElement('a');

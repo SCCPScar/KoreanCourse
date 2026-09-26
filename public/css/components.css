@@ -768,6 +768,10 @@
   opacity: 0.92;
 }
 
+.tile--wide {
+  grid-column: span 2;
+}
+
 .tile--fact {
   grid-column: span 2;
   border-color: transparent;

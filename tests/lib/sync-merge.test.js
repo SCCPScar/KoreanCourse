@@ -1,12 +1,21 @@
 import { describe, expect, it } from 'vitest';
 import {
+  cardToRow,
+  cardsToUpload,
+  daysToUpload,
+  mergeCardStates,
+  mergeGoal,
   mergeLevel,
   mergeStations,
+  mergeStudyDays,
   mergeWords,
   pickBetterRecord,
+  rowsToCards,
   rowsToStations,
+  rowsToStudyDays,
   stationToRow,
   stationsToUpload,
+  studyDayToRow,
   wordsToUpload,
 } from '../../public/js/lib/sync-merge.js';
 
@@ -89,5 +98,67 @@ describe('conversão banco ⇄ local', () => {
     expect(rowsToStations([{ ...row, completed_at: '2026-09-26 01:16:50.566+00' }])).toEqual({
       'l1-vogais': record,
     });
+  });
+});
+
+describe('flashcards: mergeCardStates e cardsToUpload', () => {
+  const card = (reviewedAt, interval = 1) => ({
+    reps: 1,
+    interval,
+    ease: 2.5,
+    due: '2026-09-27',
+    lapses: 0,
+    added: '2026-09-26',
+    reviewedAt,
+  });
+
+  it('vale a revisão mais recente', () => {
+    const local = { a: card('2026-09-26T10:00:00.000Z', 1), b: card('2026-09-20T10:00:00.000Z') };
+    const remote = { a: card('2026-09-25T10:00:00.000Z', 8), c: card('2026-09-21T10:00:00.000Z') };
+    const merged = mergeCardStates(local, remote);
+    expect(merged.a.interval).toBe(1);
+    expect(Object.keys(merged).sort()).toEqual(['a', 'b', 'c']);
+    expect(cardsToUpload(merged, remote).sort()).toEqual(['a', 'b']);
+  });
+
+  it('converte entre linhas do banco e o formato local, ida e volta', () => {
+    const state = card('2026-09-26T10:00:00.000Z');
+    const row = cardToRow('u1', 'comida:우유', state);
+    expect(row).toMatchObject({ user_id: 'u1', card_id: 'comida:우유', interval_days: 1 });
+    const back = rowsToCards([{ ...row, ease: '2.50', reviewed_at: '2026-09-26T10:00:00+00:00' }]);
+    expect(back['comida:우유']).toEqual(state);
+  });
+});
+
+describe('dias de estudo: mergeStudyDays e daysToUpload', () => {
+  it('fica o maior valor de cada campo, sem somar', () => {
+    const local = { '2026-09-26': { minutes: 5, cards: 20, lessons: 0 } };
+    const remote = {
+      '2026-09-26': { minutes: 6, cards: 0, lessons: 1 },
+      '2026-09-25': { minutes: 7, cards: 0, lessons: 1 },
+    };
+    const merged = mergeStudyDays(local, remote);
+    expect(merged['2026-09-26']).toEqual({ minutes: 6, cards: 20, lessons: 1 });
+    expect(daysToUpload(merged, remote)).toEqual(['2026-09-26']);
+  });
+
+  it('converte linhas do banco (minutes chega como texto)', () => {
+    const rows = [{ day: '2026-09-26', minutes: '5.25', cards: 1, lessons: 0 }];
+    expect(rowsToStudyDays(rows)).toEqual({
+      '2026-09-26': { minutes: 5.25, cards: 1, lessons: 0 },
+    });
+    expect(studyDayToRow('u1', '2026-09-26', { minutes: 1, cards: 2, lessons: 3 })).toEqual({
+      user_id: 'u1',
+      day: '2026-09-26',
+      minutes: 1,
+      cards: 2,
+      lessons: 3,
+    });
+  });
+
+  it('meta diária: a da conta vence', () => {
+    expect(mergeGoal(10, 30)).toBe(30);
+    expect(mergeGoal(15, null)).toBe(15);
+    expect(mergeGoal(null, undefined)).toBe(null);
   });
 });

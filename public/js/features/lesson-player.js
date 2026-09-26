@@ -11,6 +11,7 @@ import { byId, el } from '../core/dom.js';
 import { completeStation, getCourseProgress } from '../core/course-progress.js';
 import { getLevel } from '../core/level.js';
 import { speak } from '../core/speech.js';
+import { recordStudy } from '../core/study-log.js';
 import { findLine, findStation, stationsOfLine } from '../data/course.js';
 import { nextStation } from '../lib/course-progress.js';
 import {
@@ -298,6 +299,7 @@ function renderFinish() {
   const { station } = state;
   const score = scoreOf(state.session);
   completeStation(station.id, score);
+  recordStudy({ minutes: station.minutes, lessons: 1 });
   state.phase = 'finish';
   state.next = nextStation(getCourseProgress(), getLevel());
   ui.feedback.hidden = true;
