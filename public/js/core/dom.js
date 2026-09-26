@@ -1,7 +1,7 @@
 /**
  * Utilitários de DOM.
  *
- * Regra de segurança do projeto: texto vindo do usuário ou da IA nunca é
+ * Regra de segurança do projeto: texto vindo do usuário (ou de fora do site) nunca é
  * inserido com innerHTML sem passar por esc(). Sempre que possível, usamos
  * el(), que cria elementos com textContent (seguro por definição).
  */
