@@ -1,7 +1,7 @@
 {
   "name": "korean-course",
   "version": "0.1.0",
-  "description": "Plataforma web para aprender coreano (한국어), do nível zero ao TOPIK 4, em português europeu.",
+  "description": "Plataforma web para aprender coreano (한국어), do nível zero ao TOPIK 4, em português do Brasil.",
   "type": "module",
   "private": true,
   "license": "MIT",
@@ -14,7 +14,8 @@
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "test": "vitest run",
-    "vendor": "node scripts/copy-vendor.js"
+    "vendor": "node scripts/copy-vendor.js",
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -22,6 +23,7 @@
     "@fontsource-variable/lexend": "^5.3.0",
     "@fontsource-variable/noto-sans-kr": "^5.3.0",
     "@fontsource/jua": "^5.3.0",
+    "@playwright/test": "1.56.1",
     "@supabase/supabase-js": "^2.117.2",
     "eslint": "^10.11.0",
     "eslint-config-prettier": "^10.1.8",

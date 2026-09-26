@@ -9,6 +9,8 @@
  *  2. Uma estação abre quando a estação anterior (com conteúdo) foi concluída.
  *  3. Linhas ABAIXO do nível do aluno ficam abertas por inteiro — quem já
  *     sabe o básico não precisa refazer tudo para chegar ao que interessa.
+ *  4. A primeira estação da linha do NÍVEL do aluno também abre: quem escolheu
+ *     "Intermédio" começa direto na Linha 3.
  */
 import { isWithinLevel } from '../core/level.js';
 import { LINES, STATIONS, findLine, hasContent } from '../data/course.js';
@@ -29,18 +31,29 @@ export function stationState(station, progress, level, stations = STATIONS) {
   const index = playable.indexOf(station);
   const previous = playable[index - 1];
   const line = findLine(station.line);
+  const startsOwnLine = previous?.line !== station.line && line?.level === level;
 
-  if (index === 0 || isCompleted(progress, previous.id) || isLineBelowLevel(line, level)) {
+  if (
+    index === 0 ||
+    isCompleted(progress, previous.id) ||
+    isLineBelowLevel(line, level) ||
+    startsOwnLine
+  ) {
     return 'open';
   }
   return 'locked';
 }
 
-/** Próxima estação a estudar: a primeira aberta e não concluída (ou null). */
+/**
+ * Próxima estação a estudar (ou null): a primeira aberta e não concluída,
+ * dando preferência às linhas do nível do aluno para cima (as de baixo são revisão).
+ */
 export function nextStation(progress, level, stations = STATIONS) {
-  return (
-    stations.find((station) => stationState(station, progress, level, stations) === 'open') ?? null
+  const open = stations.filter(
+    (station) => stationState(station, progress, level, stations) === 'open',
   );
+  const atLevel = open.find((station) => !isLineBelowLevel(findLine(station.line), level));
+  return atLevel ?? open[0] ?? null;
 }
 
 /** Quantas estações de uma linha estão concluídas. */
