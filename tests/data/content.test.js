@@ -17,8 +17,8 @@ const ROMANIZATION = /^[a-z .,?!-]+$/;
 const levelIds = LEVELS.map((level) => level.id);
 
 describe('vocabulário', () => {
-  it('tem pelo menos 200 palavras', () => {
-    expect(WORDS.length).toBeGreaterThanOrEqual(200);
+  it('tem pelo menos 300 palavras', () => {
+    expect(WORDS.length).toBeGreaterThanOrEqual(300);
   });
 
   it('tem ids únicos', () => {
