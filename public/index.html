@@ -24,28 +24,44 @@
     <link rel="stylesheet" href="css/theme-dark.css" />
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/navbar.css" />
+    <link rel="stylesheet" href="css/transition.css" />
   </head>
   <body>
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
     <header class="site-header">
-      <div class="container site-header__bar">
-        <a class="brand" href="#inicio">
-          <img class="brand__logo" src="img/logo.svg" alt="" width="40" height="40" />
-          <span class="brand__name">
-            <span class="brand__ko" lang="ko">하루</span>
-            <span class="brand__pt">Haru · coreano</span>
-          </span>
+      <nav id="navbar" class="navbar" aria-label="Principal">
+        <a class="navbar__brand" href="#inicio">
+          <img class="navbar__logo" src="img/logo.svg" alt="" width="36" height="36" />
+          <span class="navbar__name" lang="ko">하루</span>
+          <span class="visually-hidden">Haru — Início</span>
         </a>
-        <button id="theme-toggle" class="btn btn--icon" type="button"></button>
-      </div>
-      <nav class="container site-nav" aria-label="Seções">
-        <ul class="site-nav__list">
+
+        <ul id="nav-menu" class="navbar__links">
           <li><a class="site-nav__link" href="#inicio">Início</a></li>
           <li><a class="site-nav__link" href="#hangul">Hangul</a></li>
           <li><a class="site-nav__link" href="#vocabulario">Vocabulário</a></li>
           <li><a class="site-nav__link" href="#gramatica">Gramática</a></li>
+          <li class="navbar__menu-cta">
+            <a class="navbar__cta" href="#hangul" data-next-step>Estudar agora</a>
+          </li>
         </ul>
+
+        <div class="navbar__actions">
+          <button id="theme-toggle" class="navbar__icon-btn" type="button"></button>
+          <a class="navbar__cta navbar__cta--bar" href="#hangul" data-next-step>Estudar agora</a>
+          <button
+            id="nav-toggle"
+            class="navbar__icon-btn navbar__toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="nav-menu"
+            aria-label="Abrir menu"
+          >
+            <span class="navbar__burger" aria-hidden="true"></span>
+          </button>
+        </div>
       </nav>
     </header>
 
@@ -376,6 +392,33 @@
         </div>
       </form>
     </dialog>
+
+    <!-- Cortina da transição entre seções (decorativa: escondida dos leitores de tela). -->
+    <div id="curtain" class="curtain" aria-hidden="true" hidden>
+      <svg
+        class="curtain__svg"
+        viewBox="0 0 1080 1080"
+        preserveAspectRatio="none"
+        focusable="false"
+      >
+        <path
+          id="curtain-path"
+          class="curtain__path"
+          pathLength="1"
+          d="M180 -80 C180 180 900 60 900 300 C900 540 180 420 180 660 C180 900 900 780 900 1020 C900 1260 60 1160 60 1500"
+        />
+      </svg>
+      <div class="curtain__center">
+        <img
+          id="curtain-logo"
+          class="curtain__logo"
+          src="img/logo.svg"
+          alt=""
+          width="120"
+          height="120"
+        />
+      </div>
+    </div>
 
     <script type="module" src="js/main.js"></script>
   </body>

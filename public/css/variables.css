@@ -64,6 +64,25 @@
   --shadow-card: 0 1px 2px rgb(29 27 47 / 6%), 0 6px 20px rgb(29 27 47 / 5%);
   --content-width: 68rem;
 
+  /* Barra de navegação flutuante ("vidro fosco") — escura nos dois temas */
+  --navbar-height: 4rem;
+  --navbar-width: 42.5rem; /* 680px */
+  --color-nav-bg: rgb(20 19 31 / 88%); /* tinta do Haru, 88% opaca */
+  /* O painel do menu (celular) fica DENTRO da barra: um backdrop-filter dentro de outro
+     não borra a página, então o painel é opaco para o texto ficar legível. */
+  --color-nav-menu-bg: rgb(20 19 31);
+  --color-nav-border: rgb(255 255 255 / 10%);
+  --color-nav-text: #eeeaf6; /* ≥ 13:1 sobre o fundo da barra */
+  --color-nav-text-muted: #c9c5d8;
+  --color-nav-hover: rgb(255 255 255 / 10%);
+  --color-nav-cta: var(--color-reward); /* amarelo: 8.95:1 com o texto tinta */
+  --color-nav-cta-text: #1d1b2f;
+
+  /* Camadas (z-index): quanto maior, mais na frente */
+  --z-navbar: 50;
+  --z-curtain: 100;
+  --z-skip-link: 110;
+
   /* Movimento (ver tabela de tempos no estudo de marca) */
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --duration-press: 120ms;

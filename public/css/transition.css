@@ -1,0 +1,55 @@
+/*
+ * Cortina da transição entre seções (animada em core/page-transition.js).
+ *
+ * pointer-events: none por padrão — a cortina só bloqueia cliques enquanto
+ * a animação está rodando (classe .is-animating).
+ */
+
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-curtain);
+  pointer-events: none;
+}
+
+.curtain.is-animating {
+  pointer-events: auto;
+}
+
+.curtain__svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.curtain__path {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 8%;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* Traço e espaço do tamanho do caminho inteiro (pathLength = 1): começa invisível. */
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+}
+
+.curtain__center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.curtain__logo {
+  width: clamp(5rem, 14vw, 8rem);
+  height: auto;
+  border-radius: 30%;
+  /* Anel claro para o logo azul se destacar sobre a cortina azul. */
+  box-shadow: 0 0 0 6px var(--color-on-primary);
+  transform: scale(0);
+}
+
+/* Cada palavra do título vira um bloco para poder subir sozinha. */
+.word {
+  display: inline-block;
+}

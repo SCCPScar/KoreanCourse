@@ -4,6 +4,8 @@
  */
 import { initActions } from './core/actions.js';
 import { byId } from './core/dom.js';
+import { initNavMenu } from './core/nav-menu.js';
+import { createPageTransition } from './core/page-transition.js';
 import { initRouter } from './core/router.js';
 import { initTabs } from './core/tabs.js';
 import { initTheme } from './core/theme.js';
@@ -19,6 +21,7 @@ import { initVocabulary } from './features/vocabulary.js';
 document.addEventListener('DOMContentLoaded', () => {
   initTheme(byId('theme-toggle'));
   initActions();
+  initNavMenu({ nav: byId('navbar'), toggle: byId('nav-toggle'), menu: byId('nav-menu') });
   initAudio(byId('voice-warning'), byId('voice-warning-text'));
   initTabs(byId('hangul-tabs'));
   initHangulTables();
@@ -29,6 +32,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const renderHome = initHome();
   initRouter({
     fallback: 'inicio',
+    transition: createPageTransition({
+      curtain: byId('curtain'),
+      path: byId('curtain-path'),
+      logo: byId('curtain-logo'),
+      nav: byId('navbar'),
+    }),
     onChange: (route) => {
       if (route === 'inicio') renderHome();
     },

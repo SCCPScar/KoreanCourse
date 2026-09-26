@@ -71,6 +71,10 @@ export function initHome() {
     next.text.textContent = step.text;
     next.link.textContent = step.cta;
     next.link.href = step.href;
+    // O botão de destaque da barra ("Estudar agora") leva ao mesmo próximo passo.
+    document.querySelectorAll('[data-next-step]').forEach((link) => {
+      link.href = step.href;
+    });
 
     const daily = pickDaily(wordsAtLevel);
     word.ko.textContent = daily.ko;
