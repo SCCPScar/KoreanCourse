@@ -1,32 +1,14 @@
 /**
  * Vocabulário por categorias, com áudio e "marcar como aprendida".
- * As palavras aprendidas ficam salvas no localStorage (usadas também no Progresso).
+ * As palavras aprendidas ficam em core/learned-words.js (e sincronizam com a conta).
  */
 import { registerAction } from '../core/actions.js';
 import { byId, el } from '../core/dom.js';
 import { getLevel, isWithinLevel, onLevelChange } from '../core/level.js';
-import { readJSON, writeJSON } from '../core/storage.js';
+import { getLearnedIds, onLearnedWordsChange, toggleLearned } from '../core/learned-words.js';
 import { findLevel } from '../data/levels.js';
 import { CATEGORIES, WORDS } from '../data/vocabulary.js';
 import { audioButton } from './audio.js';
-
-const STORAGE_KEY = 'learned-words';
-
-/** Conjunto de ids das palavras aprendidas. */
-export function getLearnedIds() {
-  const ids = readJSON(STORAGE_KEY, []);
-  return new Set(Array.isArray(ids) ? ids : []);
-}
-
-/** Marca/desmarca uma palavra e retorna o novo estado (true = aprendida). */
-function toggleLearned(id) {
-  const learned = getLearnedIds();
-  const isLearned = !learned.has(id);
-  if (isLearned) learned.add(id);
-  else learned.delete(id);
-  writeJSON(STORAGE_KEY, [...learned]);
-  return isLearned;
-}
 
 function learnedButton(word, isLearned) {
   return el('button', {
@@ -121,6 +103,10 @@ export function initVocabulary() {
   hideLearned.addEventListener('change', render);
   levelOnly.addEventListener('change', render);
   onLevelChange(render);
+  // Lista trocada de uma vez (ex.: dados baixados da conta): redesenha tudo.
+  onLearnedWordsChange((event) => {
+    if (event.detail === null) render();
+  });
 
   render();
 }

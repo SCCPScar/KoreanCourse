@@ -4,3 +4,4 @@ public/css/fonts.css
 package-lock.json
 coverage/
 .wrangler/
+public/vendor/

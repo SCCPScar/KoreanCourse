@@ -9,7 +9,7 @@
     -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://wwkuzlwxmngvgyhjycyn.supabase.co; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta
@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/components.css" />
     <link rel="stylesheet" href="css/course.css" />
+    <link rel="stylesheet" href="css/account.css" />
     <link rel="stylesheet" href="css/navbar.css" />
     <link rel="stylesheet" href="css/transition.css" />
   </head>
@@ -53,7 +54,30 @@
         </ul>
 
         <div class="navbar__actions">
-          <button id="theme-toggle" class="navbar__icon-btn" type="button"></button>
+          <button
+            id="account-button"
+            class="navbar__icon-btn navbar__account"
+            type="button"
+            data-action="open-account"
+            aria-label="Entrar e configurações"
+          >
+            <svg
+              id="account-button-icon"
+              class="navbar__account-icon"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" />
+            </svg>
+            <span
+              id="account-button-initial"
+              class="navbar__initial"
+              aria-hidden="true"
+              hidden
+            ></span>
+          </button>
           <a
             class="navbar__cta navbar__cta--bar"
             href="#percurso"
@@ -473,6 +497,240 @@
       </form>
     </dialog>
 
+    <dialog id="account-dialog" class="dialog account" aria-labelledby="account-title">
+      <div class="account__head">
+        <h2 id="account-title">Conta e configurações</h2>
+        <button class="lesson__close" type="button" data-action="close-account" aria-label="Fechar">
+          ✕
+        </button>
+      </div>
+
+      <p id="account-message" class="account__message" role="status" hidden></p>
+
+      <section id="account-section" class="account__section" aria-label="Conta">
+        <!-- Sem sessão: entrar ou criar conta -->
+        <div id="account-view-guest">
+          <p class="account__intro">
+            Crie uma conta grátis para guardar seu progresso e continuar em qualquer aparelho. Sem
+            conta, o progresso fica só neste navegador.
+          </p>
+          <div id="auth-tabs" class="tabs" role="tablist" aria-label="Entrar ou criar conta">
+            <button
+              id="tab-entrar"
+              class="tabs__tab"
+              type="button"
+              role="tab"
+              aria-controls="signin-form"
+            >
+              Entrar
+            </button>
+            <button
+              id="tab-criar"
+              class="tabs__tab"
+              type="button"
+              role="tab"
+              aria-controls="signup-form"
+            >
+              Criar conta
+            </button>
+          </div>
+
+          <form id="signin-form" class="account__form" role="tabpanel" aria-labelledby="tab-entrar">
+            <div class="account__fields">
+              <label class="field" for="signin-email">
+                <span class="field__label">Email</span>
+                <input
+                  id="signin-email"
+                  class="field__input"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                />
+              </label>
+              <label class="field" for="signin-password">
+                <span class="field__label">Senha</span>
+                <input
+                  id="signin-password"
+                  class="field__input"
+                  name="password"
+                  type="password"
+                  autocomplete="current-password"
+                  required
+                />
+              </label>
+              <button class="btn btn--primary" type="submit">Entrar</button>
+              <button class="account__link" type="button" data-action="account-forgot">
+                Esqueci minha senha
+              </button>
+            </div>
+          </form>
+
+          <form id="signup-form" class="account__form" role="tabpanel" aria-labelledby="tab-criar">
+            <div class="account__fields">
+              <label class="field" for="signup-name">
+                <span class="field__label">Como quer ser chamado(a)?</span>
+                <input
+                  id="signup-name"
+                  class="field__input"
+                  name="name"
+                  type="text"
+                  autocomplete="given-name"
+                  maxlength="60"
+                  required
+                />
+              </label>
+              <label class="field" for="signup-email">
+                <span class="field__label">Email</span>
+                <input
+                  id="signup-email"
+                  class="field__input"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                />
+              </label>
+              <label class="field" for="signup-password">
+                <span class="field__label">Senha (mínimo 8 caracteres, com letras e números)</span>
+                <input
+                  id="signup-password"
+                  class="field__input"
+                  name="password"
+                  type="password"
+                  autocomplete="new-password"
+                  minlength="8"
+                  required
+                />
+              </label>
+              <label class="checkbox checkbox--top" for="signup-age">
+                <input id="signup-age" name="age" type="checkbox" required />
+                <span>Tenho 13 anos ou mais.</span>
+              </label>
+              <label class="checkbox checkbox--top" for="signup-privacy">
+                <input id="signup-privacy" name="privacy" type="checkbox" required />
+                <span
+                  >Li e aceito a
+                  <a href="privacidade.html" target="_blank" rel="noopener"
+                    >política de privacidade</a
+                  >.</span
+                >
+              </label>
+              <button class="btn btn--primary" type="submit">Criar conta</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Esqueci a senha -->
+        <div id="account-view-forgot" hidden>
+          <form id="forgot-form" class="account__fields">
+            <p>Digite o email da sua conta. Vamos enviar um link para você criar uma nova senha.</p>
+            <label class="field" for="forgot-email">
+              <span class="field__label">Email</span>
+              <input
+                id="forgot-email"
+                class="field__input"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+              />
+            </label>
+            <button class="btn btn--primary" type="submit">Enviar link</button>
+            <button class="account__link" type="button" data-action="account-back">Voltar</button>
+          </form>
+        </div>
+
+        <!-- Nova senha (depois de abrir o link do email) -->
+        <div id="account-view-recovery" hidden>
+          <form id="recovery-form" class="account__fields">
+            <p>Escolha uma nova senha para a sua conta.</p>
+            <label class="field" for="recovery-password">
+              <span class="field__label"
+                >Nova senha (mínimo 8 caracteres, com letras e números)</span
+              >
+              <input
+                id="recovery-password"
+                class="field__input"
+                name="password"
+                type="password"
+                autocomplete="new-password"
+                minlength="8"
+                required
+              />
+            </label>
+            <button class="btn btn--primary" type="submit">Salvar nova senha</button>
+          </form>
+        </div>
+
+        <!-- Com sessão -->
+        <div id="account-view-user" class="account__fields" hidden>
+          <p>
+            Olá, <strong id="account-user-name">estudante</strong>!<br />
+            <span id="account-user-email" class="account__muted"></span>
+          </p>
+          <p id="account-sync" class="account__sync" aria-live="polite"></p>
+          <div class="account__actions">
+            <button class="btn" type="button" data-action="account-sign-out">Sair</button>
+            <button class="btn" type="button" data-action="account-export">
+              Baixar meus dados
+            </button>
+          </div>
+          <button
+            class="account__link account__link--danger"
+            type="button"
+            data-action="account-delete"
+          >
+            Apagar minha conta
+          </button>
+        </div>
+
+        <!-- Confirmação para apagar a conta -->
+        <div id="account-view-delete" class="account__fields" hidden>
+          <p>
+            <strong>Apagar sua conta para sempre?</strong> Seu progresso, suas palavras e seus selos
+            serão apagados do servidor. Isso não pode ser desfeito.
+          </p>
+          <div class="account__actions">
+            <button class="btn" type="button" data-action="account-back">Cancelar</button>
+            <button class="btn btn--danger" type="button" data-action="account-delete-confirm">
+              Sim, apagar tudo
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <p id="account-unavailable" class="account__muted" hidden>
+        As contas estão indisponíveis agora (sem conexão com o servidor). Você pode continuar
+        estudando: o progresso fica salvo neste navegador.
+      </p>
+
+      <section class="account__settings" aria-labelledby="settings-title">
+        <h3 id="settings-title">Configurações</h3>
+        <fieldset id="theme-options" class="account__theme">
+          <legend class="field__label">Tema</legend>
+          <label class="choice-inline"
+            ><input type="radio" name="theme" value="system" /> Automático</label
+          >
+          <label class="choice-inline"
+            ><input type="radio" name="theme" value="light" /> Claro</label
+          >
+          <label class="choice-inline"
+            ><input type="radio" name="theme" value="dark" /> Escuro</label
+          >
+        </fieldset>
+        <div class="account__row">
+          <span>Nível de coreano</span>
+          <button class="btn btn--small" type="button" data-action="open-onboarding">
+            Mudar nível
+          </button>
+        </div>
+        <p class="account__muted">
+          <a href="privacidade.html">Política de privacidade</a>
+        </p>
+      </section>
+    </dialog>
+
     <dialog id="lesson-dialog" class="lesson" aria-labelledby="lesson-heading">
       <div class="lesson__top">
         <button
@@ -546,6 +804,8 @@
       </div>
     </div>
 
+    <!-- Biblioteca oficial do Supabase (cópia local, ver scripts/copy-vendor.js). -->
+    <script src="vendor/supabase.js"></script>
     <script type="module" src="js/main.js"></script>
   </body>
 </html>

@@ -7,11 +7,11 @@
  */
 import { readJSON, writeJSON } from './storage.js';
 
-const STORAGE_KEY = 'course-progress';
+const COURSE_PROGRESS_KEY = 'course-progress';
 const CHANGE_EVENT = 'haru:progresschange';
 
 export function getCourseProgress() {
-  const progress = readJSON(STORAGE_KEY, null);
+  const progress = readJSON(COURSE_PROGRESS_KEY, null);
   return progress && typeof progress.stations === 'object' ? progress : { stations: {} };
 }
 
@@ -27,9 +27,15 @@ export function completeStation(stationId, { correct, total }, now = new Date())
     total: isBetter ? total : previous.total,
     attempts: (previous?.attempts ?? 0) + 1,
   };
-  writeJSON(STORAGE_KEY, progress);
+  writeJSON(COURSE_PROGRESS_KEY, progress);
   document.dispatchEvent(new CustomEvent(CHANGE_EVENT, { detail: stationId }));
   return progress;
+}
+
+/** Troca o progresso inteiro (usado ao baixar os dados da conta). */
+export function replaceCourseProgress(stations) {
+  writeJSON(COURSE_PROGRESS_KEY, { stations });
+  document.dispatchEvent(new CustomEvent(CHANGE_EVENT, { detail: null }));
 }
 
 export function onCourseProgressChange(callback) {

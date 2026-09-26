@@ -13,7 +13,8 @@
     "fonts": "node scripts/copy-fonts.js",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "vendor": "node scripts/copy-vendor.js"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -21,6 +22,7 @@
     "@fontsource-variable/lexend": "^5.3.0",
     "@fontsource-variable/noto-sans-kr": "^5.3.0",
     "@fontsource/jua": "^5.3.0",
+    "@supabase/supabase-js": "^2.117.2",
     "eslint": "^10.11.0",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^17.12.0",

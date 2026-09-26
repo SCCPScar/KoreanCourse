@@ -9,6 +9,7 @@ import { createPageTransition } from './core/page-transition.js';
 import { initRouter } from './core/router.js';
 import { initTabs } from './core/tabs.js';
 import { initTheme } from './core/theme.js';
+import { initAccount } from './features/account.js';
 import { initAudio } from './features/audio.js';
 import { initGrammar } from './features/grammar.js';
 import { initHangulTables } from './features/hangul-tables.js';
@@ -22,12 +23,13 @@ import { initStrokeOrder } from './features/stroke-order.js';
 import { initVocabulary } from './features/vocabulary.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  initTheme(byId('theme-toggle'));
+  initTheme(byId('theme-options'));
   initActions();
   initNavMenu({ nav: byId('navbar'), toggle: byId('nav-toggle'), menu: byId('nav-menu') });
   initAudio(byId('voice-warning'), byId('voice-warning-text'));
   initTabs(byId('hangul-tabs'));
   initTabs(byId('route-tabs'));
+  initTabs(byId('auth-tabs'));
   initLessonPlayer();
   initMetroMap();
   initPassport();
@@ -50,4 +52,5 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   });
   initOnboarding();
+  initAccount();
 });

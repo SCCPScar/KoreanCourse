@@ -4,7 +4,7 @@ import prettier from 'eslint-config-prettier';
 
 export default [
   {
-    ignores: ['node_modules/', 'public/fonts/', 'coverage/', '.wrangler/'],
+    ignores: ['node_modules/', 'public/fonts/', 'public/vendor/', 'coverage/', '.wrangler/'],
   },
   js.configs.recommended,
   {

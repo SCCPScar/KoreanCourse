@@ -5,22 +5,28 @@
  * usam getLevel() e onLevelChange().
  */
 import { LEVELS, findLevel } from '../data/levels.js';
-import { readJSON, writeJSON } from './storage.js';
+import { readJSON, removeKey, writeJSON } from './storage.js';
 
-const STORAGE_KEY = 'level';
+const LEVEL_KEY = 'level';
 const CHANGE_EVENT = 'haru:levelchange';
 
 /** Nível atual (id), ou null se o aluno ainda não escolheu. */
 export function getLevel() {
-  const id = readJSON(STORAGE_KEY);
+  const id = readJSON(LEVEL_KEY);
   return findLevel(id) ? id : null;
 }
 
 /** Salva o nível e avisa quem estiver escutando. */
 export function setLevel(id) {
   if (!findLevel(id)) return;
-  writeJSON(STORAGE_KEY, id);
+  writeJSON(LEVEL_KEY, id);
   document.dispatchEvent(new CustomEvent(CHANGE_EVENT, { detail: id }));
+}
+
+/** Esquece o nível (ex.: ao sair da conta) e avisa quem estiver escutando. */
+export function clearLevel() {
+  removeKey(LEVEL_KEY);
+  document.dispatchEvent(new CustomEvent(CHANGE_EVENT, { detail: null }));
 }
 
 export function onLevelChange(callback) {

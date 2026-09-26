@@ -7,6 +7,7 @@
  */
 import { byId, el } from '../core/dom.js';
 import { getCourseProgress, onCourseProgressChange } from '../core/course-progress.js';
+import { getLearnedIds, onLearnedWordsChange } from '../core/learned-words.js';
 import { getLevel, isWithinLevel, onLevelChange } from '../core/level.js';
 import { findLine, stationsOfLine } from '../data/course.js';
 import { FACTS } from '../data/facts.js';
@@ -16,7 +17,6 @@ import { currentLine, isCompleted, lineStats, nextStation } from '../lib/course-
 import { pickDaily } from '../lib/daily.js';
 import { audioButton } from './audio.js';
 import { countStamps } from './passport.js';
-import { getLearnedIds } from './vocabulary.js';
 
 function renderFact(container, parts) {
   const nodes = parts.map((part) =>
@@ -122,6 +122,7 @@ export function initHome() {
 
   onLevelChange(render);
   onCourseProgressChange(render);
+  onLearnedWordsChange(render);
   render();
   // O vocabulário muda em outra seção: redesenha sempre que o Início é aberto.
   return render;

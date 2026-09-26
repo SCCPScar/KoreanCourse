@@ -3,25 +3,15 @@
  *
  * Três modos: 'system' (segue prefers-color-scheme), 'light' e 'dark'.
  * O CSS trata das cores; aqui só definimos o atributo data-theme no <html>.
+ * A escolha é feita com três botões de opção (radio) nas configurações.
  */
 import { readJSON, writeJSON } from './storage.js';
 
 const STORAGE_KEY = 'theme';
 export const THEME_MODES = ['system', 'light', 'dark'];
 
-const THEME_LABELS = {
-  system: { icon: '🖥️', name: 'automático' },
-  light: { icon: '☀️', name: 'claro' },
-  dark: { icon: '🌙', name: 'escuro' },
-};
-
-/** Retorna o modo seguinte no ciclo automático → claro → escuro → automático. */
-export function nextThemeMode(mode) {
-  const index = THEME_MODES.indexOf(mode);
-  return THEME_MODES[(index + 1) % THEME_MODES.length];
-}
-
-function getStoredMode() {
+/** Modo salvo (ou 'system' se não houver um válido). */
+export function getThemeMode() {
   const mode = readJSON(STORAGE_KEY, 'system');
   return THEME_MODES.includes(mode) ? mode : 'system';
 }
@@ -34,24 +24,17 @@ function applyTheme(mode) {
   }
 }
 
-function updateButton(button, mode) {
-  const current = THEME_LABELS[mode];
-  const next = THEME_LABELS[nextThemeMode(mode)];
-  button.textContent = current.icon;
-  button.setAttribute('aria-label', `Tema ${current.name}. Mudar para ${next.name}`);
-  button.title = `Tema: ${current.name}`;
-}
-
-/** Aplica o tema salvo e liga o botão de alternância. */
-export function initTheme(button) {
-  let mode = getStoredMode();
+/** Aplica o tema salvo e liga o grupo de opções (inputs radio com name="theme"). */
+export function initTheme(fieldset) {
+  const mode = getThemeMode();
   applyTheme(mode);
-  updateButton(button, mode);
+  const current = fieldset.querySelector(`input[value="${mode}"]`);
+  if (current) current.checked = true;
 
-  button.addEventListener('click', () => {
-    mode = nextThemeMode(mode);
-    applyTheme(mode);
-    updateButton(button, mode);
-    writeJSON(STORAGE_KEY, mode);
+  fieldset.addEventListener('change', (event) => {
+    const chosen = event.target.value;
+    if (!THEME_MODES.includes(chosen)) return;
+    applyTheme(chosen);
+    writeJSON(STORAGE_KEY, chosen);
   });
 }
